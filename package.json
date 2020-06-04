@@ -1,0 +1,16 @@
+{
+  "name": "ack-device-sync",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.0.10",
+    "prompt-sync": "^4.2.0",
+    "serialport": "^9.0.0"
+  }
+}
