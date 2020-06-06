@@ -240,11 +240,64 @@ var hexToAscii = function (str1) {
     }
     return str;
 };
+var ACKPacket = function (commandType, packetNumber) {
+    var currentPacketNumber = intToUintByte(packetNumber, radix.currentPacketNumber);
+    var totalPacket = intToUintByte(0, radix.totalPacket);
+    var dataChunk = '00000000';
+    var commData = currentPacketNumber + totalPacket + dataChunk;
+    var crc = crc16(Buffer.from(commData, 'hex')).toString(16);
+    var stuffedData = byteStuffing(Buffer.from(commData + crc, 'hex')).toString('hex');
+    var commHeader = START_OF_FRAME +
+        // ' ' +
+        intToUintByte(commandType, radix.commandType) +
+        // ' ' +
+        intToUintByte(stuffedData.length / 2, radix.dataSize);
+    // ' '
+    var packet = commHeader + stuffedData;
+    return packet;
+};
 //End XModem
+var ACK_PACKET = commandType.ACK_PACKET;
 var currentPort = '';
 var hardwarePort;
 var serialNumber = '';
 var createdPorts = new Map();
+function sendPacket(packetList, i, ackList, count) {
+    if (count === void 0) { count = 0; }
+    var temp = Buffer.from("aa" + packetList[i], 'hex');
+    hardwarePort.write(temp, function (err) {
+        if (err)
+            console.log('Error: ' + ("Error in writing data to serial, " + err.message));
+        else
+            console.log('Info: ' + ("Packet written to device: " + packetList[i]));
+    });
+    setTimeout(function (packetNumber) {
+        if (!ackList.get(packetNumber) && count < 5) {
+            // resend packet
+            sendPacket(packetList, packetNumber, ackList, count + 1);
+        }
+    }, constants.ACK_TIME, i);
+}
+var sendData = function (packetList) {
+    var i = 0;
+    // const port = createdPorts.get(currentPort);
+    var ackList = new Map();
+    sendPacket(packetList, i, ackList);
+    hardwarePort.on('data', function (serialData) {
+        i += 1;
+        var resList = xmodemDecode(serialData);
+        resList.forEach(function (res) {
+            var currentPacketNumber = res.currentPacketNumber, decodedCommandType = res.commandType;
+            if (Number(decodedCommandType) === commandType.ACK_PACKET) {
+                ackList.set(i - 1, true);
+                console.log('Info: ' +
+                    ("Ack for packet " + packetList[Number(currentPacketNumber) - 1]));
+                if (i < packetList.length)
+                    sendPacket(packetList, i, ackList);
+            }
+        });
+    });
+};
 var myCreatePort = function (port) {
     if (createdPorts.has(port)) {
         var oldPort = createdPorts.get(port);
@@ -271,42 +324,6 @@ var myCreatePort = function (port) {
         console.log('Error: ' + err);
     });
     return { hardwarePort: hardwarePort, serialNumber: serialNumber };
-};
-function sendPacket(packetList, i, ackList, count) {
-    if (count === void 0) { count = 0; }
-    var temp = Buffer.from("aa" + packetList[i], 'hex');
-    hardwarePort.write(temp, function (err) {
-        if (err)
-            console.log('Error: ' + ("Error in writing data to serial, " + err.message));
-        else
-            console.log('Info: ' + ("Packet written to device: " + packetList[i]));
-    });
-    setTimeout(function (packetNumber) {
-        if (!ackList.get(packetNumber) && count < 3) {
-            // resend packet
-            sendPacket(packetList, packetNumber, ackList, count + 1);
-        }
-    }, constants.ACK_TIME, i);
-}
-var sendData = function (packetList) {
-    var i = 0;
-    // const port = createdPorts.get(currentPort);
-    var ackList = new Map();
-    sendPacket(packetList, i, ackList);
-    hardwarePort.on('data', function (serialData) {
-        i += 1;
-        var resList = xmodemDecode(serialData);
-        resList.forEach(function (res) {
-            var currentPacketNumber = res.currentPacketNumber, decodedCommandType = res.commandType;
-            if (Number(decodedCommandType) === commandType.ACK_PACKET) {
-                ackList.set(i - 1, true);
-                console.log('Info: ' +
-                    ("Ack for packet " + packetList[Number(currentPacketNumber) - 1]));
-                if (i < packetList.length)
-                    sendPacket(packetList, i, ackList);
-            }
-        });
-    });
 };
 var createPort = function () {
     return SerialPort.list().then(function (list) {
@@ -346,12 +363,39 @@ var openPort = function () {
         resolve(createPort());
     });
 };
-var str = p('Enter the string');
-var port = p('Enter the Command Type ');
-openPort().then(function (portData) {
-    hardwarePort = portData.hardwarePort;
-    var packetList = xmodemEncode(str, Number(10));
-    console.log("Info: ");
-    console.log(packetList);
-    return sendData(packetList);
-})["catch"](function (err) { return console.log("Error: " + err); });
+var recieveDataHelper = function () {
+    return openPort()
+        .then(function (portData) {
+        var recievedCommandType;
+        var recievedData = '';
+        var recievedDataSize = 0;
+        var portError = null;
+        var hardwarePort = portData.hardwarePort;
+        hardwarePort.on('data', function (serialData) {
+            var decodedDataList = xmodemDecode(Buffer.from("AA270a00010001000000001230", 'hex'));
+            recievedCommandType = decodedDataList[0].commandType;
+            decodedDataList.forEach(function (decodedData) {
+                var currentPacketNumber = decodedData.currentPacketNumber, dataChunk = decodedData.dataChunk, dataSize = decodedData.dataSize, decodedCommandType = decodedData.commandType, totalPacket = decodedData.totalPacket;
+                var ackPacket = ACKPacket(ACK_PACKET, "0x" + currentPacketNumber.toString(16));
+                hardwarePort.write(Buffer.from("aa" + ackPacket, 'hex'));
+                recievedData = recievedData + dataChunk;
+                recievedDataSize = recievedDataSize + dataSize;
+            });
+        });
+        return {
+            recievedCommandType: recievedCommandType,
+            recievedData: recievedData,
+            recievedDataSize: recievedDataSize,
+            portError: portError
+        };
+    })["catch"](function (err) { return err; });
+};
+var recieveData = function () {
+    return new Promise(function (resolve) {
+        resolve(recieveDataHelper());
+    });
+};
+recieveData().then(function (data) {
+    console.log("In function");
+    console.log(data);
+});

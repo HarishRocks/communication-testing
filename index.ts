@@ -280,8 +280,31 @@ const hexToAscii = (str1: number) => {
 	return str;
 };
 
+const ACKPacket = (commandType, packetNumber) => {
+  const currentPacketNumber = intToUintByte(
+    packetNumber,
+    radix.currentPacketNumber
+  );
+  const totalPacket = intToUintByte(0, radix.totalPacket);
+  const dataChunk = '00000000';
+  const commData = currentPacketNumber + totalPacket + dataChunk;
+  const crc = crc16(Buffer.from(commData, 'hex')).toString(16);
+  const stuffedData = byteStuffing(Buffer.from(commData + crc, 'hex')).toString(
+    'hex'
+  );
+  const commHeader =
+    START_OF_FRAME +
+    // ' ' +
+    intToUintByte(commandType, radix.commandType) +
+    // ' ' +
+    intToUintByte(stuffedData.length / 2, radix.dataSize);
+  // ' '
+  const packet = commHeader + stuffedData;
+  return packet;
+};
 
 //End XModem
+const { ACK_PACKET } = commandType;
 
 
 let currentPort = '';
@@ -289,6 +312,7 @@ let hardwarePort;
 let serialNumber = '';
 
 const createdPorts = new Map();
+
 
 const myCreatePort = port => {
   if (createdPorts.has(port)) {
@@ -318,51 +342,6 @@ const myCreatePort = port => {
   });
 
   return { hardwarePort, serialNumber };
-};
-
-function sendPacket(
-  packetList: Array<string>,
-  i: number,
-  ackList: Map<number, boolean>,
-  count = 0
-): void {
-  const temp = Buffer.from(`aa${packetList[i]}`, 'hex');
-  hardwarePort.write(temp, err => {
-    if (err) console.log('Error: '+`Error in writing data to serial, ${err.message}`);
-    else console.log('Info: '+`Packet written to device: ${packetList[i]}`);
-  });
-  setTimeout(
-    packetNumber => {
-      if (!ackList.get(packetNumber) && count < 5) {
-        // resend packet
-        sendPacket(packetList, packetNumber, ackList, count + 1);
-      }
-    },
-    constants.ACK_TIME,
-    i
-  );
-}
-
-const sendData = (packetList: Array<string>): void => {
-  let i = 0;
-  // const port = createdPorts.get(currentPort);
-  const ackList = new Map();
-  sendPacket(packetList, i, ackList);
-
-  hardwarePort.on('data', (serialData: Buffer) => {
-    i += 1;
-    const resList = xmodemDecode(serialData);
-    resList.forEach(res => {
-      const { currentPacketNumber, commandType: decodedCommandType } = res;
-      if (Number(decodedCommandType) === commandType.ACK_PACKET) {
-        ackList.set(i - 1, true);
-        console.log('Info: '+
-          `Ack for packet ${packetList[Number(currentPacketNumber) - 1]}`
-        );
-        if (i < packetList.length) sendPacket(packetList, i, ackList);
-      }
-    });
-  });
 };
 
 
@@ -408,14 +387,106 @@ const openPort = (): Promise<any> => {
   });
 };
 
-const str = p('Enter the string');
-const cmd = p('Enter the Command Type ')
 
-openPort().then(portData => {
-	hardwarePort = portData.hardwarePort;
-	const packetList = xmodemEncode(str, Number(cmd));
+function sendPacket(
+  packetList: Array<string>,
+  i: number,
+  ackList: Map<number, boolean>,
+  count = 0
+): void {
+  const temp = Buffer.from(`aa${packetList[i]}`, 'hex');
+  hardwarePort.write(temp, err => {
+    if (err) console.log('Error: '+`Error in writing data to serial, ${err.message}`);
+    else console.log('Info: '+`Packet written to device: ${packetList[i]}`);
+  });
+  setTimeout(
+    packetNumber => {
+      if (!ackList.get(packetNumber) && count < 5) {
+        // resend packet
+        sendPacket(packetList, packetNumber, ackList, count + 1);
+      }
+    },
+    constants.ACK_TIME,
+    i
+  );
+}
 
-	console.log("Info: ");
-    console.log(packetList);
-    return sendData(packetList);
-}).catch(err => console.log("Error: "+err));
+
+
+const sendData = (packetList: Array<string>): void => {
+  let i = 0;
+  // const port = createdPorts.get(currentPort);
+  const ackList = new Map();
+  sendPacket(packetList, i, ackList);
+
+  hardwarePort.on('data', (serialData: Buffer) => {
+    i += 1;
+    const resList = xmodemDecode(serialData);
+    resList.forEach(res => {
+      const { currentPacketNumber, commandType: decodedCommandType } = res;
+      if (Number(decodedCommandType) === commandType.ACK_PACKET) {
+        ackList.set(i - 1, true);
+        console.log('Info: '+
+          `Ack for packet ${packetList[Number(currentPacketNumber) - 1]}`
+        );
+        if (i < packetList.length) sendPacket(packetList, i, ackList);
+      }
+    });
+  });
+};
+
+
+const recieveData = () => {
+
+	let recievedCommandType;
+	let recievedData = '';
+	let recievedDataSize = 0;
+	let portError = '';
+
+    openPort()
+    .then(portData => {
+
+    let recievedCommandType;
+  	let recievedData = '';
+  	let recievedDataSize = 0;
+  	let portError = null;
+
+      const { hardwarePort } = portData;
+      
+      hardwarePort.on('data', serialData => {
+        const decodedDataList = xmodemDecode(Buffer.from("AA270a00010001000000001230", 'hex'));
+
+        recievedCommandType = decodedDataList[0].commandType;
+
+        decodedDataList.forEach(decodedData => {
+          const {
+            currentPacketNumber,
+            dataChunk,
+            dataSize,
+            commandType: decodedCommandType,
+            totalPacket
+          } = decodedData;
+
+          const ackPacket = ACKPacket(
+            ACK_PACKET,
+            `0x${currentPacketNumber.toString(16)}`
+          );
+            
+          hardwarePort.write(Buffer.from(`aa${ackPacket}`, 'hex'));
+          
+          recievedData = recievedData + dataChunk;
+
+          recievedDataSize = recievedDataSize + dataSize;
+        });
+      });
+    })
+    .catch(err => portError = err);
+
+    return {
+      recievedCommandType,
+      recievedData,
+      recievedDataSize,
+      portError
+    };
+}
+
