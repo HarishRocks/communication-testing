@@ -84,7 +84,7 @@ const getPort = async () => {
     if(err) console.log("Error writing :"+err);
       else console.log("Success");
   })
-  console.log(`Packet Sent :  ${data_to_send}`);
+  console.log(`Packet Sent :  ${data_to_send[0]}`);
   console.log();
 
 
@@ -99,14 +99,25 @@ const getPort = async () => {
 
   console.log(`Desktop : Sending Success Command.`);
 
-  data_to_send = xmodemEncode("01", 42); 
+  const x = '00000001';
+
+  data_to_send = xmodemEncode(x, 42); 
   
   connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
     if(err) console.log("Error writing :"+err);
       else console.log("Success");
   })
-  console.log(`Packet Sent :  ${data_to_send}`);
+  console.log(`Packet Sent :  ${data_to_send[0]}`);
   console.log();
+
+  setTimeout(() => {
+    connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
+      if(err) console.log("Error writing :"+err);
+        else console.log("Success");
+    })
+    console.log(`Packet Sent :  ${data_to_send[0]}`);
+    console.log();
+  }, 5000);
 
   /**
    * Code below is just to create hardware output doc
