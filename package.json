@@ -1,17 +1,28 @@
 {
-  "name": "ack-device-sync",
+  "name": "cypherock-library",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "onchange -i -k 'src/**/*.ts' 'config/*' -- ts-node src/app.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serialport/list": "^9.0.0",
-    "@types/node": "^14.0.11",
+    "inquirer": "^7.1.0",
+    "prompt": "^1.0.0",
     "prompt-sync": "^4.2.0",
     "serialport": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.11",
+    "@types/serialport": "^8.0.1",
+    "onchange": "^7.0.2",
+    "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.5"
   }
 }
