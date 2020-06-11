@@ -26,11 +26,7 @@ const deviceReady = (connection: any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     connection.on('data', (packet: any) => {
-      console.log("Raw Data ");
-      console.log(packet)
       const data = xmodemDecode(packet);
-      console.log("Packets ");
-      console.log(data);
       data.forEach((d) => {
         const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
           resData[currentPacketNumber - 1] = dataChunk;
@@ -106,13 +102,11 @@ export const addWallet = async () => {
   
 
   //Added a 1 second delay which was suggested by @Atul sir. 
-
   setTimeout( () => {connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
     if(err) console.log("Error writing :"+err);
       else console.log("Success");
   });
   }, 1000);
-
   console.log(`Packet Sent :  ${data_to_send}`);
   console.log();
 
