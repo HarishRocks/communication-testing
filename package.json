@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.0",
     "inquirer": "^7.1.0",
     "prompt": "^1.0.0",
     "prompt-sync": "^4.2.0",
