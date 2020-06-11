@@ -12,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bs58": "^4.0.1",
     "chalk": "^4.1.0",
     "inquirer": "^7.1.0",
+    "nedb": "^1.8.0",
     "prompt": "^1.0.0",
     "prompt-sync": "^4.2.0",
     "serialport": "^9.0.0"

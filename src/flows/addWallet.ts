@@ -3,32 +3,18 @@ import { xmodemDecode , xmodemEncode } from '../xmodem';
 import { ackData , sendData } from '../communication/sendData';
 import { commands } from '../config';
 import { hexToAscii } from '../bytes';
-
+const Datastore = require('nedb')
 const { ACK_PACKET } = commands;
 
-const ackRecieve = (connection: any) => {
-  const resData: any = [];
-  return new Promise((resolve, reject) => {
-    connection.on('data', (packet: any) => {
-      const data = xmodemDecode(packet);
-      data.forEach((d) => {
-        const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
-          resData[currentPacketNumber - 1] = dataChunk;
-          if (currentPacketNumber === totalPacket) {
-            resolve({commandType, data : resData.join('')});
-          }
-      });
-    });
-  });
-};
 
-const deviceReady = (connection: any) => {
+const recieveData = (connection: any, command : any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     connection.on('data', (packet: any) => {
       const data = xmodemDecode(packet);
       data.forEach((d) => {
         const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
+        if (commandType === command) {
           resData[currentPacketNumber - 1] = dataChunk;
           const ackPacket = ackData(
             ACK_PACKET,
@@ -36,16 +22,31 @@ const deviceReady = (connection: any) => {
           );
           connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
           if (currentPacketNumber === totalPacket) {
-            resolve({commandType, data : resData.join('')});
+            connection.removeAllListeners('data')
+            resolve(resData.join(''));
           }
+        }
       });
     });
   });
 };
 
+//Author: Gaurav Agarwal
+//@method Takes raw data, converts the name from hex to String, and keeps the id in hex itself, and stores it in the database.
+//@var rawData : hex data from device
+const addWalletToDB = (rawData : any) => {
+  let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
+  let name = hexToAscii(String(rawData).slice(0,32));
+  let passwordSet = String(rawData).slice(32,34);
+  let _id = String(rawData).slice(34);
+
+  db.insert({name : name, passwordSet : passwordSet, _id : _id});
+}
+
+
+//Todo in this function, Replace all the commands with their const values. Example, 42 -> Status Command.
 export const addWallet = async () => {
-
 
   const { connection, serial } = await createPort();
   connection.open();
@@ -53,84 +54,56 @@ export const addWallet = async () => {
   // this will work only one time and will self exit to prevent memory leak
   // initiate them whenever needed to get data otherwise just ignore it
 
-  console.log(`Desktop : Sending Ready Command.`);
-  let data_to_send = xmodemEncode("00", 41);
-
-  connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
-  })
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
-
-
-
-  let d = await ackRecieve(connection);
-  console.log('Ack From Device: ');
-  console.log(d);
+  console.log(`Desktop : Sending Ready Command.\n\n`);
+  await sendData(connection, 41, "00");
   
-  d = await deviceReady(connection);
+  //recieving Success Status Command (Value = 2)
+  let d = await recieveData(connection, 42);
   console.log('From Device: ')
   console.log(d);
 
+  //only proceed if device is ready, else quit.
+  if(String(d).slice(0,2) == "02")
+  {
+    console.log(`\n\nDesktop : Sending Add Wallet Command.\n\n`);
+    await sendData(connection, 43, "00");
 
-  console.log(`Desktop : Sending Add Wallet Command.`);
-  data_to_send = xmodemEncode("00", 43); 
+    
+    // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
+    console.log('Wallet Details From Device: ');
+    d = await recieveData(connection, 44);
+    console.log(d);
 
-  connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
-  })
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
+    addWalletToDB(d);
 
+    console.log(`\n\nDesktop : Sending Success Command.`);
+    await sendData(connection, 42, "01");
+  }
 
-  d = await ackRecieve(connection);
-  console.log('Ack From Device: ')
-  console.log(d);
-
-
-  
-  console.log('Wallet Details From Device: ');
-  d = await deviceReady(connection);
-  console.log(d);
-
-
-  console.log(`Desktop : Sending Success Command.`);
-
-  data_to_send = xmodemEncode("01", 42); 
-  
-
-  //Added a 1 second delay which was suggested by @Atul sir. 
-  setTimeout( () => {connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
+  connection.close();
+  connection.on('error', (d) => {
+    console.log(d);
   });
-  }, 1000);
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
+}
 
-  d = await ackRecieve(connection);
-  console.log('Ack From Device: ')
+
+//ONLY FOR TESTING PURPOSES RIGHT NOW
+export const addWalletDeviceInitiated = async () => {
+
+  const { connection, serial } = await createPort();
+  connection.open();
+
+  // this will work only one time and will self exit to prevent memory leak
+  // initiate them whenever needed to get data otherwise just ignore it
+
+  console.log('Wallet Details From Device: ');
+  let d = await recieveData(connection, 44);
   console.log(d);
 
-  /**
-   * Code below is just to create hardware output doc
-   * Don't remove & don't use
-   */
 
-  // connection.on('data', (d) => {
-  //   const data = xmodemDecode(d);
-  //   data.forEach((d) => {
-  //     const { commandType, currentPacketNumber } = d;
-  //     const ackPacket = ackData(
-  //       ACK_PACKET,
-  //       `0x${currentPacketNumber.toString(16)}`
-  //     );
-  //     connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
-  //     console.log(d);
-  //   });
-  // });
+  console.log(`\n\nDesktop : Sending Success Command.`);
+  await sendData(connection, 42, "01");
+
   connection.close();
   connection.on('error', (d) => {
     console.log(d);

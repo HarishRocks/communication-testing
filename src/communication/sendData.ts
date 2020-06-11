@@ -1,54 +1,81 @@
 import { constants, commands, radix } from '../config';
-import { xmodemDecode } from '../xmodem';
+import { xmodemDecode, xmodemEncode } from '../xmodem';
 import { intToUintByte, byteStuffing } from '../bytes';
 import { crc16 } from './crc';
 
 const { START_OF_FRAME } = constants;
 
-const sendPacket = (connection: any) => (
-  packetList: Array<string>,
-  i: number,
-  ackList: Map<number, boolean>,
-  count = 0
-): void => {
-  const temp = Buffer.from(`aa${packetList[i]}`, 'hex');
-  connection.write(temp, (err: any) => {
-    if (err)
-      console.log(`Error: Error in writing data to serial, ${err.message}`);
-    else console.log(`Info: Packet written to device: ${packetList[i]}`);
-  });
-  setTimeout(
-    (packetNumber) => {
-      if (!ackList.get(packetNumber) && count < 0) {
-        sendPacket(connection)(packetList, packetNumber, ackList, count + 1);
-      }
-    },
-    constants.ACK_TIME,
-    i
-  );
-};
-
-const sendData = (connection: any) => (packetList: Array<string>): void => {
-  let i = 0;
-  // const port = createdPorts.get(currentPort);
-  const ackList = new Map();
-  sendPacket(connection)(packetList, i, ackList);
-
-  connection.on('data', (serialData: Buffer) => {
-    i += 1;
-    const resList = xmodemDecode(serialData);
-    resList.forEach((res) => {
-      const { currentPacketNumber, commandType: decodedCommandType } = res;
-      if (Number(decodedCommandType) === commands.ACK_PACKET) {
-        ackList.set(i - 1, true);
-        console.log(
-          `Info: Ack for packet ${packetList[Number(currentPacketNumber) - 1]}`
-        );
-        if (i < packetList.length)
-          sendPacket(connection)(packetList, i, ackList);
+const writePacket = (connection: any, packet: any) => {
+  return new Promise((resolve, reject) => {
+    /**
+     * Ensure is listener is activated first before writing
+     */
+    connection.on('data', (packet: any) => {
+      const data = xmodemDecode(packet);
+      data.forEach((d) => {
+        const { commandType } = d;
+        if (Number(commandType) === commands.ACK_PACKET) {
+          /**
+           * We got a packet so just accept
+           */
+          connection.removeAllListeners('data')
+          resolve(true);
+        }
+      });
+    });
+    /**
+     * Write packet
+     */
+    connection.write(Buffer.from(`aa${packet}`, 'hex'), (err: any) => {
+      if (err) {
+        reject('device diconnected');
+        return;
       }
     });
+
+    /**
+     * as writing is done, fail so we can retry if no acknowledgement within 2 second
+     */
+    setTimeout(() => reject(), 2000);
   });
+};
+
+const sendData = async (connection: any, command: number, data: string) => {
+  const packetsList = xmodemEncode(data, command);
+
+  /**
+   * Create a list of each packet and self contained retries and listener
+   */
+  const dataList = packetsList.map((d) => {
+    return async (resolve: any, reject: any) => {
+      let tries = 1;
+      while (tries <= 5) {
+        tries++;
+        try {
+          await writePacket(connection, d);
+          connection.removeAllListeners('data')
+          resolve(true);
+        } catch (e) {}
+      }
+      connection.removeAllListeners('data')
+      reject(false);
+    };
+  });
+
+  /**
+   * Try each packet if any one of them fail
+   * after 5 retries or hardware disconnet
+   * fail immideatly
+   */
+  for (let i = 0; i < dataList.length; i++) {
+    try {
+      await new Promise((res, rej) => {
+        dataList[i](res, rej);
+      });
+    } catch (e) {
+      throw new Error('error writing');
+    }
+  }
 };
 
 const ackData = (commandType: number, packetNumber: string) => {

@@ -3,32 +3,21 @@ import { xmodemDecode , xmodemEncode } from '../xmodem';
 import { ackData , sendData } from '../communication/sendData';
 import { commands } from '../config';
 import { hexToAscii } from '../bytes';
+const Wallet = require('wallet');
+const Datastore = require('nedb')
+const base58 = require('bs58');
+
 
 const { ACK_PACKET } = commands;
 
-const ackRecieve = (connection: any) => {
+const recieveData = (connection: any, command : any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     connection.on('data', (packet: any) => {
       const data = xmodemDecode(packet);
       data.forEach((d) => {
         const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
-          resData[currentPacketNumber - 1] = dataChunk;
-          if (currentPacketNumber === totalPacket) {
-            resolve({commandType, data : resData.join('')});
-          }
-      });
-    });
-  });
-};
-
-const deviceReady = (connection: any) => {
-  const resData: any = [];
-  return new Promise((resolve, reject) => {
-    connection.on('data', (packet: any) => {
-      const data = xmodemDecode(packet);
-      data.forEach((d) => {
-        const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
+        if (commandType === command) {
           resData[currentPacketNumber - 1] = dataChunk;
           const ackPacket = ackData(
             ACK_PACKET,
@@ -36,36 +25,31 @@ const deviceReady = (connection: any) => {
           );
           connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
           if (currentPacketNumber === totalPacket) {
-            resolve({commandType, data : resData.join('')});
+            connection.removeAllListeners('data')
+            resolve(resData.join(''));
           }
+        }
       });
     });
   });
 };
 
+//ToDo discuss with shreyas the format of recieving data
+const addXPubsToDB = (wallet_id : any, xpubraw : any, coinType : any) => {
+ 
 
-const recieveXPubs = (connection: any) => {
-  const resData: any = [];
-  return new Promise((resolve, reject) => {
-    connection.on('data', (packet: any) => {
-      const data = xmodemDecode(packet);
-      data.forEach((d) => {
-        const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
-          resData[currentPacketNumber - 1] = dataChunk;
-          const ackPacket = ackData(
-            ACK_PACKET,
-            `0x${currentPacketNumber.toString(16)}`
-          );
-          connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
-          if (currentPacketNumber === totalPacket) {
-            resolve({commandType, data : resData.join('')});
-          }
-      });
-    });
+}
+
+const allAvailableWallets = () => {
+  let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+  let all_wallets;
+  db.find({}, function (err : any , docs : any){
+    all_wallets = docs;
   });
-};
+  return all_wallets;
+}
 
-export const addCoin = async () => {
+export const addCoin = async (wallet_id : any , coins : any) => {
 
 
   const { connection, serial } = await createPort();
@@ -75,59 +59,48 @@ export const addCoin = async () => {
   // initiate them whenever needed to get data otherwise just ignore it
 
   console.log(`Desktop : Sending Ready Command.`);
-  let data_to_send = xmodemEncode("00", 41);
-
-  connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
-  })
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
+  sendData(connection, 41, "00");
 
 
-
-  let d = await ackRecieve(connection);
-  console.log('Ack From Device: ')
-  console.log(d);
-
-  d = await deviceReady(connection);
+  let d = await recieveData(connection, 42);
   console.log('From Device: ')
   console.log(d);
 
 
-
-  console.log(`Desktop : Sending Wallet ID and Coins.`);
-  let wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31" ;
-  let coins: any = ['800000'];
-  data_to_send = xmodemEncode(wallet_id + coins.join(''), 45); 
-
-  connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
-  })
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
-
-
-  d = await ackRecieve(connection);
-  console.log('Ack From Device: ')
-  console.log(d);
-
-  d = await recieveXPubs(connection);
-  console.log('From Device: ')
-  console.log(d);
-
-
-  console.log(`Desktop : Sending Success Command.`);
-
-  data_to_send = xmodemEncode("01", 42); 
+  if(String(d).slice(0,2) == "02")
+  {
+    console.log(`Desktop : Sending Wallet ID and Coins.`);
+    wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31" ;
+    coins = ['800000'];
+    sendData(connection, 45, wallet_id + coins.join('')); 
   
-  connection.write(Buffer.from(`aa${data_to_send[0]}`, 'hex'), (err) => {
-    if(err) console.log("Error writing :"+err);
-      else console.log("Success");
-  });
-  console.log(`Packet Sent :  ${data_to_send}`);
-  console.log();
+  
+    d = await recieveData(connection , 46);
+    console.log('From Device: User confirmed coins: ')
+    console.log(d);
+  
+    d = await recieveData(connection , 47);
+    console.log('From Device: User entered pin: ')
+    console.log(d);
+  
+    d = await recieveData(connection , 48);
+    console.log('From Device: User tapped cards: ')
+    console.log(d);
+  
+    d = await recieveData(connection , 49);
+    console.log('From Device: all xPubs')
+    console.log(d);
+  
+    addXPubsToDB(wallet_id, d, coins);
+  
+    console.log(`Desktop : Sending Success Command.`);
+    sendData(connection, 42, "01");
+  }
+
+
+
+  
+
 
   /**
    * Code below is just to create hardware output doc
