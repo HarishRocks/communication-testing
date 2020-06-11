@@ -89,7 +89,7 @@ export const addWallet = async () => {
   console.log();
 
 
-  let d = await ackRecieve(connection);
+  d = await ackRecieve(connection);
   console.log('Ack From Device: ')
   console.log(d);
 
@@ -112,7 +112,7 @@ export const addWallet = async () => {
       else console.log("Success");
   });
   }, 1000);
-  
+
   console.log(`Packet Sent :  ${data_to_send}`);
   console.log();
 
