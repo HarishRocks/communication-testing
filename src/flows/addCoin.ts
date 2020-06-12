@@ -13,18 +13,6 @@ const axios = require('axios');
 var crypto = require('crypto');
 
 
-bitcoin.networks.litecointestnet = {
-  baseNetwork: "litecointestnet",
-  messagePrefix: '\x18Litecoin Signed Message:\n',
-  bech32: 'litecointestnet',
-  bip32: {
-    public: 0x043587cf,
-    private: 0x04358394
-  },
-  pubKeyHash: 0x6f,
-  scriptHash: 0xc4,
-  wif: 0xef
-};
 bitcoin.networks.litecoin = {
   messagePrefix: '\x19Litecoin Signed Message:\n',
   bip32: {
@@ -46,16 +34,7 @@ bitcoin.networks.dash = {
   scriptHash: 0x10,
   wif: 0xcc
 };
-bitcoin.networks.dashtestnet = {
-  messagePrefix: 'unused',
-  bip32: {
-    public: 0x043587cf,
-    private: 0x04358394
-  },
-  pubKeyHash: 0x8c,
-  scriptHash: 0x13,
-  wif: 0xef
-};
+
 bitcoin.networks.dogecoin = {
   messagePrefix: '\x19Dogecoin Signed Message:\n',
   bip32: {
@@ -66,16 +45,7 @@ bitcoin.networks.dogecoin = {
   scriptHash: 0x16,
   wif: 0x9e
 };
-bitcoin.networks.dogecointestnet = {
-  messagePrefix: '\x19Dogecoin Signed Message:\n',
-  bip32: {
-    public: 0x043587cf,
-    private: 0x04358394
-  },
-  pubKeyHash: 0x71,
-  scriptHash: 0xc4,
-  wif: 0xf1
-};
+
 
 //Internal function
 //@paras para1: xpub, para2: start, para3: end, para4: internal(0)/external(1)
@@ -199,6 +169,7 @@ const allAvailableWallets = () => {
   return all_wallets;
 }
 
+
 export const addCoin = async (wallet_id: any, coins: any) => {
 
 
@@ -221,6 +192,7 @@ export const addCoin = async (wallet_id: any, coins: any) => {
     console.log(`Desktop : Sending Wallet ID and Coins.`);
     wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
     coins = ['800000'];
+    let num_coins = coins.length;
     sendData(connection, 45, wallet_id + coins.join(''));
 
 
