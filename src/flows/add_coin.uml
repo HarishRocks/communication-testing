@@ -28,6 +28,6 @@ Device-->Desktop: 31,[XPUBS]
 note Right: Device sends xpubs for all selected coins
 
 Desktop-->Device: 2A, SUCCESS/FAILED
-note Left: Desktop sends confirmation (XPubs added in db and flow completed)
+note Left: Desktop sends confirmation \n(XPubs added in db and flow completed)
 
 @enduml
