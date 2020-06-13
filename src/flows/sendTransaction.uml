@@ -16,7 +16,7 @@ Desktop-->Device: 34, [Wallet_id(32), TXN_META_DATA(...)]
 note Left: Desktop sends transaction\nmeta data
 
 Device-->Desktop: 35, OK/NOT_OK (Subject to change)
-note Right: Check meta_data / User\nverify coin
+note Right: Check meta_data / User verify coin \nIf xpub not found Display 'no coin found' on device
 
 Desktop-->Device: 36, [LEN_UNSIGNED_TXN(2),UNSIGNED_TXN(...)]
 note Left: Dekstop sends unsigned\ntxn
