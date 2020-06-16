@@ -1,35 +1,10 @@
 import { createPort } from '../communication/port';
-import { xmodemDecode , xmodemEncode } from '../xmodem';
-import { ackData , sendData } from '../communication/sendData';
-import { commands } from '../config';
+import { sendData } from '../communication/sendData';
+import { recieveData, recieveCommand } from '../communication/recieveData';
 import { hexToAscii } from '../bytes';
+
 const Datastore = require('nedb')
-const { ACK_PACKET } = commands;
 
-
-const recieveData = (connection: any, command : any) => {
-  const resData: any = [];
-  return new Promise((resolve, reject) => {
-    connection.on('data', (packet: any) => {
-      const data = xmodemDecode(packet);
-      data.forEach((d) => {
-        const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
-        if (commandType === command) {
-          resData[currentPacketNumber - 1] = dataChunk;
-          const ackPacket = ackData(
-            ACK_PACKET,
-            `0x${currentPacketNumber.toString(16)}`
-          );
-          connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
-          if (currentPacketNumber === totalPacket) {
-            connection.removeAllListeners('data')
-            resolve(resData.join(''));
-          }
-        }
-      });
-    });
-  });
-};
 
 //Author: Gaurav Agarwal
 //@method Takes raw data, converts the name from hex to String, and keeps the id in hex itself, and stores it in the database.
@@ -41,7 +16,7 @@ const addWalletToDB = (rawData : any) => {
   let passwordSet = String(rawData).slice(32,34);
   let _id = String(rawData).slice(34);
 
-  db.insert({name : name, passwordSet : passwordSet, _id : _id});
+  db.insert({name : name, passwordSet : passwordSet, _id : _id, xPubs : []});
 }
 
 
@@ -58,7 +33,7 @@ export const addWallet = async () => {
   await sendData(connection, 41, "00");
   
   //recieving Success Status Command (Value = 2)
-  let d = await recieveData(connection, 42);
+  let d = await recieveCommand(connection, 42);
   console.log('From Device: ')
   console.log(d);
 
@@ -71,7 +46,7 @@ export const addWallet = async () => {
     
     // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
     console.log('Wallet Details From Device: ');
-    d = await recieveData(connection, 44);
+    d = await recieveCommand(connection, 44);
     console.log(d);
 
     addWalletToDB(d);
@@ -97,7 +72,7 @@ export const addWalletDeviceInitiated = async () => {
   // initiate them whenever needed to get data otherwise just ignore it
 
   console.log('Wallet Details From Device: ');
-  let d = await recieveData(connection, 44);
+  let d = await recieveCommand(connection, 44);
   console.log(d);
 
 

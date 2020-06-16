@@ -9,6 +9,6 @@
     "strict": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/flows/wallet.js"],
   "lib": ["esnext"]
 }
