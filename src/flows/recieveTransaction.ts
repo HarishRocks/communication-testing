@@ -12,7 +12,7 @@ const Datastore = require('nedb')
 
 
 
-const create_derivation_path = async (xpub : any, coinType : any){
+const create_derivation_path = async (xpub : any, coinType : any) => {
     let wallet = Wallet(xpub , coinType);
     let recieve_address = wallet.get_recieve_address();
 
@@ -40,7 +40,7 @@ const create_derivation_path = async (xpub : any, coinType : any){
 
 }
 
-const get_xpub_from_wallet = (wallet_id : any, coinType : any){
+const get_xpub_from_wallet = (wallet_id : any, coinType : any) => {
     let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
     let wallet_details : any;
@@ -77,47 +77,32 @@ export const recieveTransaction = async ( wallet_id : any , coinType : any) => {
     if(String(d).slice(0,2) == "02")
     {
         wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
-        let xpub = get_xpub_from_wallet(wallet_id,coinType);
+        let derivation_path = create_derivation_path(wallet_id,coinType);
 
-        let wallet = new Wallet(xpub, coinType);
-        let txn_metadata = await wallet.generateMetaData(output_list);
-
-        console.log("Destop : Sending Wallet ID and Txn Metadata.");
+        console.log("Destop : Sending Wallet ID and Derivation Path.");
         console.log("Wallet id: "+ wallet_id);
-        console.log("Transaction Metadata" + txn_metadata);
-        await sendData(connection, 52, wallet_id + txn_metadata);
+        console.log("Derivation Path" + derivation_path);
+        await sendData(connection, 59, wallet_id + derivation_path);
 
-        d = await recieveCommand(connection,53);
-        console.log("From Device : ")
+
+        d = await recieveCommand(connection,60);
+        console.log("From Device (User verified coin) : ")
         console.log(d);
 
-        let unsigned_txn = await wallet.generate_unsigned_transaction(output_list);
-
-        console.log("Destop : Sending Unsigned Transaction.");
-        console.log("Unsigned Transaction" + unsigned_txn);
-        await sendData(connection, 54, unsigned_txn);
-
-        d = await recieveCommand(connection,55);
-        console.log("From Device (User verified reciepient amount and address) : ")
-        console.log(d);
-
-        d = await recieveCommand(connection,56);
+        d = await recieveCommand(connection,61);
         console.log("From Device (user entered pin) : ")
         console.log(d);
 
-        d = await recieveCommand(connection,57);
+        d = await recieveCommand(connection,62);
         console.log("From Device (Cards are tapped) : ")
         console.log(d);
 
-        d = await recieveCommand(connection,58);
-        console.log("From Device (Signed Transaction) : ")
+        d = await recieveCommand(connection,63);
+        console.log("From Device (Verified recieve address) : ")
         console.log(d);
 
-        let s = broadcastTransaction(d);
-
-        if(d){
-            sendData(connection, 42, "01");
-        }
+        console.log(`\n\nDesktop : Sending Success Command.`);
+        sendData(connection, 42, "01");
     }
     else { 
         console.log("Device not ready");

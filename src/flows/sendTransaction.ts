@@ -33,7 +33,7 @@ const getCoinType = (address: String) => {
         return COINS.DOGE;
 }
 
-const get_xpub_from_wallet = (wallet_id : any, coinType : any){
+const get_xpub_from_wallet = (wallet_id : any, coinType : any) => {
     let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
     let wallet_details : any;
