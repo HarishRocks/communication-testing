@@ -1,24 +1,34 @@
-import { addWallet ,addWalletDeviceInitiated } from './flows/addWallet';
+import { addWallet, addWalletDeviceInitiated } from './flows/addWallet';
+import cardAuth from './flows/cardAuth';
 import { addCoin } from './flows/addCoin';
 const inquirer = require('inquirer');
 
 (async () => {
-
-  while(1){
-    const choice1 = await inquirer.prompt([
-       {
-         type: 'list',
-         name: 'addOrSelectWallet',
-         message: 'Select your option',
-         choices: ['Select Wallet', 'Add Wallet', 'Add Coin'],
-       },
+  while (1) {
+    const selection = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'choice',
+        message: 'Select your option',
+        choices: [
+          'Select Wallet',
+          'Add Wallet',
+          'Add Coin',
+          'Card Authentication',
+        ],
+      },
     ]);
 
-    if (choice1.addOrSelectWallet === "Add Wallet")
-      await addWallet();
-    if(choice1.addOrSelectWallet === "Add Coin")
-        await addCoin(1,1);
-}
-
-
-})().catch( err => console.log(err));
+    switch (selection.choice) {
+      case 'Add Wallet':
+        await addWallet();
+        break;
+      case 'Add Coin':
+        await addCoin(1, 1);
+        break;
+      case 'Card Authentication':
+        cardAuth();
+        break;
+    }
+  }
+})().catch((err) => console.log(err));
