@@ -8,6 +8,7 @@ export const recieveCommand = (connection: any, command: any) => {
     const resData: any = [];
     return new Promise((resolve, reject) => {
         connection.on('data', (packet: any) => {
+            // console.log(packet)
             const data = xmodemDecode(packet);
             data.forEach((d) => {
                 const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;

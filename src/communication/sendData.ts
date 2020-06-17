@@ -15,10 +15,10 @@ const writePacket = (connection: any, packet: any) => {
       data.forEach((d) => {
         const { commandType } = d;
         if (Number(commandType) === commands.ACK_PACKET) {
+          console.log("ack recieved");
           /**
            * We got a packet so just accept
            */
-          connection.removeAllListeners('data')
           resolve(true);
         }
       });
@@ -48,14 +48,16 @@ const sendData = async (connection: any, command: number, data: string) => {
    */
   const dataList = packetsList.map((d) => {
     return async (resolve: any, reject: any) => {
-      let tries = 1;
+      let tries = 0;
       while (tries <= 5) {
-        tries++;
         try {
+          tries++;
+          console.log("for command "+ String(command)+ " try no. " +(tries-1))
           await writePacket(connection, d);
           connection.removeAllListeners('data')
           resolve(true);
-        } catch (e) {}
+          return;
+        } catch (e) {console.log("Caught error")}
       }
       connection.removeAllListeners('data')
       reject(false);

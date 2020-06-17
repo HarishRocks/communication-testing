@@ -26,9 +26,6 @@ export const addWallet = async () => {
   const { connection, serial } = await createPort();
   connection.open();
 
-  // this will work only one time and will self exit to prevent memory leak
-  // initiate them whenever needed to get data otherwise just ignore it
-
   console.log(`Desktop : Sending Ready Command.\n\n`);
   await sendData(connection, 41, "00");
   

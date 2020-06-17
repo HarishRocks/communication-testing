@@ -20,7 +20,5 @@ const inquirer = require('inquirer');
         await addCoin(1,1);
 }
 
-    
-await addWallet();
 
 })().catch( err => console.log(err));

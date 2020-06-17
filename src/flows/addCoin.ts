@@ -76,7 +76,6 @@ export const addCoin = async (wallet_id: any, coins: any) => {
     let num_coins = coins.length;
     sendData(connection, 45, wallet_id + coins.join(''));
 
-
     d = await recieveCommand(connection, 46);
     console.log('From Device: User confirmed coins: ')
     console.log(d);

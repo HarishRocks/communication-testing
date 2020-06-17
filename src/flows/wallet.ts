@@ -194,7 +194,8 @@ class Wallet{
 		// console.log(utxos);
 		return utxos;
 	}
-
+	
+	//get unused change address
 	async get_change_address(){
 		let change_addresses = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/"+this.internal+"?token=5849c99db61a468db0ab443bab0a9a22");
 		change_addresses = change_addresses["data"];
@@ -221,12 +222,36 @@ class Wallet{
 		return change_add;
 	}
 
+	//get unused recieve address
+	async get_recieve_address(){
+		let recieveAddress = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/"+this.external+"?token=5849c99db61a468db0ab443bab0a9a22");
+		recieveAddress = recieveAddress["data"];
+
+		let original_length = recieveAddress["wallet"]["addresses"].length;
+
+		let recieve_add = undefined;
+		for(let i in recieveAddress["txrefs"]){
+			if(recieveAddress["wallet"]["addresses"].includes(recieveAddress["txrefs"][i]["address"]))
+			{
+				recieveAddress["wallet"]["addresses"].splice(i,1);
+				break;
+			}
+		}
+
+		if(recieveAddress["wallet"]["addresses"].length == 0){
+			recieve_add = this.address_list(1, original_length, original_length+1)[0];
+		}
+		else{
+			recieve_add = recieveAddress["wallet"]["addresses"][0];
+		}
+
+		return recieve_add;
+	}
 
 	
 
 	//checks if the user has enough funds for a transaction using the coinselect library
 	//returns 1 if funds are available, 0 if not. 
-
 	async funds_check( output_addresses : any , amounts : any){
 
 		let targets : any = [];
@@ -283,7 +308,7 @@ class Wallet{
 	// }];
 	//Yet to complete this function.
 
-	generateMetaData = async (outputList : any, feerate : any) => {
+	generateMetaData = async (outputList : any) => {
 		let purposeIndex = "8000002c";
 		let coinIndex;
 	
