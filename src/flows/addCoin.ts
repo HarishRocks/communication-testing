@@ -9,7 +9,8 @@ import { commands } from '../config';
 const Datastore = require('nedb');
 const axios = require('axios');
 import { coins as COINS } from '../config';
-import { Wallet } from './wallet';
+// import { Wallet } from './wallet';
+const Wallet = require('./wallet')
 const base58 = require('bs58');
 
 //ToDo discuss with shreyas the format of recieving data

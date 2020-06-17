@@ -3,11 +3,14 @@
 //ToDo Get the funds_check function approved by Vipul sir.
 //ToDO fetch the feerate from an API.
 //ToDo solve discripency between generate_metadata, and generate_unsigned_transaction, fundscheck. (Input parameters)
+//ToDo feerate https://api.blockcypher.com/v1/btc/main 
 const bitcoin = require('bitcoinjs-lib');  
 const bip32 = require('bip32');
 const axios = require('axios');
 const coinselect = require('coinselect');
-import { default as COINS } from '../config/coins';
+import { coins as COINS } from '../config';
+import { intToUintByte } from '../bytes';
+const crypto = require('crypto');
 
 bitcoin.networks.litecoin = {
 	messagePrefix: '\x19Litecoin Signed Message:\n',
@@ -51,9 +54,14 @@ bitcoin.networks.litecoin = {
 // DOGE
 // DASH
 // LTC
-export class Wallet{
+class Wallet{
 	//xpub in base58
-	constructor( xpub , coinType ){
+	coinType : String;
+	xpub: String;
+	external: String;
+	internal: String;
+	network: any;
+	constructor( xpub : string, coinType : string ){
 		this.coinType = coinType;
 		this.xpub = xpub;
 
@@ -89,7 +97,7 @@ export class Wallet{
 	}
 
 	//chain, 0 for external, 1 for internal
-	address_list(chain, start, end){
+	address_list(chain : number, start : number, end : number){
 		let addresses = [];
 
 		for(let i = start; i<end; i++){
@@ -101,14 +109,7 @@ export class Wallet{
 	}
 
 
-
-	get_chain_address_index(address){
-		
-	}
-
-	
-
-	upload_wallet (name, addresses){
+	upload_wallet (name : string, addresses : any){
 
 		axios.post(
 			"https://api.blockcypher.com/v1/btc/test3/wallets?token=5849c99db61a468db0ab443bab0a9a22",
@@ -116,30 +117,30 @@ export class Wallet{
 				"name":name,
 				"addresses":addresses
 			}
-		).then(function(response){
+		).then(function(response : any){
 			console.log("Adding a new wallet suceessful");
-		}).catch(function(error){
+		}).catch(function(error : any){
 			console.log("An error occured:"+error);
 		});
 	}
 
 
-	add_addresses_to_online_wallet(name, addresses){
+	add_addresses_to_online_wallet(name : string, addresses : any){
 		axios.post(
 			"https://api.blockcypher.com/v1/btc/test3/wallets/"+name+"/addresses?token=5849c99db61a468db0ab443bab0a9a22",
 			{
 				"name":name,
 				"addresses":addresses
 			}
-		).then(function(response){
+		).then(function(response : any){
 			console.log("Adding new addresses suceessful");
-		}).catch(function(error){
+		}).catch(function(error : any){
 			console.log("An error occured:"+error);
 		});
 	}
 
 
-	async fetch_wallet(name){
+	async fetch_wallet(name : string){
 		let res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/"+name+"?token=5849c99db61a468db0ab443bab0a9a22");
 		console.log(res["data"]["wallet"]["addresses"]);
 		return res['data'];
@@ -211,7 +212,7 @@ export class Wallet{
 		}
 
 		if(change_addresses["wallet"]["addresses"].length == 0){
-			change_add = this.address_list(this.xpub, 1, original_length, original_length+1)[0];
+			change_add = this.address_list(1, original_length, original_length+1)[0];
 		}
 		else{
 			change_add = change_addresses["wallet"]["addresses"][0];
@@ -226,9 +227,9 @@ export class Wallet{
 	//checks if the user has enough funds for a transaction using the coinselect library
 	//returns 1 if funds are available, 0 if not. 
 
-	async funds_check( output_addresses , amounts ){
+	async funds_check( output_addresses : any , amounts : any){
 
-		let targets = [];
+		let targets : any = [];
 
 		for( let i in output_addresses){
 			let t = {
@@ -241,7 +242,7 @@ export class Wallet{
 		let utxos = await this.fetch_utxo();
 		let {inputs, outputs, fee}  = coinselect(utxos, targets, 10);
 
-		if( !inputs || !ouputs )
+		if( !inputs || !outputs )
 		{
 			return 0;
 		}
@@ -250,6 +251,30 @@ export class Wallet{
 
 	}
 
+
+	get_chain_address_index(address : string){
+		//1000 is a soft limit. It suggests that the address provided may be wrong, but that is a rare case
+		let chain_index;
+		let address_index;
+		for( let i = 0; i<1000; i++)
+		{
+			if ( address == bitcoin.payments.p2pkh({pubkey: bip32.fromBase58(this.xpub, this.network).derive(0).derive(i).publicKey, network: this.network}).address)
+			{
+				chain_index = 0;
+				address_index = i;
+			}
+
+			if ( address == bitcoin.payments.p2pkh({pubkey: bip32.fromBase58(this.xpub, this.network).derive(1).derive(i).publicKey, network: this.network}).address)
+			{
+				chain_index = 1;
+				address_index = i;
+			}
+		}
+
+		return {chain_index, address_index};
+	}
+
+
 	//Output list is 
 	//let output = [
 	// {
@@ -257,7 +282,8 @@ export class Wallet{
 	//     "value":amount
 	// }];
 	//Yet to complete this function.
-	generateMetaData = (outputList) => {
+
+	generateMetaData = async (outputList : any, feerate : any) => {
 		let purposeIndex = "8000002c";
 		let coinIndex;
 	
@@ -274,11 +300,11 @@ export class Wallet{
 	
 		let accountIndex = "80000000";
 	
-		let utxos = fetch_utxo(recieve, change);
+		let utxos = this.fetch_utxo();
 	
 		let feeRate = 50 //Yet to fetch this from an API
 	
-		let { inputs, outputs, fee } = coinSelect(utxos, outputList, feeRate)
+		let { inputs, outputs, fee } = coinselect(utxos, outputList, feeRate)
 				
 		let change_add = await this.get_change_address();
 
@@ -290,22 +316,58 @@ export class Wallet{
 
 		let input_count = String(inputs.length);
 		
+		//all inputs: their chain index and address index
+		let input_string = ''
 
+		for ( let i in inputs ){
+			let ch_addr_in = this.get_chain_address_index(inputs[i].address);
+			input_string = input_string + intToUintByte(ch_addr_in.chain_index, 32); 
+			input_string = input_string + intToUintByte(ch_addr_in.address_index, 32); 
+		}
 
-		
+		let output_count = 0;
+		let output_string = '';
+
+		for(let i in outputs){
+			if("address" in outputs[i]){
+				let ch_addr_in = this.get_chain_address_index(outputs[i].address);
+				output_string = output_string + intToUintByte(ch_addr_in.chain_index, 32); 
+				output_string = output_string + intToUintByte(ch_addr_in.address_index, 32); 
+				output_count++;
+			}
+		}
+
+		let change_count = 0;
+		let change_string = '';
+
+		for(let i in outputs){
+			if(!("address" in outputs[i])){
+				let ch_addr_in = this.get_chain_address_index(change_add);
+				change_string = change_string + intToUintByte(ch_addr_in.chain_index, 32); 
+				change_string = change_string + intToUintByte(ch_addr_in.address_index, 32); 
+				change_count++;
+
+				//because output string needs to have the change address too
+				output_string = output_string + intToUintByte(ch_addr_in.chain_index, 32); 
+				output_string = output_string + intToUintByte(ch_addr_in.address_index, 32); 
+				output_count++;
+			}
+		}
+
+		return purposeIndex + coinIndex + accountIndex + input_count + input_string + output_count + output_string + change_count + change_string;
 		
 	}
 
-	//output_addresses is a list of addresses, amounts is a list of amounts. 
-	async generate_unsigned_transaction( output_addresses , amounts ){
+	//Output list is 
+	//let targets = [
+	// {
+	//     "address":output_address,
+	//     "value":amount
+	// }];
+	//Yet to complete this function.
+	async generate_unsigned_transaction( targets : any ){
 		
 		let change_add = await this.get_change_address();
-
-		let targets = [
-		{
-			"address":output_address,
-			"value":amount
-		}];
 
 		let utxos = await this.fetch_utxo();
 		let {inputs, outputs, fee}  = coinselect(utxos, targets, 10);
@@ -350,3 +412,5 @@ export class Wallet{
 	    return tx.toHex();
 	}
 }
+
+module.exports = {Wallet};
