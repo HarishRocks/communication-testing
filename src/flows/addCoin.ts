@@ -18,35 +18,22 @@ const base58 = require('bs58');
 const addXPubsToDB = (wallet_id: any, xpubraw: any, coinType: any) => {
   let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
-  
-  for ( let i = 0; i < ( xpubraw.length/82); i++ )
-  {
-    let x = xpubraw.slice ( i*82 , i*82 + 82 );
+
+  for (let i = 0; i < (xpubraw.length / 82); i++) {
+    let x = xpubraw.slice(i * 82, i * 82 + 82);
     var account_xpub = base58.encode(Buffer.from(x, 'hex'));
 
-    db.update({ _id: wallet_id }, { $push: { xpubs: {coinType : coinType[i] , xPub : account_xpub} } }, {}, function () {
+    db.update({ _id: wallet_id }, { $push: { xpubs: { coinType: coinType[i], xPub: account_xpub } } }, {}, function () {
       console.log(`Added xPub : ${account_xpub} to the database.`);
     });
 
     let w = new Wallet(account_xpub, coinType[i]);
-    let re_addr = w.address_list(0,0,20);
-    let ch_addr = w.address_list(1,0,20);
-    w.upload_wallet(w.external , re_addr);
+    let re_addr = w.address_list(0, 0, 20);
+    let ch_addr = w.address_list(1, 0, 20);
+    w.upload_wallet(w.external, re_addr);
     w.upload_wallet(w.internal, ch_addr);
   }
 }
-
-
-//To Display Added Wallets
-const allAvailableWallets = () => {
-  let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
-  let all_wallets;
-  db.find({}, function (err: any, docs: any) {
-    all_wallets = docs;
-  });
-  return all_wallets;
-}
-
 
 export const addCoin = async (wallet_id: any, coins: any) => {
 
@@ -54,14 +41,18 @@ export const addCoin = async (wallet_id: any, coins: any) => {
   const { connection, serial } = await createPort();
   connection.open();
 
+  let d: any;
   // this will work only one time and will self exit to prevent memory leak
   // initiate them whenever needed to get data otherwise just ignore it
 
   console.log(`Desktop : Sending Ready Command.`);
-  sendData(connection, 41, "00");
+  await sendData(connection, 41, "00");
 
 
-  let d = await recieveCommand(connection, 42);
+  do {
+    d = await recieveData(connection);
+  } while (d != 42);
+  d = d.data;
   console.log('From Device: ')
   console.log(d);
 
@@ -74,7 +65,7 @@ export const addCoin = async (wallet_id: any, coins: any) => {
     coins = ['80000000'];
     let coinTypes = [COINS.BTC];
     let num_coins = coins.length;
-    sendData(connection, 45, wallet_id + coins.join(''));
+    await sendData(connection, 45, wallet_id + coins.join(''));
 
     d = await recieveCommand(connection, 46);
     console.log('From Device: User confirmed coins: ')
@@ -95,7 +86,7 @@ export const addCoin = async (wallet_id: any, coins: any) => {
     addXPubsToDB(wallet_id, d, coinTypes);
 
     console.log(`Desktop : Sending Success Command.`);
-    sendData(connection, 42, "01");
+    await sendData(connection, 42, "01");
   }
   else {
     console.log("Device not ready");

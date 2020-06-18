@@ -2,22 +2,10 @@ import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { recieveData, recieveCommand } from '../communication/recieveData';
 import { hexToAscii } from '../bytes';
+import { addWalletToDB } from './wallet';
 
 const Datastore = require('nedb')
 
-
-//Author: Gaurav Agarwal
-//@method Takes raw data, converts the name from hex to String, and keeps the id in hex itself, and stores it in the database.
-//@var rawData : hex data from device
-const addWalletToDB = (rawData : any) => {
-  let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
-
-  let name = hexToAscii(String(rawData).slice(0,32));
-  let passwordSet = String(rawData).slice(32,34);
-  let _id = String(rawData).slice(34);
-
-  db.insert({name : name, passwordSet : passwordSet, _id : _id, xPubs : []});
-}
 
 
 //Todo in this function, Replace all the commands with their const values. Example, 42 -> Status Command.
@@ -28,19 +16,18 @@ export const addWallet = async () => {
 
   console.log(`Desktop : Sending Ready Command.\n\n`);
   await sendData(connection, 41, "00");
-  
+
   //recieving Success Status Command (Value = 2)
   let d = await recieveCommand(connection, 42);
   console.log('From Device: ')
   console.log(d);
 
   //only proceed if device is ready, else quit.
-  if(String(d).slice(0,2) == "02")
-  {
+  if (String(d).slice(0, 2) == "02") {
     console.log(`\n\nDesktop : Sending Add Wallet Command.\n\n`);
     await sendData(connection, 43, "00");
 
-    
+
     // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
     console.log('Wallet Details From Device: ');
     d = await recieveCommand(connection, 44);

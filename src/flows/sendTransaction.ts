@@ -118,8 +118,8 @@ export const sendTransaction = async ( wallet_id : any , output_list : any, coin
 
         let s = broadcastTransaction(d);
 
-        if(d){
-            sendData(connection, 42, "01");
+        if(s !== undefined){
+            await sendData(connection, 42, "01");
         }
     }
     else { 
