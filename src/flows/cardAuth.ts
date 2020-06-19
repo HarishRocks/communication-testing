@@ -10,6 +10,7 @@ import deviceReady from '../communication/deviceReady';
 
 const cardAuth = async () => {
   const { connection, serial } = await createPort();
+  console.log('Serial Number: ' + serial);
   connection.open();
 
   const ready = await deviceReady(connection);
