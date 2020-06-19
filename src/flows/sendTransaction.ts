@@ -6,9 +6,10 @@ import { createPort } from '../communication/port';
 import { ackData , sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-const Wallet = require('./wallet')
-const base58 = require('bs58');
-const Datastore = require('nedb')
+import { getXpubFromWallet , Wallet } from './wallet';
+import { default as base58 } from 'bs58';
+import {default as Datastore } from 'nedb';
+import deviceReady from '../communication/deviceReady';
 
 //Bitcoin (Mainnet) - 00
 //Bitcoin (Testnet) - 6f
@@ -17,7 +18,7 @@ const Datastore = require('nedb')
 //Doge - 1e
 
 //Get Coin type from address
-const getCoinType = (address: String) => {
+const getCoinType = (address: string) => {
     let decodedString = base58.decode(address).toString('hex')
     let addressVersion = decodedString.slice(0,2);
 
@@ -33,26 +34,8 @@ const getCoinType = (address: String) => {
         return COINS.DOGE;
 }
 
-const get_xpub_from_wallet = (wallet_id : any, coinType : any) => {
-    let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
-
-    let wallet_details : any;
-    db.findOne({ _id: wallet_id }, function (err, doc) {
-        wallet_details = doc;
-    });
-    let xpub : any;
-    for( let i in wallet_details.xPubs )
-    {
-        if(wallet_details.xPubs[i].coinType === coinType)
-        {
-            xpub = wallet_details.xPubs[i].xPub;
-        }
-    }    
-     return xpub; 
-}
-
 //ToDo
-const broadcastTransaction = (transaction:any) => {
+const broadcastTransaction = (transaction : any) => {
     
 }
 
@@ -69,18 +52,12 @@ export const sendTransaction = async ( wallet_id : any , output_list : any, coin
     const { connection, serial } = await createPort();
     connection.open();
 
-    console.log(`Desktop : Sending Ready Command.\n\n`);
-    await sendData(connection, 41, "00");
-    
-    //recieving Success Status Command (Value = 2)
-    let d = await recieveCommand(connection, 42);
-    console.log('From Device: ')
-    console.log(d);
+    const ready = await deviceReady(connection);
 
-    if(String(d).slice(0,2) == "02")
+
+    if(ready)
     {
-        wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
-        let xpub = get_xpub_from_wallet(wallet_id,coinType);
+        let xpub = await getXpubFromWallet(wallet_id,coinType);
 
         let wallet = new Wallet(xpub, coinType);
         let txn_metadata = await wallet.generateMetaData(output_list);
@@ -90,9 +67,9 @@ export const sendTransaction = async ( wallet_id : any , output_list : any, coin
         console.log("Transaction Metadata" + txn_metadata);
         await sendData(connection, 52, wallet_id + txn_metadata);
 
-        d = await recieveCommand(connection,53);
-        console.log("From Device : ")
-        console.log(d);
+        const coinConfirmed = await recieveCommand(connection,53);
+        console.log("From Device (Coin Confirmed) : ")
+        console.log(coinConfirmed);
 
         let unsigned_txn = await wallet.generate_unsigned_transaction(output_list);
 
@@ -100,26 +77,29 @@ export const sendTransaction = async ( wallet_id : any , output_list : any, coin
         console.log("Unsigned Transaction" + unsigned_txn);
         await sendData(connection, 54, unsigned_txn);
 
-        d = await recieveCommand(connection,55);
+        const reciepentVerified = await recieveCommand(connection,55);
         console.log("From Device (User verified reciepient amount and address) : ")
-        console.log(d);
+        console.log(reciepentVerified);
 
-        d = await recieveCommand(connection,56);
+        const pinEntered = await recieveCommand(connection,56);
         console.log("From Device (user entered pin) : ")
-        console.log(d);
+        console.log(pinEntered);
 
-        d = await recieveCommand(connection,57);
+        const cardsTapped = await recieveCommand(connection,57);
         console.log("From Device (Cards are tapped) : ")
-        console.log(d);
+        console.log(cardsTapped);
 
-        d = await recieveCommand(connection,58);
+        const signedTransaction = await recieveCommand(connection,58);
         console.log("From Device (Signed Transaction) : ")
-        console.log(d);
+        console.log(signedTransaction);
 
-        let s = broadcastTransaction(d);
+        let s = broadcastTransaction(signedTransaction);
 
         if(s !== undefined){
             await sendData(connection, 42, "01");
+        }
+        else {
+            console.log("Boradcast Unsuccessful");
         }
     }
     else { 

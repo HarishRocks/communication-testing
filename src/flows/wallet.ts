@@ -5,14 +5,17 @@
 //ToDo solve discripency between generate_metadata, and generate_unsigned_transaction, fundscheck. (Input parameters)
 //ToDo feerate https://api.blockcypher.com/v1/btc/main 
 const bitcoin = require('bitcoinjs-lib');
-const bip32 = require('bip32');
+import { default as bip32 } from 'bip32';
+// import {default as axios} from 'axios';
 const axios = require('axios');
 const coinselect = require('coinselect');
 import { coins as COINS } from '../config';
 import { intToUintByte, hexToAscii } from '../bytes';
-const crypto = require('crypto');
-const Datastore = require('nedb');
-
+import { resolve } from 'path';
+import { default as crypto } from 'crypto';
+// const crypto = require('crypto');
+// const Datastore = require('nedb');
+import { default as Datastore } from 'nedb';
 
 bitcoin.networks.litecoin = {
 	messagePrefix: '\x19Litecoin Signed Message:\n',
@@ -58,12 +61,15 @@ bitcoin.networks.doge = {
 // LTC
 export class Wallet {
 	//xpub in base58
-	coinType: String;
-	xpub: String;
-	external: String;
-	internal: String;
+	coinType: string;
+	xpub: string;
+	external: string;
+	internal: string;
 	network: any;
-	constructor(xpub: string, coinType: string) {
+	coin_url: string;
+	api_url: string;
+
+	constructor(xpub: any, coinType: any) {
 		this.coinType = coinType;
 		this.xpub = xpub;
 
@@ -72,30 +78,38 @@ export class Wallet {
 		this.external = `re${hash}`;
 		this.internal = `ch${hash}`;
 
+
 		switch (coinType) {
 			case COINS.BTC:
 				this.network = bitcoin.network.bitcoin;
+				this.coin_url = "btc/main/";
 				break;
 
 			case COINS.BTC_TESTNET:
 				this.network = bitcoin.network.testnet;
+				this.coin_url = "btc/test3/";
 				break;
 
 			case COINS.LTC:
 				this.network = bitcoin.networks.litecoin;
+				this.coin_url = "ltc/main/";
 				break;
 
 			case COINS.DASH:
 				this.network = bitcoin.networks.dash;
+				this.coin_url = "dash/main/";
 				break;
 
 			case COINS.DOGE:
 				this.network = bitcoin.networks.doge;
+				this.coin_url = "doge/main/";
 				break;
 
 			default:
 				throw new Error('Please Provide a Valid Coin Type');
 		}
+
+		this.api_url = "http://api.blockcypher.com/v1/" + this.coin_url;
 	}
 
 	//chain, 0 for external, 1 for internal
@@ -114,7 +128,7 @@ export class Wallet {
 	upload_wallet(name: string, addresses: any) {
 
 		axios.post(
-			"https://api.blockcypher.com/v1/btc/test3/wallets?token=5849c99db61a468db0ab443bab0a9a22",
+			this.api_url + "wallets?token=5849c99db61a468db0ab443bab0a9a22",
 			{
 				"name": name,
 				"addresses": addresses
@@ -129,7 +143,7 @@ export class Wallet {
 
 	add_addresses_to_online_wallet(name: string, addresses: any) {
 		axios.post(
-			"https://api.blockcypher.com/v1/btc/test3/wallets/" + name + "/addresses?token=5849c99db61a468db0ab443bab0a9a22",
+			this.api_url + "wallets/" + name + "/addresses?token=5849c99db61a468db0ab443bab0a9a22",
 			{
 				"name": name,
 				"addresses": addresses
@@ -143,7 +157,7 @@ export class Wallet {
 
 
 	async fetch_wallet(name: string) {
-		let res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + name + "?token=5849c99db61a468db0ab443bab0a9a22");
+		let res = await axios.get(this.api_url + "/addrs/" + name + "?token=5849c99db61a468db0ab443bab0a9a22");
 		console.log(res["data"]["wallet"]["addresses"]);
 		return res['data'];
 	}
@@ -197,6 +211,24 @@ export class Wallet {
 		return utxos;
 	}
 
+	async get_total_balance() {
+
+		let res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+
+		let balance = res.balance;
+		let unconfirmed_balance = res.unconfirmed_balance;
+		let final_balance = res.final_balance;
+
+		res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+
+		balance = balance + res.balance;
+		unconfirmed_balance = unconfirmed_balance + res.unconfirmed_balance;
+		final_balance = final_balance + res.final_balance;
+
+		return { balance, unconfirmed_balance, final_balance };
+	}
+
+
 	//get unused change address
 	async get_change_address() {
 		let change_addresses = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22");
@@ -247,7 +279,6 @@ export class Wallet {
 
 		return recieve_add;
 	}
-
 
 
 	//checks if the user has enough funds for a transaction using the coinselect library
@@ -434,17 +465,63 @@ export class Wallet {
 		console.log(tx.toHex());
 		return tx.toHex();
 	}
+
+	create_derivation_path = async () => {
+		let recieve_address = await this.get_recieve_address();
+
+		let purposeIndex = "8000002c";
+		let coinIndex;
+
+		if (this.coinType === COINS.BTC) //x  
+			coinIndex = "80000000";
+		if (this.coinType === COINS.BTC_TESTNET)
+			coinIndex = "80000001";
+		if (this.coinType === COINS.LTC)
+			coinIndex = "80000002";
+		if (this.coinType === COINS.DASH)
+			coinIndex = "80000005";
+		if (this.coinType === COINS.DOGE)
+			coinIndex = "80000003";
+
+		let accountIndex = "80000000";
+
+		let internal_external_index = "00000000";
+
+		let address_index = this.get_chain_address_index(recieve_address);
+
+		return purposeIndex + coinIndex + accountIndex + internal_external_index + address_index;
+
+	}
 }
 
 export const allAvailableWallets = () => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
-	return new Promise((resolve : any, reject : any) => {
-        db.find({}, function(err : any, docs : any) {
-            if(err) reject(err);
-            resolve(docs);
-        });
-    })
+	return new Promise((resolve: any, reject: any) => {
+		db.find({}, function (err: any, docs: any) {
+			if (err) reject(err);
+			resolve(docs);
+		});
+	})
+}
+
+export const getXpubFromWallet = (wallet_id: any, coinType: any) => {
+	return new Promise(async (resolve, reject) => {
+		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+
+		let wallet_details: any;
+		db.findOne({ _id: wallet_id }, function (err: any, doc: any) {
+			wallet_details = doc;
+			let xpub: any;
+			for (let i in wallet_details.xPubs) {
+				if (wallet_details.xPubs[i].coinType === coinType) {
+					xpub = wallet_details.xPubs[i].xPub;
+				}
+			}
+			resolve(xpub);
+		});
+	});
+
 }
 
 //Author: Gaurav Agarwal
@@ -463,12 +540,27 @@ export const addWalletToDB = (rawData: any) => {
 export const deleteWalletfromDB = (wallet_id: any) => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
-	db.remove({ _id: wallet_id }, {}, function (err : any, numRemoved : any) {
-		if(err){
+	db.remove({ _id: wallet_id }, {}, function (err: any, numRemoved: any) {
+		if (err) {
 			console.log("Error");
 		}
 	});
 }
 
+export const getCoinsFromWallet = (wallet_id: any) => {
+	return new Promise(async (resolve, reject) => {
+		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+
+		let wallet_details: any;
+		db.findOne({ _id: wallet_id }, function (err: any, doc: any) {
+			let coins: any = [];
+			for (let i in doc.xPubs) {
+				coins[i] = doc.xPubs[i].coinType;
+			}
+			resolve(coins);
+		});
+	});
+
+}
 
 // module.exports = {Wallet};

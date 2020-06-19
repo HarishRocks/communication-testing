@@ -1,11 +1,8 @@
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-import { hexToAscii } from '../bytes';
 import { addWalletToDB } from './wallet';
-
-const Datastore = require('nedb')
-
+import deviceReady from '../communication/deviceReady';
 
 
 //Todo in this function, Replace all the commands with their const values. Example, 42 -> Status Command.
@@ -14,26 +11,20 @@ export const addWallet = async () => {
   const { connection, serial } = await createPort();
   connection.open();
 
-  console.log(`Desktop : Sending Ready Command.\n\n`);
-  await sendData(connection, 41, "00");
-
-  //recieving Success Status Command (Value = 2)
-  let d = await recieveCommand(connection, 42);
-  console.log('From Device: ')
-  console.log(d);
+  const ready = await deviceReady(connection);
 
   //only proceed if device is ready, else quit.
-  if (String(d).slice(0, 2) == "02") {
+  if (ready) {
     console.log(`\n\nDesktop : Sending Add Wallet Command.\n\n`);
     await sendData(connection, 43, "00");
 
-
+  
     // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
     console.log('Wallet Details From Device: ');
-    d = await recieveCommand(connection, 44);
-    console.log(d);
+    const walletDetails = await recieveCommand(connection, 44);
+    console.log(walletDetails);
 
-    addWalletToDB(d);
+    addWalletToDB(walletDetails);
 
     console.log(`\n\nDesktop : Sending Success Command.`);
     await sendData(connection, 42, "01");
