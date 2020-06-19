@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "bitcoinjs-lib": "^5.1.10",
     "bs58": "^4.0.1",
     "chalk": "^4.1.0",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",
+    "@types/elliptic": "^6.4.12",
     "@types/nedb": "^1.8.9",
     "@types/node": "^14.0.11",
     "@types/serialport": "^8.0.1",

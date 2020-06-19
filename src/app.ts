@@ -8,6 +8,7 @@ import {
   getCoinsFromWallet,
 } from './flows/wallet';
 const inquirer = require('inquirer');
+import elliptic from 'elliptic';
 
 (async () => {
   let selection = await inquirer.prompt([
@@ -118,3 +119,21 @@ const inquirer = require('inquirer');
     await cardAuth();
   }
 })().catch((err) => console.log(err));
+
+let ec = new elliptic.ec('p256');
+
+const publicKey =
+  'EA41042CC5A216AC66B41F6549FF0313F592825871AB493911A2ACBDA545B212CDC028065061BB4A01F692C04EAC80D40E832483D54DBEDC1C6A91B6653DC7F81C13B51A20362B44AB46F05574D60521E7F8BFF0996CBF2F97654C6B171FD0D4EA711FF46E9000';
+
+const signature =
+  '9aeb92a58c8844c408e79b1eced7589c2c5739db6b67522d72a903c60591b681a14976cc4498f9f2e56932b7bb9334f2292b2ff4baa325cfa040343107dd4381aaaaaaa101';
+
+const curveLength = Math.ceil(256 / 8);
+
+let pubX = publicKey.slice(0, publicKey.length / 2);
+let pubY = publicKey.slice(publicKey.length / 2);
+let publicKeyObject = ec.keyFromPublic({ x: pubX, y: pubY }, 'hex');
+let r = signature.slice(0, curveLength * 2);
+let s = signature.slice(curveLength * 2);
+let validSig = ec.verify('EA21278116A5', { r: r, s: s }, publicKeyObject);
+console.log(validSig);
