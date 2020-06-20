@@ -9,7 +9,9 @@ import { commands } from '../config';
 import { default as Datastore } from 'nedb';
 import { coins as COINS } from '../config';
 import { Wallet } from './wallet';
-import { default as base58 } from 'bs58';
+import { hexToAscii } from '../bytes';
+// import { default as base58 } from 'bs58';
+const base58 = require('bs58');
 import deviceReady from '../communication/deviceReady';
 
 
@@ -18,12 +20,11 @@ import deviceReady from '../communication/deviceReady';
 const addXPubsToDB = (wallet_id: any, xpubraw: any, coinType: any) => {
   let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
+  for (let i = 0; i < (xpubraw.length / 224); i++) {
+    let x = xpubraw.slice(i * 224, i * 224 + 222);
+    var account_xpub = hexToAscii(xpubraw);
 
-  for (let i = 0; i < (xpubraw.length / 82); i++) {
-    let x = xpubraw.slice(i * 82, i * 82 + 82);
-    var account_xpub = base58.encode(Buffer.from(x, 'hex'));
-
-    db.update({ _id: wallet_id }, { $push: { xpubs: { coinType: coinType[i], xPub: account_xpub } } }, {}, function () {
+    db.update({ _id: wallet_id }, { $push: { xPubs: { coinType: coinType[i], xPub: account_xpub } } }, {}, function () {
       console.log(`Added xPub : ${account_xpub} to the database.`);
     });
 
@@ -79,9 +80,9 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('From Device: User confirmed coins: ')
     console.log(coinsConfirmed);
 
-    const pinEnteredPin = await recieveCommand(connection, 47);
-    console.log('From Device: User entered pin: ')
-    console.log(pinEnteredPin);
+    // const pinEnteredPin = await recieveCommand(connection, 47);
+    // console.log('From Device: User entered pin: ')
+    // console.log(pinEnteredPin);
 
     const tappedCards = await recieveCommand(connection, 48);
     console.log('From Device: User tapped cards: ')

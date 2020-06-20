@@ -5,9 +5,10 @@
 //ToDo solve discripency between generate_metadata, and generate_unsigned_transaction, fundscheck. (Input parameters)
 //ToDo feerate https://api.blockcypher.com/v1/btc/main 
 const bitcoin = require('bitcoinjs-lib');
-import { default as bip32 } from 'bip32';
-// import {default as axios} from 'axios';
-const axios = require('axios');
+// import { default as bip32 } from 'bip32';
+const bip32 = require('bip32');
+import {default as axios} from 'axios';
+// const axios = require('axios');
 const coinselect = require('coinselect');
 import { coins as COINS } from '../config';
 import { intToUintByte, hexToAscii } from '../bytes';
@@ -81,12 +82,12 @@ export class Wallet {
 
 		switch (coinType) {
 			case COINS.BTC:
-				this.network = bitcoin.network.bitcoin;
+				this.network = bitcoin.networks.bitcoin;
 				this.coin_url = "btc/main/";
 				break;
 
 			case COINS.BTC_TESTNET:
-				this.network = bitcoin.network.testnet;
+				this.network = bitcoin.networks.testnet;
 				this.coin_url = "btc/test3/";
 				break;
 
@@ -165,7 +166,7 @@ export class Wallet {
 	async fetch_utxo() {
 		let utxos = []
 
-		let res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		let res : any = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
 
 
 		res = res["data"]["txrefs"]
@@ -213,7 +214,7 @@ export class Wallet {
 
 	async get_total_balance() {
 
-		let res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		let res : any = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
 
 		let balance = res.balance;
 		let unconfirmed_balance = res.unconfirmed_balance;
@@ -231,7 +232,7 @@ export class Wallet {
 
 	//get unused change address
 	async get_change_address() {
-		let change_addresses = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22");
+		let change_addresses : any = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22");
 		change_addresses = change_addresses["data"];
 
 		let original_length = change_addresses["wallet"]["addresses"].length;
@@ -257,7 +258,7 @@ export class Wallet {
 
 	//get unused recieve address
 	async get_recieve_address() {
-		let recieveAddress = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22");
+		let recieveAddress : any = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22");
 		recieveAddress = recieveAddress["data"];
 
 		let original_length = recieveAddress["wallet"]["addresses"].length;
@@ -524,15 +525,23 @@ export const getXpubFromWallet = (wallet_id: any, coinType: any) => {
 
 }
 
+
+export const extractWalletDetails = (rawData : any) => {
+
+	let name = hexToAscii(String(rawData).slice(0, 32));
+	let passwordSet = String(rawData).slice(32, 34);
+	let _id = String(rawData).slice(34);
+
+	return {name, passwordSet, _id};
+}
+
 //Author: Gaurav Agarwal
 //@method Takes raw data, converts the name from hex to String, and keeps the id in hex itself, and stores it in the database.
 //@var rawData : hex data from device
 export const addWalletToDB = (rawData: any) => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
-	let name = hexToAscii(String(rawData).slice(0, 32));
-	let passwordSet = String(rawData).slice(32, 34);
-	let _id = String(rawData).slice(34);
+	const { name, passwordSet, _id } = extractWalletDetails(rawData);
 
 	db.insert({ name: name, passwordSet: passwordSet, _id: _id, xPubs: [] });
 }
