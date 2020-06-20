@@ -8,7 +8,7 @@ import { recieveData, recieveCommand } from '../communication/recieveData';
 import { commands } from '../config';
 import { default as Datastore } from 'nedb';
 import { coins as COINS } from '../config';
-import { Wallet } from './wallet';
+import { Wallet , addCoinsToDB } from './wallet';
 import { hexToAscii } from '../bytes';
 // import { default as base58 } from 'bs58';
 const base58 = require('bs58');
@@ -17,22 +17,22 @@ import deviceReady from '../communication/deviceReady';
 
 //ToDo discuss with shreyas the format of recieving data
 //Also uploads the wallet to blockcypher
-const addXPubsToDB = (wallet_id: any, xpubraw: any, coinType: any) => {
-  let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+const addXPubsToDB = async(wallet_id: any, xpubraw: any, coinType: any) => {
 
   for (let i = 0; i < (xpubraw.length / 224); i++) {
     let x = xpubraw.slice(i * 224, i * 224 + 222);
-    var account_xpub = hexToAscii(xpubraw);
+    var account_xpub = hexToAscii(x);
+    
+    await addCoinsToDB(wallet_id,account_xpub,coinType[i]);
 
-    db.update({ _id: wallet_id }, { $push: { xPubs: { coinType: coinType[i], xPub: account_xpub } } }, {}, function () {
-      console.log(`Added xPub : ${account_xpub} to the database.`);
-    });
 
     let w = new Wallet(account_xpub, coinType[i]);
     let re_addr = w.address_list(0, 0, 20);
     let ch_addr = w.address_list(1, 0, 20);
     w.upload_wallet(w.external, re_addr);
     w.upload_wallet(w.internal, ch_addr);
+    // console.log(w.external);
+    // console.log(w.internal);
   }
 }
 
@@ -92,7 +92,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('From Device: all xPubs')
     console.log(xPubDetails);
 
-    addXPubsToDB(wallet_id, xPubDetails, coinTypes);
+    await addXPubsToDB(wallet_id, xPubDetails, coinTypes);
 
     console.log(`Desktop : Sending Success Command.`);
     await sendData(connection, 42, "01");

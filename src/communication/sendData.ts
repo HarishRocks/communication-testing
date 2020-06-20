@@ -42,7 +42,7 @@ const writePacket = (connection: any, packet: any) => {
 
 const sendData = async (connection: any, command: number, data: string) => {
   const packetsList = xmodemEncode(data, command);
-
+  console.log("Packets List "+ packetsList.length);
   /**
    * Create a list of each packet and self contained retries and listener
    */

@@ -7,6 +7,9 @@ import {
   Wallet,
   getCoinsFromWallet,
 } from './flows/wallet';
+
+import { sendTransaction , getCoinType } from './flows/sendTransaction';
+
 const inquirer = require('inquirer');
 import elliptic from 'elliptic';
 
@@ -25,7 +28,7 @@ import elliptic from 'elliptic';
   } else if (selection.choice === 'Select Wallet') {
     let wallets: any;
     wallets = await allAvailableWallets();
-    console.log(wallets);
+    // console.log(wallets);
     let display_wallets: any = [];
 
     //make a list for inquirer with name and ID.
@@ -36,8 +39,8 @@ import elliptic from 'elliptic';
       });
     });
 
-    console.log(display_wallets);
-    console.log(display_wallets[0].name);
+    // console.log(display_wallets);
+    // console.log(display_wallets[0].name);
 
     selection = await inquirer.prompt([
       {
@@ -61,9 +64,9 @@ import elliptic from 'elliptic';
 
     switch (selection.walletAction) {
       case 'Add Coin':
-        console.log('Wallet Id' + wallet_id);
+        // console.log('Wallet Id' + wallet_id);
         let added_coins: any = await getCoinsFromWallet(wallet_id);
-        console.log('added coins' + added_coins);
+        // console.log(added_coins);
         let all_coins: any = [
           {
             name: 'BITCOIN',
@@ -88,10 +91,13 @@ import elliptic from 'elliptic';
         ];
 
         for (let i in all_coins) {
-          if (all_coins[i].value in added_coins) {
+          if (added_coins.indexOf(all_coins[i].value) > -1) {
             all_coins[i].disabled = 'Already Added';
+            // console.log("Ping")
           }
         }
+
+        // console.log(all_coins);
 
         selection = await inquirer.prompt([
           {
@@ -107,6 +113,30 @@ import elliptic from 'elliptic';
         break;
 
       case 'Send Transaction':
+
+        selection = await inquirer.prompt([
+          {
+            type: 'input',
+            message: 'Input the Reciepient Address',
+            name: 'rec_addr'
+          },
+          {
+            type: 'number',
+            message: "Input the amount",
+            name: 'send_amount'
+          }
+        ]);
+
+        const coinType = getCoinType(selection.rec_addr);
+
+        const output_list = [{
+          address : selection.rec_addr,
+          value : selection.send_amount
+        }];
+
+        console.log(output_list);
+
+        await sendTransaction(wallet_id, output_list, coinType);
         break;
 
       case 'Recieve Transaction':

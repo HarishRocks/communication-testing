@@ -74,7 +74,7 @@ export class Wallet {
 		this.coinType = coinType;
 		this.xpub = xpub;
 
-		let hash = crypto.createHash('sha256').update(xpub).digest('hex').slice(0, 32); //because we only need the first 16 bytes
+		let hash = crypto.createHash('sha256').update(xpub).digest('hex').slice(0, 10); //because we only need the first 16 bytes
 
 		this.external = `re${hash}`;
 		this.internal = `ch${hash}`;
@@ -127,7 +127,11 @@ export class Wallet {
 
 
 	upload_wallet(name: string, addresses: any) {
-
+		console.log({
+			"name": name,
+			"addresses": addresses
+		});
+		console.log(this.api_url + "wallets?token=5849c99db61a468db0ab443bab0a9a22");
 		axios.post(
 			this.api_url + "wallets?token=5849c99db61a468db0ab443bab0a9a22",
 			{
@@ -355,19 +359,13 @@ export class Wallet {
 
 		let accountIndex = "80000000";
 
-		let utxos = this.fetch_utxo();
+		let utxos = await this.fetch_utxo();
 
-		let feeRate = 50 //Yet to fetch this from an API
+		let feeRate = 500 //Yet to fetch this from an API
 
 		let { inputs, outputs, fee } = coinselect(utxos, outputList, feeRate)
 
 		let change_add = await this.get_change_address();
-
-		for (let i in outputs) {
-			if (!("address" in outputs[i])) {
-				outputs[i]["address"] = change_add;
-			}
-		}
 
 		let input_count = String(inputs.length);
 
@@ -380,36 +378,31 @@ export class Wallet {
 			input_string = input_string + intToUintByte(ch_addr_in.address_index, 32);
 		}
 
-		let output_count = 0;
-		let output_string = '';
+		let output_count = 1;
+		let output_string = '0000000000000000';
 
-		for (let i in outputs) {
-			if ("address" in outputs[i]) {
-				let ch_addr_in = this.get_chain_address_index(outputs[i].address);
-				output_string = output_string + intToUintByte(ch_addr_in.chain_index, 32);
-				output_string = output_string + intToUintByte(ch_addr_in.address_index, 32);
-				output_count++;
-			}
-		}
+		// for (let i in outputs) {
+		// 	if ("address" in outputs[i]) {
+		// 		let ch_addr_in = this.get_chain_address_index(outputs[i].address);
+		// 		output_string = output_string + intToUintByte(ch_addr_in.chain_index, 32);
+		// 		output_string = output_string + intToUintByte(ch_addr_in.address_index, 32);
+		// 		output_count++;
+		// 	}
+		// }
 
 		let change_count = 0;
 		let change_string = '';
-
+		console.log(outputs);
 		for (let i in outputs) {
 			if (!("address" in outputs[i])) {
 				let ch_addr_in = this.get_chain_address_index(change_add);
 				change_string = change_string + intToUintByte(ch_addr_in.chain_index, 32);
 				change_string = change_string + intToUintByte(ch_addr_in.address_index, 32);
 				change_count++;
-
-				//because output string needs to have the change address too
-				output_string = output_string + intToUintByte(ch_addr_in.chain_index, 32);
-				output_string = output_string + intToUintByte(ch_addr_in.address_index, 32);
-				output_count++;
 			}
 		}
-
-		return purposeIndex + coinIndex + accountIndex + input_count + input_string + output_count + output_string + change_count + change_string;
+		console.log(purposeIndex + " " + coinIndex + " " + accountIndex + " " + intToUintByte(input_count,8) + " " + input_string + " " + intToUintByte(output_count,8) + " " + output_string + " " + intToUintByte(change_count,8) + " " + change_string);
+		return purposeIndex + coinIndex + accountIndex + intToUintByte(input_count,8) + input_string + intToUintByte(output_count,8) + output_string + intToUintByte(change_count,8) + change_string;
 
 	}
 
@@ -554,6 +547,17 @@ export const deleteWalletfromDB = (wallet_id: any) => {
 			console.log("Error");
 		}
 	});
+}
+
+export const addCoinsToDB = (wallet_id : any, account_xpub: any, coinType: any) => {
+	return new Promise(async (resolve,reject)=>{
+		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+		db.update({ _id: wallet_id }, { $push: { xPubs: { coinType: coinType, xPub: account_xpub } } }, {}, function () {
+			console.log(`Added xPub : ${account_xpub} to the database.`);
+			resolve(true);
+		  });
+	  
+	})
 }
 
 export const getCoinsFromWallet = (wallet_id: any) => {
