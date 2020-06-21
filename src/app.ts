@@ -1,3 +1,4 @@
+//ToDo ask suraj sir about the added_coins in recievetransaction flow
 import { addWallet, addWalletDeviceInitiated } from './flows/addWallet';
 import { addCoin } from './flows/addCoin';
 import cardAuth from './flows/cardAuth';
@@ -12,6 +13,7 @@ import { sendTransaction , getCoinType } from './flows/sendTransaction';
 
 const inquirer = require('inquirer');
 import elliptic from 'elliptic';
+import { recieveTransaction } from './flows/recieveTransaction';
 
 (async () => {
   let selection = await inquirer.prompt([
@@ -134,12 +136,100 @@ import elliptic from 'elliptic';
           value : selection.send_amount
         }];
 
-        console.log(output_list);
+        while(1) {
+          
+          selection = await inquirer.prompt([
+            {
+              type: 'list',
+              message: 'Do you want to add more addresses?',
+              name: 'choice',
+              choices : ['yes','no']
+            }
+          ]);
+
+          if(selection.choice == "yes")
+          {
+            selection = await inquirer.prompt([
+              {
+                type: 'input',
+                message: 'Input the Reciepient Address',
+                name: 'rec_addr'
+              },
+              {
+                type: 'number',
+                message: "Input the amount",
+                name: 'send_amount'
+              }
+            ]);
+
+            let tempCoinType = getCoinType(selection.rec_addr);
+
+            if(coinType === tempCoinType){
+              output_list.push({
+                address : selection.rec_addr,
+                value : selection.send_amount
+              })
+            }
+
+            else{
+              console.log("Please enter an addresses for the same coinType as above.\n");
+            }
+          }
+          else{
+            break;
+          }
+
+        }
+
 
         await sendTransaction(wallet_id, output_list, coinType);
         break;
 
       case 'Recieve Transaction':
+
+        let added_coins1 : any = await getCoinsFromWallet(wallet_id);
+        // console.log(added_coins);
+        let all_coins1 : any = [
+          {
+            name: 'BITCOIN',
+            value: COINS.BTC,
+          },
+          {
+            name: 'BITCOIN TESTNET',
+            value: COINS.BTC_TESTNET,
+          },
+          {
+            name: 'LITECOIN',
+            value: COINS.LTC,
+          },
+          {
+            name: 'DOGECOIN',
+            value: COINS.DOGE,
+          },
+          {
+            name: 'DASHCOIN',
+            value: COINS.DASH,
+          },
+        ];
+
+        for (let i in all_coins1) {
+          if (added_coins1.indexOf(all_coins1[i].value) == -1) {
+            delete(all_coins1[i]);
+            // console.log("Ping")
+          }
+        }
+
+        // console.log(all_coins1.filter(Boolean));
+        selection = await inquirer.prompt([
+          {
+            type: 'list',
+            message: 'Select Coin type',
+            name: 'coinType',
+            choices: all_coins1.filter(Boolean)
+          }
+        ]);
+        
+        await recieveTransaction(wallet_id, selection.coinType);
         break;
 
       default:

@@ -6,7 +6,7 @@ import { createPort } from '../communication/port';
 import { ackData , sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-import { Wallet } from './wallet';
+import { Wallet, getXpubFromWallet } from './wallet';
 import { default as base58 } from 'bs58';
 import {default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
@@ -25,11 +25,14 @@ export const recieveTransaction = async ( wallet_id : any , coinType : any) => {
     if(ready)
     {
 
-        wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
-        coinType = COINS.BTC_TESTNET;
-        const wallet = new Wallet(wallet_id, coinType);
+        // wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
+        // coinType = COINS.BTC_TESTNET;
+        let xpub = await getXpubFromWallet(wallet_id,coinType);
+        
+        const wallet = new Wallet(xpub, coinType);
 
-        let derivation_path = wallet.create_derivation_path();
+        let derivation_path = await wallet.create_derivation_path();
+        let recieve_address = await wallet.get_recieve_address();
 
         console.log("Destop : Sending Wallet ID and Derivation Path.");
         console.log("Wallet id: "+ wallet_id);
@@ -49,6 +52,7 @@ export const recieveTransaction = async ( wallet_id : any , coinType : any) => {
         console.log("From Device (Cards are tapped) : ")
         console.log(cardsTapped);
 
+        console.log("Please verify if this is the same address on the device? \n" + recieve_address);
         const addressesVerified = await recieveCommand(connection,63);
         console.log("From Device (Verified recieve address) : ")
         console.log(addressesVerified);

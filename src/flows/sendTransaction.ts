@@ -1,7 +1,5 @@
-//Find out coin from recieve address - done
 //ToDo, create a universal coinType object for refrence in whole system - done (kind of)
-//ToDo, think of another file for display_all_wallets function.
-
+//ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
 import { createPort } from '../communication/port';
 import { ackData , sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';

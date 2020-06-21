@@ -481,7 +481,7 @@ export class Wallet {
 
 		let internal_external_index = "00000000";
 
-		let address_index = this.get_chain_address_index(recieve_address);
+		let address_index = intToUintByte(this.get_chain_address_index(recieve_address).address_index , 32);
 
 		return purposeIndex + coinIndex + accountIndex + internal_external_index + address_index;
 
