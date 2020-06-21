@@ -1,7 +1,3 @@
-//Find out coin from recieve address - done
-//ToDo, create a universal coinType object for refrence in whole system - done (kind of)
-//ToDo, think of another file for display_all_wallets function.
-
 import { createPort } from '../communication/port';
 import { ackData, sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
@@ -26,6 +22,7 @@ const cardAuth = async () => {
   } else {
     console.log('device not ready');
   }
+  connection.close();
 };
 
 export default cardAuth;
