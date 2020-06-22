@@ -106,7 +106,7 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
     const { connection, serial } = await createPort();
     connection.open();
 
-    if (process.env.NODE_ENV == 'cli') {
+    if (process.env.NODE_ENV == 'cli ') {
         let t = await makeOutputList();
         output_list = t.output_list;
         coinType = t.coinType;

@@ -54,7 +54,7 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
     const { connection, serial } = await createPort();
     connection.open();
 
-    if (process.env.NODE_ENV == 'cli') {
+    if (process.env.NODE_ENV == 'cli ') {
         let coins_available = await allAvailableCoins(wallet_id);
         coinType = await query_list(coins_available, 'Select Coin type');
 
