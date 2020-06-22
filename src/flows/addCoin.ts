@@ -125,21 +125,26 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
   //Only if device is ready.
   if (ready) {
     console.log(`Desktop : Sending Wallet ID and Coins.`);
-    // wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
+
+
     let coins = makeCoinIndexList(coinTypes);
     let num_coins = coins.length;
     await sendData(connection, 45, wallet_id + coins.join(''));
     console.log('Message: ' + wallet_id + coins.join('') + '\n\n');
 
-    const coinsConfirmed = await recieveCommand(connection, 46);
-    console.log('From Device: User confirmed coins: ');
-    console.log(coinsConfirmed);
-
-    if(await pinSetWallet(wallet_id)){
-      const pinEnteredPin = await recieveCommand(connection, 47);
-      console.log('From Device: User entered pin: ')
-      console.log(pinEnteredPin);
+    const coinsConfirmed : any = await recieveCommand(connection, 46);
+    if(!!parseInt(coinsConfirmed)) {
+      console.log('From Device: User confirmed coins');
+    } else {
+      console.log('From Device: User did not confirm coins.\nExiting Function...');
+      return 0;
     }
+
+    // if(await pinSetWallet(wallet_id)){
+    //   const pinEnteredPin = await recieveCommand(connection, 47);
+    //   console.log('From Device: User entered pin: ')
+    //   console.log(pinEnteredPin);
+    // }
     
 
     const tappedCards = await recieveCommand(connection, 48);

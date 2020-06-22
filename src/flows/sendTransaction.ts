@@ -100,7 +100,7 @@ const makeOutputList = async () => {
 //     "value":amount
 // }];
 //Yet to complete this function.
-export const sendTransaction = async (wallet_id: any, output_list: any, coinType: any) => {
+export const sendTransaction = async (wallet_id: any, output_list: any, coinType: any, fee_rate: any) => {
     //will get xPub from wallet_id and the coin_type
 
     const { connection, serial } = await createPort();
@@ -110,6 +110,12 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
         let t = await makeOutputList();
         output_list = t.output_list;
         coinType = t.coinType;
+
+        fee_rate = await query_list([
+            { name: "Low", value :"l" },
+            { name: "Medium", value :"m" },
+            { name: "High", value :"h" },
+        ] , "Select the transaction fees");
     }
 
     const ready = await deviceReady(connection);
@@ -130,7 +136,9 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
         console.log("From Device (Coin Confirmed) : ")
         console.log(coinConfirmed);
 
-        let unsigned_txn: any = await wallet.generate_unsigned_transaction(output_list);
+
+
+        let unsigned_txn: any = await wallet.generate_unsigned_transaction(output_list , 'm');
 
         console.log("Destop : Sending Unsigned Transaction.");
         console.log("Unsigned Transaction" + unsigned_txn);
@@ -140,11 +148,11 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
         console.log("From Device (User verified reciepient amount and address) : ")
         console.log(reciepentVerified);
 
-        if (await pinSetWallet(wallet_id)) {
-            const pinEnteredPin = await recieveCommand(connection, 47);
-            console.log('From Device: User entered pin: ')
-            console.log(pinEnteredPin);
-        }
+        // if (await pinSetWallet(wallet_id)) {
+        //     const pinEnteredPin = await recieveCommand(connection, 47);
+        //     console.log('From Device: User entered pin: ')
+        //     console.log(pinEnteredPin);
+        // }
 
         const cardsTapped = await recieveCommand(connection, 48);
         console.log("From Device (Cards are tapped) : ")

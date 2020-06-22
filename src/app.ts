@@ -37,7 +37,7 @@ import { query_list } from './flows/cli_input';
           break;
         
         case 'Send Transaction':
-          await sendTransaction(wallet_id , undefined , undefined);
+          await sendTransaction(wallet_id , undefined , undefined, undefined);
           break;
 
         case 'Recieve Transaction':

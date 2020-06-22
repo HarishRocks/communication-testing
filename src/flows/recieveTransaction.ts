@@ -1,7 +1,3 @@
-//Find out coin from recieve address - done
-//ToDo, create a universal coinType object for refrence in whole system - done (kind of)
-//ToDo, think of another file for display_all_wallets function.
-
 import { createPort } from '../communication/port';
 import { ackData, sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
@@ -75,8 +71,8 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
         let xpub = await getXpubFromWallet(wallet_id, coinType);
 
         const wallet = new Wallet(xpub, coinType);
-        console.log("Total Amount in your wallet")
-        console.log(wallet.get_total_balance); 
+        // console.log("Total Amount in your wallet")
+        // console.log(await wallet.get_total_balance()); 
         let derivation_path = await wallet.create_derivation_path();
         let recieve_address = await wallet.get_recieve_address();
 
@@ -90,11 +86,11 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
         console.log("From Device (User verified coin) : ")
         console.log(coinsConfirmed);
 
-        if (await pinSetWallet(wallet_id)) {
-            const pinEnteredPin = await recieveCommand(connection, 47);
-            console.log('From Device: User entered pin: ')
-            console.log(pinEnteredPin);
-        }
+        // if (await pinSetWallet(wallet_id)) {
+        //     const pinEnteredPin = await recieveCommand(connection, 47);
+        //     console.log('From Device: User entered pin: ')
+        //     console.log(pinEnteredPin);
+        // }
 
         const cardsTapped = await recieveCommand(connection, 62);
         console.log("From Device (Cards are tapped) : ")
