@@ -1,59 +1,53 @@
 //DEVICE_CONFIRM_FOR_DFU_MODE not used
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
-import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-import { getXpubFromWallet, Wallet, pinSetWallet } from './wallet';
-import { default as base58 } from 'bs58';
-import { default as Datastore } from 'nedb';
-import deviceReady from '../communication/deviceReady';
-import { query_input, query_number, query_list } from './cli_input';
+import { getAccessToken, getRandomNumFromServer, verifySignedChallenge } from './auth';
 const axios = require('axios');
+const {
+    DfuUpdates,
+    DfuTransportSerial,
+    DfuOperation
+} = require('./nrf-dfu.cjs');
 
+
+const sleep = (ms: any) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const nulldata = "00000000";
-export const cyBaseURL = 'http://3.6.66.118';
 
-export const getAccessToken = async (serialNumber: any, signature: any) => {
-    let res: any = await axios.post(`${cyBaseURL}/auth/login`, {
-        serialNumber: serialNumber,
-        signature: signature,
-    });
 
-    console.log('autheticated');
-    let accessToken = res.data.token;
-    axios.defaults.headers.common[
-        'Authorization'
-    ] = `Bearer ${accessToken}`;
 
-    return accessToken;
+const upgrade = async (connection: any) => {
+    const updates = await DfuUpdates.fromZipFilePath('./app_dfu_package.zip');
+    // Create DfuTransportSerial
+    const serialTransport = new DfuTransportSerial(connection, 16);
+
+    // Create DfuOperation
+    const dfu = new DfuOperation(updates, serialTransport);
+    // Start dfu
+    console.log('writing upgrade');
+    dfu
+        .start(true)
+        .then(() => {
+            console.log('complete');
+        })
+        .catch(async (e: any) => {
+            console.log(e);
+            console.log('waiting before retry');
+            await sleep(2000);
+            console.log('retrying now');
+            connection.close(() => {
+                upgrade(connection);
+            });
+        });
 }
 
-export const getRandomNumFromServer = async (serialNumber: any, firmwareVersion: any) => {
-    let res: any = await axios.post(`${cyBaseURL}/randomNumber`, {
-        serialNumber: serialNumber,
-        firmwareVersion: firmwareVersion,
-    });
 
-    let randomNumber = res.data;
-    return randomNumber;
-}
 
-export const verifySignedChallenge = async (serialNumber: any, signedChallenge: any, firmwareVersion: any) => {
-    let res : any = await axios.post(`${cyBaseURL}/verify`, {
-        serialNumber: serialNumber,
-        signature: signedChallenge,
-        firmwareVersion: firmwareVersion,
-    });
 
-    if(res.data){
-        return 1;
-    } else { 
-        return 0;
-    }
-}
-
-export const deviceAuth = async () => {
+export const deviceAuthandUpgrade = async () => {
     //will get xPub from wallet_id and the coin_type
 
     const { connection, serial } = await createPort();
@@ -85,13 +79,16 @@ export const deviceAuth = async () => {
     await sendData(connection, 12, nulldata);
 
     const signature = await recieveCommand(connection, 13);
+    console.log("Signature : " + signature);
 
     const accessToken = await getAccessToken(serialNumber, signature);
 
     await sendData(connection, 14, nulldata);
-    
+
     const firmwareVersion = await recieveCommand(connection, 15);
     console.log("From Device: Firmware Version: " + firmwareVersion);
+
+    // const firmwareVersion = 1;
 
     const randomNumber = await getRandomNumFromServer(serialNumber, firmwareVersion);
 
@@ -99,14 +96,28 @@ export const deviceAuth = async () => {
 
     const signedChallenge = await recieveCommand(connection, 17);
 
-    const verified = await verifySignedChallenge(serialNumber,signedChallenge,firmwareVersion);
+    const verified = await verifySignedChallenge(serialNumber, signedChallenge, firmwareVersion);
 
-    if(!verified){
+    if (!verified) {
         console.log("Not verified from the server.\nExiting function...");
         return 0;
     }
     console.log("\nVerified by server.\n");
 
-    return 1;
+    await sendData(connection, 18, "00000002");
 
+    const upgradeFirmwareResponse = await recieveCommand(connection, 29);
+    if (!Number(upgradeFirmwareResponse)) {
+        console.log("From Device: User Rejected Upgrade Request.\nExiting Function...");
+        return 0;
+    }
+
+    connection.flush();
+
+    connection.close(async () => {
+        console.log('close');
+
+        await sleep(5000);
+        upgrade(connection);
+    });
 }
