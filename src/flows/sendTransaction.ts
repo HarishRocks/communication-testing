@@ -1,7 +1,7 @@
 //ToDo, create a universal coinType object for refrence in whole system - done (kind of)
 //ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
 import { createPort } from '../communication/port';
-import { ackData, sendData } from '../communication/sendData';
+import { sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
 import { getXpubFromWallet, Wallet, pinSetWallet } from './wallet';
@@ -112,10 +112,10 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
         coinType = t.coinType;
 
         fee_rate = await query_list([
-            { name: "Low", value :"l" },
-            { name: "Medium", value :"m" },
-            { name: "High", value :"h" },
-        ] , "Select the transaction fees");
+            { name: "Low", value: "l" },
+            { name: "Medium", value: "m" },
+            { name: "High", value: "h" },
+        ], "Select the transaction fees");
     }
 
     const ready = await deviceReady(connection);
@@ -132,13 +132,17 @@ export const sendTransaction = async (wallet_id: any, output_list: any, coinType
         console.log("Transaction Metadata" + txn_metadata);
         await sendData(connection, 50, wallet_id + txn_metadata);
 
-        const coinConfirmed = await recieveCommand(connection, 51);
-        console.log("From Device (Coin Confirmed) : ")
-        console.log(coinConfirmed);
+        const coinConfirmed: any = await recieveCommand(connection, 51);
+        if (!!parseInt(coinConfirmed)) {
+            console.log('From Device: User confirmed coin.');
+        } else {
+            console.log('From Device: User did not confirm coin.\nExiting Function...');
+            return 0;
+        }
 
 
 
-        let unsigned_txn: any = await wallet.generate_unsigned_transaction(output_list , 'm');
+        let unsigned_txn: any = await wallet.generate_unsigned_transaction(output_list, 'm');
 
         console.log("Destop : Sending Unsigned Transaction.");
         console.log("Unsigned Transaction" + unsigned_txn);
