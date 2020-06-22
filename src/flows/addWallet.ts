@@ -7,7 +7,11 @@ import deviceReady from '../communication/deviceReady';
 
 
 
-//Todo in this function, Replace all the commands with their const values. Example, 42 -> Status Command.
+/**
+ * Adds the wallet recieved from the hardware to the local database.
+ */
+
+
 export const addWallet = async () => {
 
   const { connection, serial } = await createPort();

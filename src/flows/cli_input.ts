@@ -1,5 +1,13 @@
 const inquirer = require('inquirer');
 
+
+/**
+ * Displays 
+ * 
+ * @param selections
+ * Example 
+ * @param message 
+ */
 export const query_list = async (selections: any[], message : string = 'Select your option') => {
     const q = await inquirer.prompt([
         {

@@ -10,15 +10,28 @@ import { query_list, query_checkbox } from './cli_input';
 
 
 
-//Also uploads the wallet to blockcypher
-const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinType: any) => {
+/**
+ *Adds xpubs database and uploads them.
+ *
+ * @remarks
+ * Adds the raw xpubs obtained from the device to the database and also uploads them to the blockcypher website.
+ * Each xpub is in base58 encoded format, but in hexadecimal. 
+ * 
+ * @param wallet_id - Wallet id to refrence a wallet from the database
+ * 
+ * @param xpubraw  - Raw string containing multiple xpubs in hex format.
+ * 
+ * @param coinTypes - List of coin types for the corrosponding xpub
+ * 
+ */
+const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinTypes: any) => {
   for (let i = 0; i < xpubraw.length / 224; i++) {
     let x = xpubraw.slice(i * 224, i * 224 + 222);
     var account_xpub = hexToAscii(x);
 
-    await addCoinsToDB(wallet_id, account_xpub, coinType[i]);
+    await addCoinsToDB(wallet_id, account_xpub, coinTypes[i]);
 
-    let w = new Wallet(account_xpub, coinType[i]);
+    let w = new Wallet(account_xpub, coinTypes[i]);
     let re_addr = w.address_list(0, 0, 20);
     let ch_addr = w.address_list(1, 0, 20);
     w.upload_wallet(w.external, re_addr);
@@ -29,7 +42,17 @@ const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinType: any) => {
 };
 
 
-
+/**
+ * Makes the coin index list.
+ * 
+ * @remarks
+ * Takes the array containing the coin names and converts them into an array of the corrosponding coin indexes. 
+ * Example : bitcoin is converted to 80000000
+ * 
+ * @param coinTypes - Array containing the coin names
+ * 
+ * @returns - Array containing the coin indexes
+ */
 const makeCoinIndexList = (coinTypes : any) => {
   let coinsIndexList : any = [];
 
@@ -51,8 +74,27 @@ const makeCoinIndexList = (coinTypes : any) => {
 
 
 
-
-//Only for CLI, Can be used for GUI if compatible.
+/**
+ * Returns a list of available wallets with its id.
+ * 
+ * @remarks
+ * Format
+ * ```ts
+ * [
+ *   {
+ *      name : "Savings",
+ *      value : "e80053381bceb08732024f10af80053aedc48fbc51c8e4cb6a10d22bc814892c"
+ *   },
+ *   {
+ *      name : "Secret",
+ *      value : "f80053381bcea08732024f10af81053aedc48fbc51c8e4cb6a10d22bc8148312"
+ *   }
+ * ]
+ * ```
+ * 
+ * @returns List of objects containing wallet names and ids.
+ * 
+ */
 export const allWalletsList = async () => {
   let wallets: any;
   wallets = await allAvailableWallets();
@@ -69,6 +111,19 @@ export const allWalletsList = async () => {
   return display_wallets;
 }
 
+
+/**
+ * Returns a list of objects with coins which are not added in a wallet.
+ * 
+ * @remarks
+ * This function is used to return a list for the CLI interface. It returns a list of all coins.
+ * The coins which are already added in the wallet provided, will have an extra property called 'disabled' to prevent the user from selecting it.
+ * This object is used in the inquirerjs library to render the CLI.
+ * 
+ * @param wallet_id - Wallet id to refrence a wallet from the database
+ * 
+ * @returns List of objects containing coin names.
+ */
 export const coinsNotAdded = async (wallet_id: any) => {
 
   let added_coins: any = await getCoinsFromWallet(wallet_id);
@@ -107,6 +162,15 @@ export const coinsNotAdded = async (wallet_id: any) => {
 }
 
 
+/**
+ * Adds coins and their corrosponding xpubs to the database.
+ * 
+ * @remarks
+ * Sends the coin indexes to the hardware, which returns the corrosponding xpubs and we store it in the database and upload it to the server.
+ * @param wallet_id - Wallet Id of the wallet in which coins are to be added.
+ * @param coinTypes - The coin types which are to be added.
+ */
+
 export const addCoin = async (wallet_id: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
   connection.open();
@@ -137,6 +201,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
       console.log('From Device: User confirmed coins');
     } else {
       console.log('From Device: User did not confirm coins.\nExiting Function...');
+      connection.close();
       return 0;
     }
 
@@ -159,8 +224,11 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
 
     console.log(`Desktop : Sending Success Command.`);
     await sendData(connection, 42, '01');
+    
   } else {
     console.log('Device not ready');
+    connection.close();
+    return 0;
   }
 
   connection.close();
