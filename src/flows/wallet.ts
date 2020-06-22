@@ -378,7 +378,7 @@ export class Wallet {
 			input_string = input_string + intToUintByte(ch_addr_in.address_index, 32);
 		}
 
-		let output_count = 1;
+		let output_count = 0;
 		let output_string = '0000000000000000';
 
 		// for (let i in outputs) {
@@ -412,7 +412,6 @@ export class Wallet {
 	//     "address":output_address,
 	//     "value":amount
 	// }];
-	//Yet to complete this function.
 	async generate_unsigned_transaction(targets: any) {
 
 		let change_add = await this.get_change_address();
@@ -420,7 +419,10 @@ export class Wallet {
 		let utxos = await this.fetch_utxo();
 		let { inputs, outputs, fee } = coinselect(utxos, targets, 10);
 
-
+		if( !inputs || !outputs){
+			console.log("Insufficient funds");
+			return 0;
+		}
 		for (let i in outputs) {
 			if (!("address" in outputs[i])) {
 				outputs[i]["address"] = change_add;
@@ -457,7 +459,7 @@ export class Wallet {
 		}
 
 		console.log(tx.toHex());
-		return tx.toHex();
+		return tx.toHex() + "01000000";
 	}
 
 	create_derivation_path = async () => {
@@ -575,5 +577,20 @@ export const getCoinsFromWallet = (wallet_id: any) => {
 	});
 
 }
+
+export const pinSetWallet = async (wallet_id : any) => {
+	return new Promise(async (resolve, reject) => {
+		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+
+		let wallet_details: any;
+		db.findOne({ _id: wallet_id }, function (err: any, doc: any) {
+			let coins: any = [];
+			for (let i in doc.xPubs) {
+				coins[i] = doc.xPubs[i].coinType;
+			}
+			resolve(!!doc.passwordSet);
+		});
+	});
+} 
 
 // module.exports = {Wallet};

@@ -1,20 +1,15 @@
-//ToDo, create a universal coinType object for refrence in whole system - done
-//ToDo, create a different file for all blockcypher related stuff - done
-//ToDo, ask Vipul Sir if I should put a return 0/1 in addCoin to show if it was successful or failed
-//ToDo, think of another file for display_all_wallets function - done
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
-import { recieveData, recieveCommand } from '../communication/recieveData';
-import { commands } from '../config';
-import { default as Datastore } from 'nedb';
+import { recieveCommand } from '../communication/recieveData';
 import { coins as COINS } from '../config';
-import { Wallet, addCoinsToDB } from './wallet';
+import { Wallet, addCoinsToDB, allAvailableWallets, getCoinsFromWallet, pinSetWallet } from './wallet';
 import { hexToAscii } from '../bytes';
-// import { default as base58 } from 'bs58';
 const base58 = require('bs58');
 import deviceReady from '../communication/deviceReady';
+import { query_list, query_checkbox } from './cli_input';
 
-//ToDo discuss with shreyas the format of recieving data
+
+
 //Also uploads the wallet to blockcypher
 const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinType: any) => {
   for (let i = 0; i < xpubraw.length / 224; i++) {
@@ -33,25 +28,97 @@ const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinType: any) => {
   }
 };
 
-const makeCoinIndexList = (coinTypes: any) =>
-  coinTypes.map((c: String) => {
-    switch (c) {
-      case COINS.BTC:
-        return '80000000';
-      case COINS.BTC_TESTNET:
-        return '80000001';
-      case COINS.LTC:
-        return '80000002';
-      case COINS.DASH:
-        return '80000005';
-      case COINS.DOGE:
-        return '80000003';
-    }
+
+
+const makeCoinIndexList = (coinTypes : any) => {
+  let coinsIndexList : any = [];
+
+  for( let i in coinTypes ){
+    let coinType = coinTypes[i];
+    if (coinType === COINS.BTC) //x  
+			coinsIndexList[i] = "80000000";
+		if (coinType === COINS.BTC_TESTNET)
+			coinsIndexList[i] = "80000001";
+		if (coinType === COINS.LTC)
+			coinsIndexList[i] = "80000002";
+		if (coinType === COINS.DASH)
+			coinsIndexList[i] = "80000005";
+		if (coinType === COINS.DOGE)
+			coinsIndexList[i] = "80000003";
+  }
+  return coinsIndexList;
+}
+
+
+
+
+//Only for CLI, Can be used for GUI if compatible.
+export const allWalletsList = async () => {
+  let wallets: any;
+  wallets = await allAvailableWallets();
+  let display_wallets: any = [];
+
+  //make a list for inquirer with name and ID.
+  wallets.forEach((element: any) => {
+    display_wallets.push({
+      name: element.name,
+      value: element._id,
+    });
   });
+
+  return display_wallets;
+}
+
+export const coinsNotAdded = async (wallet_id: any) => {
+
+  let added_coins: any = await getCoinsFromWallet(wallet_id);
+  // console.log(added_coins);
+  let all_coins: any = [
+    {
+      name: 'BITCOIN',
+      value: COINS.BTC,
+    },
+    {
+      name: 'BITCOIN TESTNET',
+      value: COINS.BTC_TESTNET,
+    },
+    {
+      name: 'LITECOIN',
+      value: COINS.LTC,
+    },
+    {
+      name: 'DOGECOIN',
+      value: COINS.DOGE,
+    },
+    {
+      name: 'DASHCOIN',
+      value: COINS.DASH,
+    },
+  ];
+
+  for (let i in all_coins) {
+    if (added_coins.indexOf(all_coins[i].value) > -1) {
+      all_coins[i].disabled = 'Already Added';
+      // console.log("Ping")
+    }
+  }
+
+  return all_coins;
+}
+
 
 export const addCoin = async (wallet_id: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
   connection.open();
+
+
+  //If CLI, take input from user.
+  if (process.env.NODE_ENV == 'cli') {
+    const available_coins = await coinsNotAdded(wallet_id);
+
+    coinTypes = await query_checkbox(available_coins , 'Choose your coins');
+
+  }
 
   const ready = await deviceReady(connection);
 
@@ -68,9 +135,12 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('From Device: User confirmed coins: ');
     console.log(coinsConfirmed);
 
-    // const pinEnteredPin = await recieveCommand(connection, 47);
-    // console.log('From Device: User entered pin: ')
-    // console.log(pinEnteredPin);
+    if(await pinSetWallet(wallet_id)){
+      const pinEnteredPin = await recieveCommand(connection, 47);
+      console.log('From Device: User entered pin: ')
+      console.log(pinEnteredPin);
+    }
+    
 
     const tappedCards = await recieveCommand(connection, 48);
     console.log('From Device: User tapped cards: ');
