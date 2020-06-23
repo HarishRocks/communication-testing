@@ -57,7 +57,7 @@ console.log(process.env.NODE_ENV);
     case 'Add Wallet':
       await addWallet();
       break;
-    case 'Card Authentiation':
+    case 'Card Authentication':
       await cardAuth();
       break;
   }

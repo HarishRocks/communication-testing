@@ -7,7 +7,7 @@ const { ACK_PACKET } = commands;
 export const recieveCommand = (connection: any, command: any) => {
     const resData: any = [];
     return new Promise((resolve, reject) => {
-        connection.on('data', (packet: any) => {
+        const eListener = (packet: any) => {
             // console.log(packet)
             const data = xmodemDecode(packet);
             data.forEach((d) => {
@@ -20,12 +20,13 @@ export const recieveCommand = (connection: any, command: any) => {
                     );
                     connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
                     if (currentPacketNumber === totalPacket) {
-                        connection.removeAllListeners('data')
                         resolve(resData.join(''));
+                        connection.removeListener('data', eListener)
                     }
                 }
             });
-        });
+        }
+        connection.on('data', eListener);
     });
 };
 
@@ -35,7 +36,7 @@ export const recieveCommand = (connection: any, command: any) => {
 export const recieveData = (connection: any) => {
     const resData: any = [];
     return new Promise((resolve, reject) => {
-        connection.on('data', (packet: any) => {
+        const eListener = (packet: any) => {
             const data = xmodemDecode(packet);
             data.forEach((d) => {
                 const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
@@ -46,10 +47,17 @@ export const recieveData = (connection: any) => {
                 );
                 connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
                 if (currentPacketNumber === totalPacket) {
-                    connection.removeAllListeners('data')
                     resolve({ commandType, data: resData.join('') });
+
+                    /**
+                     * We don't have to remove listener for this this one as this
+                     * one is for internal usages, global listener
+                     * in case need to test listener uncomment line below 
+                     */
+                    // connection.removeListener('data', eListener)
                 }
             });
-        });
+        }
+        connection.on('data', eListener);
     });
 };

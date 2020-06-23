@@ -10,7 +10,7 @@ const writePacket = (connection: any, packet: any) => {
     /**
      * Ensure is listener is activated first before writing
      */
-    connection.on('data', (packet: any) => {
+    const eListener = (packet: any) => {
       const data = xmodemDecode(packet);
       data.forEach((d) => {
         const { commandType } = d;
@@ -20,9 +20,12 @@ const writePacket = (connection: any, packet: any) => {
            * We got a packet so just accept
            */
           resolve(true);
+          connection.removeListener('data', eListener);
         }
       });
-    });
+    }
+
+    connection.on('data', eListener);
     /**
      * Write packet
      */
@@ -42,24 +45,22 @@ const writePacket = (connection: any, packet: any) => {
 
 const sendData = async (connection: any, command: number, data: string) => {
   const packetsList = xmodemEncode(data, command);
-  console.log("Packets List "+ packetsList.length);
+  console.log("Packets List " + packetsList.length);
   /**
    * Create a list of each packet and self contained retries and listener
    */
   const dataList = packetsList.map((d) => {
     return async (resolve: any, reject: any) => {
-      let tries = 0;
+      let tries = 1;
       while (tries <= 5) {
         try {
-          tries++;
-          console.log("for command "+ String(command)+ " try no. " +(tries-1))
+          console.log("for command " + String(command) + " try no. " + (tries))
           await writePacket(connection, d);
-          connection.removeAllListeners('data')
           resolve(true);
           return;
-        } catch (e) {console.log("Caught error")}
+        } catch (e) { console.log("Caught error") }
+        tries++;
       }
-      connection.removeAllListeners('data')
       reject(false);
     };
   });
