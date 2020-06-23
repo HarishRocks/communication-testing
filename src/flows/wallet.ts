@@ -1,23 +1,19 @@
 //ToDo add this.token in secrets for public repository
-//ToDo remove all xpub parameters (done)
 //ToDo Get the funds_check function approved by Vipul sir.
 //ToDO fetch the feerate from an API.
 //ToDo solve discripency between generate_metadata, and generate_unsigned_transaction, fundscheck. (Input parameters)
 //ToDo feerate https://api.blockcypher.com/v1/btc/main 
 const bitcoin = require('bitcoinjs-lib');
-// import { default as bip32 } from 'bip32';
 const bip32 = require('bip32');
-import {default as axios} from 'axios';
-// const axios = require('axios');
+import { default as axios } from 'axios';
 const coinselect = require('coinselect');
 import { coins as COINS } from '../config';
 import { intToUintByte, hexToAscii } from '../bytes';
-import { resolve } from 'path';
 import { default as crypto } from 'crypto';
-// const crypto = require('crypto');
-// const Datastore = require('nedb');
 import { default as Datastore } from 'nedb';
 
+
+//Adding coins to the bitcoin library networks
 bitcoin.networks.litecoin = {
 	messagePrefix: '\x19Litecoin Signed Message:\n',
 	bip32: {
@@ -60,6 +56,18 @@ bitcoin.networks.doge = {
 // DOGE
 // DASH
 // LTC
+
+/**
+ * @class Wallet - Creates a Wallet object with its xpub and the coin type.
+ * 
+ * @member coinType - The name of the cryptocurrency
+ * @member xpub - Extended Public key of the wallet
+ * @member external - The name of the list of recieve addresses of the wallet. Named as "re" plus the first 10 bytes of sha256 hash of the xpub.
+ * @member internal - The name of the list of change addresses of the wallet. Named as "ch" plus the first 10 bytes of sha256 hash of the xpub.
+ * @member network - Type of network (Bitcoin, Litecoin).
+ * @coin_url - URL snippet of the coin for api calls.
+ * @api_url - Base URL of the API plus the @coin_url
+ */
 export class Wallet {
 	//xpub in base58
 	coinType: string;
@@ -70,11 +78,18 @@ export class Wallet {
 	coin_url: string;
 	api_url: string;
 
+	/**
+	 * @constructor Takes in the xpub and coin type and creates the wallet object 
+	 * @param xpub - Extended Public key to be used
+	 * @param coinType - The type of coin to be used
+	 * 
+	 * @returns The wallet object
+	 */
 	constructor(xpub: any, coinType: any) {
 		this.coinType = coinType;
 		this.xpub = xpub;
 
-		let hash = crypto.createHash('sha256').update(xpub).digest('hex').slice(0, 10); //because we only need the first 16 bytes
+		let hash = crypto.createHash('sha256').update(xpub).digest('hex').slice(0, 20); //because we only need the first 16 bytes
 
 		this.external = `re${hash}`;
 		this.internal = `ch${hash}`;
@@ -114,6 +129,15 @@ export class Wallet {
 	}
 
 	//chain, 0 for external, 1 for internal
+	/**
+	 * Generated a list of addresses from the start address index till the end address index. Takes the chain index as a parameter.
+	 * 
+	 * @param chain - The chain index. 0 for external (recieve), 1 for internal (change).
+	 * @param start - Start of the address index.
+	 * @param end - Last address index to be generated.
+	 * 
+	 * @returns List of addresses 
+	 */
 	address_list(chain: number, start: number, end: number) {
 		let addresses = [];
 
@@ -125,7 +149,14 @@ export class Wallet {
 		return addresses;
 	}
 
-
+	/**
+	 * Uploades the list of addresses to the server.
+	 * 
+	 * @param name - Name of the list of addresses
+	 * @param addresses - List of addresses
+	 * 
+	 * @returns 1 if successful, 0 if failed
+	 */
 	upload_wallet(name: string, addresses: any) {
 		console.log({
 			"name": name,
@@ -140,12 +171,21 @@ export class Wallet {
 			}
 		).then(function (response: any) {
 			console.log("Adding a new wallet suceessful");
+			return 1;
 		}).catch(function (error: any) {
 			console.log("An error occured:" + error);
+			return 0;
 		});
 	}
 
-
+	/**
+	 * Uploads more addresses to already existing online wallet.
+	 * 
+	 * @param name - name of the wallet in which to add list of addresses.
+	 * @param addresses - list of addresses to add to online wallet
+	 * 
+	 * @returns 1 if successful, 0 if failed
+	 */
 	add_addresses_to_online_wallet(name: string, addresses: any) {
 		axios.post(
 			this.api_url + "wallets/" + name + "/addresses?token=5849c99db61a468db0ab443bab0a9a22",
@@ -155,22 +195,35 @@ export class Wallet {
 			}
 		).then(function (response: any) {
 			console.log("Adding new addresses suceessful");
+			return 1;
 		}).catch(function (error: any) {
 			console.log("An error occured:" + error);
+			return 0;
 		});
 	}
 
-
+	/**
+	 * Fetches the list of addresses from the online wallet.
+	 * 
+	 * @param name name of the list to fetch
+	 * 
+	 * @returns The list of addresses
+	 */
 	async fetch_wallet(name: string) {
 		let res = await axios.get(this.api_url + "/addrs/" + name + "?token=5849c99db61a468db0ab443bab0a9a22");
 		console.log(res["data"]["wallet"]["addresses"]);
 		return res['data'];
 	}
 
+	/**
+	 * Checks both the list of addresses online, the recieve and change addresses, and concatinates the utxos in one list.
+	 * 
+	 * @returns list of unspent output transactions
+	 */
 	async fetch_utxo() {
 		let utxos = []
 
-		let res : any = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		let res: any = await axios.get(this.api_url + "addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
 
 
 		res = res["data"]["txrefs"]
@@ -192,7 +245,7 @@ export class Wallet {
 			utxos.push(utxo);
 		}
 
-		res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		res = await axios.get(this.api_url + "addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
 
 		res = res["data"]["txrefs"]
 
@@ -216,16 +269,21 @@ export class Wallet {
 		return utxos;
 	}
 
+	/**
+	 * @returns Total balance avaliable in this wallet.
+	 */
 	async get_total_balance() {
 
-		let res : any = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
-
+		let res: any = await axios.get(this.api_url + "addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		res = res.data;
+		console.log(res);
 		let balance = res.balance;
 		let unconfirmed_balance = res.unconfirmed_balance;
 		let final_balance = res.final_balance;
+		console.log({})
 
-		res = await axios.get("http://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
-
+		res = await axios.get(this.api_url + "addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true");
+		res = res.data;
 		balance = balance + res.balance;
 		unconfirmed_balance = unconfirmed_balance + res.unconfirmed_balance;
 		final_balance = final_balance + res.final_balance;
@@ -234,9 +292,12 @@ export class Wallet {
 	}
 
 
-	//get unused change address
+	/**
+	 * Scans the online list of change addresses for an unused addresses, if not found, then generates one.
+	 * @returns an unused change address.
+	 */
 	async get_change_address() {
-		let change_addresses : any = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22");
+		let change_addresses: any = await axios.get(this.api_url + "addrs/" + this.internal + "?token=5849c99db61a468db0ab443bab0a9a22");
 		change_addresses = change_addresses["data"];
 
 		let original_length = change_addresses["wallet"]["addresses"].length;
@@ -260,9 +321,11 @@ export class Wallet {
 		return change_add;
 	}
 
-	//get unused recieve address
-	async get_recieve_address() {
-		let recieveAddress : any = await axios.get("https://api.blockcypher.com/v1/btc/test3/addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22");
+	/**
+	 * Scans the online list of recieve addresses for an unused addresses, if not found, then generates one.
+	 * @returns an unused recieve address.
+	 */	async get_recieve_address() {
+		let recieveAddress: any = await axios.get(this.api_url + "addrs/" + this.external + "?token=5849c99db61a468db0ab443bab0a9a22");
 		recieveAddress = recieveAddress["data"];
 
 		let original_length = recieveAddress["wallet"]["addresses"].length;
@@ -285,20 +348,37 @@ export class Wallet {
 		return recieve_add;
 	}
 
+	/**
+	 * Checks if the user has enough funds for a transaction using the coinselect library
+	 * @param targets - A list of objects containing the addresses and its amounts. The amounts should be in the lowest denomination, example satoshi for bitcoin.
+	 * Example 
+	 * ```ts
+	 * targets = [
+	 * 	{
+	 * 		"address" : "iNZ5pzgE9Q7RUtLzeVeQtH1QBXjZZgDUT7",
+	 * 		"value" : 10000
+	 * 	},
+	 * {
+	 * 		"address" : "iChm39XZpJ8uSX5e2xSh8EUFHTbxG4hFVX",
+	 * 		"value" : 12000
+	 * 	}
+	 * ]
+	 * ```
+	 * 
+	 * @returns 1 if user has enough funds, 0 if the user does not.
+	 * 
+	 */
+	async funds_check(targets : any) {
 
-	//checks if the user has enough funds for a transaction using the coinselect library
-	//returns 1 if funds are available, 0 if not. 
-	async funds_check(output_addresses: any, amounts: any) {
+		// let targets: any = [];
 
-		let targets: any = [];
-
-		for (let i in output_addresses) {
-			let t = {
-				"address": output_addresses[i],
-				"value": amounts[i]
-			};
-			targets[i] = t;
-		}
+		// for (let i in output_addresses) {
+		// 	let t = {
+		// 		"address": output_addresses[i],
+		// 		"value": amounts[i]
+		// 	};
+		// 	targets[i] = t;
+		// }
 
 		let utxos = await this.fetch_utxo();
 		let { inputs, outputs, fee } = coinselect(utxos, targets, 10);
@@ -311,7 +391,12 @@ export class Wallet {
 
 	}
 
-
+	/**
+	 * 
+	 * @param address - The address whose chain index is to be found.
+	 * 
+	 * @returns the chain and address index of an address.
+	 */
 	get_chain_address_index(address: string) {
 		//1000 is a soft limit. It suggests that the address provided may be wrong, but that is a rare case
 		let chain_index;
@@ -334,14 +419,26 @@ export class Wallet {
 	}
 
 
-	//Output list is 
-	//let output = [
-	// {
-	//     "address":output_address,
-	//     "value":amount
-	// }];
-	//Yet to complete this function.
-
+	/**
+	 * 
+	 * @param outputList - List of objects of addresses and amounts to send.
+	 * Example 
+	 * ```ts
+	 * targets = [
+	 * 	{
+	 * 		"address" : "iNZ5pzgE9Q7RUtLzeVeQtH1QBXjZZgDUT7",
+	 * 		"value" : 10000
+	 * 	},
+	 * {
+	 * 		"address" : "iChm39XZpJ8uSX5e2xSh8EUFHTbxG4hFVX",
+	 * 		"value" : 12000
+	 * 	}
+	 * ]
+	 * ```
+	 * 
+	 * @returns Metadata for the hardware to generate addresses and verify coins.
+	 * 
+	 */
 	generateMetaData = async (outputList: any) => {
 		let purposeIndex = "8000002c";
 		let coinIndex;
@@ -378,7 +475,7 @@ export class Wallet {
 			input_string = input_string + intToUintByte(ch_addr_in.address_index, 32);
 		}
 
-		let output_count = 1;
+		let output_count = 0;
 		let output_string = '0000000000000000';
 
 		// for (let i in outputs) {
@@ -401,26 +498,65 @@ export class Wallet {
 				change_count++;
 			}
 		}
-		console.log(purposeIndex + " " + coinIndex + " " + accountIndex + " " + intToUintByte(input_count,8) + " " + input_string + " " + intToUintByte(output_count,8) + " " + output_string + " " + intToUintByte(change_count,8) + " " + change_string);
-		return purposeIndex + coinIndex + accountIndex + intToUintByte(input_count,8) + input_string + intToUintByte(output_count,8) + output_string + intToUintByte(change_count,8) + change_string;
+		// console.log(purposeIndex + " " + coinIndex + " " + accountIndex + " " + intToUintByte(input_count, 8) + " " + input_string + " " + intToUintByte(output_count, 8) + " " + output_string + " " + intToUintByte(change_count, 8) + " " + change_string);
+		return purposeIndex + coinIndex + accountIndex + intToUintByte(input_count, 8) + input_string + intToUintByte(output_count, 8) + output_string + intToUintByte(change_count, 8) + change_string;
 
 	}
 
-	//Output list is 
-	//let targets = [
-	// {
-	//     "address":output_address,
-	//     "value":amount
-	// }];
-	//Yet to complete this function.
-	async generate_unsigned_transaction(targets: any) {
+
+	/**
+	 * 
+	 * @param targets - List of objects of addresses and amounts to send.
+	 * Example 
+	 * ```ts
+	 * targets = [
+	 * 	{
+	 * 		"address" : "iNZ5pzgE9Q7RUtLzeVeQtH1QBXjZZgDUT7",
+	 * 		"value" : 10000
+	 * 	},
+	 * {
+	 * 		"address" : "iChm39XZpJ8uSX5e2xSh8EUFHTbxG4hFVX",
+	 * 		"value" : 12000
+	 * 	}
+	 * ]
+	 * ```
+	 * @param fees - 'l' for low, 'm' for medium, 'h' for high.
+	 * 
+	 * @returns Unsigned transaction to send cryptocurrency to the targeted list of addresses with a corrosponding fees.
+	 * 
+	 */
+	async generate_unsigned_transaction(targets: any, fees: any) {
 
 		let change_add = await this.get_change_address();
 
+		let res: any = await axios.get(this.api_url);
+		res = res.data;
+		let fee_rate: any;
+
+		//Blockcypher gives fee_rate in satoshi per kb
+		switch (fees) {
+			case ('l'):
+				fee_rate = res.low_fee_per_kb;
+				break;
+			case ('m'):
+				fee_rate = res.medium_fee_per_kb;
+				break;
+			case ('h'):
+				fee_rate = res.high_fee_per_kb;
+				break;
+			default:
+				throw new Error("Wrong Fees Type");
+		}
+
+		//coinselect takes fees in satoshi per byte
+		fee_rate = Math.round(fee_rate/1024)
 		let utxos = await this.fetch_utxo();
-		let { inputs, outputs, fee } = coinselect(utxos, targets, 10);
+		let { inputs, outputs, fee } = coinselect(utxos, targets, fee_rate);
 
-
+		if (!inputs || !outputs) {
+			console.log("Insufficient funds");
+			return 0;
+		}
 		for (let i in outputs) {
 			if (!("address" in outputs[i])) {
 				outputs[i]["address"] = change_add;
@@ -457,9 +593,12 @@ export class Wallet {
 		}
 
 		console.log(tx.toHex());
-		return tx.toHex();
+		return tx.toHex() + "01000000";
 	}
 
+	/**
+	 * @returns a derivation path to a new and unused recieve address
+	 */
 	create_derivation_path = async () => {
 		let recieve_address = await this.get_recieve_address();
 
@@ -481,13 +620,16 @@ export class Wallet {
 
 		let internal_external_index = "00000000";
 
-		let address_index = intToUintByte(this.get_chain_address_index(recieve_address).address_index , 32);
+		let address_index = intToUintByte(this.get_chain_address_index(recieve_address).address_index, 32);
 
 		return purposeIndex + coinIndex + accountIndex + internal_external_index + address_index;
 
 	}
 }
 
+/**
+ * @returns all wallets existing in the local database.
+ */
 export const allAvailableWallets = () => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
@@ -499,6 +641,14 @@ export const allAvailableWallets = () => {
 	})
 }
 
+
+/**
+ * 
+ * @param wallet_id 
+ * @param coinType 
+ * 
+ * @returns Extended Public key of a pirticular coin and wallet.
+ */
 export const getXpubFromWallet = (wallet_id: any, coinType: any) => {
 	return new Promise(async (resolve, reject) => {
 		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
@@ -519,18 +669,30 @@ export const getXpubFromWallet = (wallet_id: any, coinType: any) => {
 }
 
 
-export const extractWalletDetails = (rawData : any) => {
+/**
+ * Extracts the wallet name (16 bytes), password set status (1 byte), and wallet_id (remaining) from raw wallet data from device
+ * @param rawData raw wallet details from device
+ *  
+ * @returns object containing wallet name, password Set, and id. 
+ */
+export const extractWalletDetails = (rawData: any) => {
 
 	let name = hexToAscii(String(rawData).slice(0, 32));
 	let passwordSet = String(rawData).slice(32, 34);
 	let _id = String(rawData).slice(34);
 
-	return {name, passwordSet, _id};
+	return { name, passwordSet, _id };
 }
 
 //Author: Gaurav Agarwal
 //@method Takes raw data, converts the name from hex to String, and keeps the id in hex itself, and stores it in the database.
 //@var rawData : hex data from device
+
+/**
+ * Extracts wallet details from raw data and stores them in the local database. 
+ * 
+ * @param rawData - raw wallet details from device
+ */
 export const addWalletToDB = (rawData: any) => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
@@ -539,6 +701,11 @@ export const addWalletToDB = (rawData: any) => {
 	db.insert({ name: name, passwordSet: passwordSet, _id: _id, xPubs: [] });
 }
 
+/**
+ * Deletes wallet from the local database.
+ * 
+ * @param wallet_id - Id of the wallet to be deleted.
+ */
 export const deleteWalletfromDB = (wallet_id: any) => {
 	let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
@@ -549,17 +716,32 @@ export const deleteWalletfromDB = (wallet_id: any) => {
 	});
 }
 
-export const addCoinsToDB = (wallet_id : any, account_xpub: any, coinType: any) => {
-	return new Promise(async (resolve,reject)=>{
+
+
+/**
+ * Adds the coin type and its corrosponding xpub to the database.
+ * 
+ * @param wallet_id - Id of the wallet to be updated
+ * @param account_xpub - Extended Public key.
+ * @param coinType - Name of the Cryptocurrency
+ */
+export const addCoinsToDB = (wallet_id: any, account_xpub: any, coinType: any) => {
+	return new Promise(async (resolve, reject) => {
 		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 		db.update({ _id: wallet_id }, { $push: { xPubs: { coinType: coinType, xPub: account_xpub } } }, {}, function () {
 			console.log(`Added xPub : ${account_xpub} to the database.`);
 			resolve(true);
-		  });
-	  
-	})
+		});
+	});
 }
 
+
+/**
+ * Retrives the coins which are saved in the local database for a pirticular wallet
+ * @param wallet_id - Id of the wallet to retrive coins.
+ * 
+ * @returns A list of coin Types.
+ */
 export const getCoinsFromWallet = (wallet_id: any) => {
 	return new Promise(async (resolve, reject) => {
 		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
@@ -576,4 +758,23 @@ export const getCoinsFromWallet = (wallet_id: any) => {
 
 }
 
-// module.exports = {Wallet};
+/**
+ * Checks if a wallet has a password set or not.
+ * @param wallet_id - Id of the wallet.
+ * 
+ * @returns 1 if password is set, 0 if no password is set.
+ */
+export const pinSetWallet = async (wallet_id: any) => {
+	return new Promise(async (resolve, reject) => {
+		let db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+
+		let wallet_details: any;
+		db.findOne({ _id: wallet_id }, function (err: any, doc: any) {
+			let coins: any = [];
+			for (let i in doc.xPubs) {
+				coins[i] = doc.xPubs[i].coinType;
+			}
+			resolve(!!doc.passwordSet);
+		});
+	});
+}

@@ -12,6 +12,7 @@ const writePacket = (connection: any, packet: any) => {
      */
     const eListener = (packet: any) => {
       const data = xmodemDecode(packet);
+      // console.log(data);
       data.forEach((d) => {
         const { commandType } = d;
         if (Number(commandType) === commands.ACK_PACKET) {
