@@ -1,4 +1,4 @@
-//DEVICE_CONFIRM_FOR_DFU_MODE not used
+// DEVICE_CONFIRM_FOR_DFU_MODE not used
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { recieveData, recieveCommand } from '../communication/recieveData';
@@ -46,7 +46,7 @@ const upgrade = async (connection: any) => {
 };
 
 export const deviceAuthandUpgrade = async () => {
-  //will get xPub from wallet_id and the coin_type
+  // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
   connection.open();

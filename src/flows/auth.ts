@@ -1,4 +1,4 @@
-//DEVICE_CONFIRM_FOR_DFU_MODE not used
+// DEVICE_CONFIRM_FOR_DFU_MODE not used
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
@@ -14,14 +14,14 @@ const nulldata = '00000000';
 export const cyBaseURL = 'http://3.6.66.118';
 
 export const getAccessToken = async (serialNumber: any, signature: any) => {
-  let res: any = await axios.post(`${cyBaseURL}/auth/login`, {
-    serialNumber: serialNumber,
-    signature: signature,
+  const res: any = await axios.post(`${cyBaseURL}/auth/login`, {
+    serialNumber,
+    signature,
   });
 
   console.log('autheticated');
-  let accessToken = res.data.token;
-  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  const accessToken = res.data.token;
+  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
   return accessToken;
 };
@@ -30,12 +30,12 @@ export const getRandomNumFromServer = async (
   serialNumber: any,
   firmwareVersion: any
 ) => {
-  let res: any = await axios.post(`${cyBaseURL}/randomNumber`, {
-    serialNumber: serialNumber,
-    firmwareVersion: firmwareVersion,
+  const res: any = await axios.post(`${cyBaseURL}/randomNumber`, {
+    serialNumber,
+    firmwareVersion,
   });
 
-  let randomNumber = res.data;
+  const randomNumber = res.data;
   return randomNumber;
 };
 
@@ -44,10 +44,10 @@ export const verifySignedChallenge = async (
   signedChallenge: any,
   firmwareVersion: any
 ) => {
-  let res: any = await axios.post(`${cyBaseURL}/verify`, {
-    serialNumber: serialNumber,
+  const res: any = await axios.post(`${cyBaseURL}/verify`, {
+    serialNumber,
     signature: signedChallenge,
-    firmwareVersion: firmwareVersion,
+    firmwareVersion,
   });
 
   if (res.data) {
@@ -58,7 +58,7 @@ export const verifySignedChallenge = async (
 };
 
 export const deviceAuth = async () => {
-  //will get xPub from wallet_id and the coin_type
+  // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
   connection.open();

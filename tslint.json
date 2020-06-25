@@ -15,7 +15,9 @@
     "triple-equals": [true, "allow-undefined-check"]
   },
   "rules": {
-    "no-console": false
+    "no-console": false,
+    "comment-format": [false],
+    "variable-name": [true,"allow-snake-case"]
   },
   "rulesDirectory": []
 }

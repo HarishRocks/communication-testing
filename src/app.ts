@@ -1,4 +1,4 @@
-//ToDo ask suraj sir about the added_coins in recievetransaction flow
+// ToDo ask suraj sir about the added_coins in recievetransaction flow
 import { addWallet } from './flows/addWallet';
 import { addCoin, allWalletsList, coinsNotAdded } from './flows/addCoin';
 import cardAuth from './flows/cardAuth';
@@ -25,7 +25,7 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
       await cardAuth();
       break;
     case 'Select Wallet':
-      let wallet_id = await query_list(
+      const wallet_id = await query_list(
         await allWalletsList(),
         'Select your wallet'
       );

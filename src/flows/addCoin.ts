@@ -30,14 +30,14 @@ import { query_list, query_checkbox } from './cli_input';
  */
 const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinTypes: any) => {
   for (let i = 0; i < xpubraw.length / 224; i++) {
-    let x = xpubraw.slice(i * 224, i * 224 + 222);
-    var account_xpub = hexToAscii(x);
+    const x = xpubraw.slice(i * 224, i * 224 + 222);
+    const account_xpub = hexToAscii(x);
 
     await addCoinsToDB(wallet_id, account_xpub, coinTypes[i]);
 
-    let w = new Wallet(account_xpub, coinTypes[i]);
-    let re_addr = w.address_list(0, 0, 20);
-    let ch_addr = w.address_list(1, 0, 20);
+    const w = new Wallet(account_xpub, coinTypes[i]);
+    const re_addr = w.address_list(0, 0, 20);
+    const ch_addr = w.address_list(1, 0, 20);
     w.upload_wallet(w.external, re_addr);
     w.upload_wallet(w.internal, ch_addr);
     // console.log(w.external);
@@ -57,12 +57,12 @@ const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinTypes: any) => {
  * @returns - Array containing the coin indexes
  */
 const makeCoinIndexList = (coinTypes: any) => {
-  let coinsIndexList: any = [];
+  const coinsIndexList: any = [];
 
-  for (let i in coinTypes) {
-    let coinType = coinTypes[i];
+  for (const i in coinTypes) {
+    const coinType = coinTypes[i];
     if (coinType === COINS.BTC)
-      //x
+      // x
       coinsIndexList[i] = '80000000';
     if (coinType === COINS.BTC_TESTNET) coinsIndexList[i] = '80000001';
     if (coinType === COINS.LTC) coinsIndexList[i] = '80000002';
@@ -96,9 +96,9 @@ const makeCoinIndexList = (coinTypes: any) => {
 export const allWalletsList = async () => {
   let wallets: any;
   wallets = await allAvailableWallets();
-  let display_wallets: any = [];
+  const display_wallets: any = [];
 
-  //make a list for inquirer with name and ID.
+  // make a list for inquirer with name and ID.
   wallets.forEach((element: any) => {
     display_wallets.push({
       name: element.name,
@@ -122,9 +122,9 @@ export const allWalletsList = async () => {
  * @returns List of objects containing coin names.
  */
 export const coinsNotAdded = async (wallet_id: any) => {
-  let added_coins: any = await getCoinsFromWallet(wallet_id);
+  const added_coins: any = await getCoinsFromWallet(wallet_id);
   // console.log(added_coins);
-  let all_coins: any = [
+  const all_coins: any = [
     {
       name: 'BITCOIN',
       value: COINS.BTC,
@@ -147,7 +147,7 @@ export const coinsNotAdded = async (wallet_id: any) => {
     },
   ];
 
-  for (let i in all_coins) {
+  for (const i in all_coins) {
     if (added_coins.indexOf(all_coins[i].value) > -1) {
       all_coins[i].disabled = 'Already Added';
       // console.log("Ping")
@@ -170,7 +170,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
   connection.open();
 
-  //If CLI, take input from user.
+  // If CLI, take input from user.
   if (process.env.NODE_ENV!.trim() == 'cli') {
     const available_coins = await coinsNotAdded(wallet_id);
 
@@ -179,12 +179,12 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
 
   const ready = await deviceReady(connection);
 
-  //Only if device is ready.
+  // Only if device is ready.
   if (ready) {
     console.log(`Desktop : Sending Wallet ID and Coins.`);
 
-    let coins = makeCoinIndexList(coinTypes);
-    let num_coins = coins.length;
+    const coins = makeCoinIndexList(coinTypes);
+    const num_coins = coins.length;
     await sendData(connection, 45, wallet_id + coins.join(''));
     console.log('Message: ' + wallet_id + coins.join('') + '\n\n');
 

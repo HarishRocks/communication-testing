@@ -20,8 +20,8 @@ export const generateSerialNumber = async () => {
 
 export const uploadPublicKey = async (serialNumber: any, publicKey: any) => {
   const res = await axios.post(`${cyBaseURL}/addDevice`, {
-    serialNumber: serialNumber,
-    publicKey: publicKey,
+    serialNumber,
+    publicKey,
   });
 
   if (res.data) {
@@ -30,7 +30,7 @@ export const uploadPublicKey = async (serialNumber: any, publicKey: any) => {
   return 0;
 };
 
-//ToDo
+// ToDo
 export const deletePublicKey = (serialNumber: any, publicKey: any) => {
   return 1;
 };
@@ -41,7 +41,7 @@ export const provision = async () => {
 
   // const ready = await deviceReady(connection);
   const ready = 1;
-  //Only if device is ready.
+  // Only if device is ready.
   if (ready) {
     console.log(`Desktop : Requesting Provision Status.`);
 

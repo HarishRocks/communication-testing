@@ -14,7 +14,7 @@ export const addWallet = async () => {
 
   const ready = await deviceReady(connection);
 
-  //only proceed if device is ready, else quit.
+  // only proceed if device is ready, else quit.
   if (ready) {
     console.log(`\n\nDesktop : Sending Add Wallet Command.\n\n`);
     await sendData(connection, 43, '00');
@@ -36,8 +36,8 @@ export const addWallet = async () => {
   });
 };
 
-//ONLY FOR TESTING PURPOSES RIGHT NOW
-//Not Required Anymore
+// ONLY FOR TESTING PURPOSES RIGHT NOW
+// Not Required Anymore
 // export const addWalletDeviceInitiated = async () => {
 
 //   const { connection, serial } = await createPort();

@@ -6,7 +6,7 @@ const { CHUNK_SIZE, START_OF_FRAME } = constants;
 
 const xmodemEncode = (data: string, commandType: number) => {
   const rounds = Math.ceil(data.length / CHUNK_SIZE);
-  const packetList: Array<string> = [];
+  const packetList: string[] = [];
   for (let i = 1; i <= rounds; i += 1) {
     const currentPacketNumber = intToUintByte(i, radix.currentPacketNumber);
     const totalPacket = intToUintByte(rounds, radix.totalPacket);
@@ -31,7 +31,7 @@ const xmodemEncode = (data: string, commandType: number) => {
 
 const xmodemDecode = (param: Buffer) => {
   let data = param.toString('hex').toUpperCase();
-  const packetList: Array<any> = [];
+  const packetList: any[] = [];
   let offset = data.indexOf(START_OF_FRAME);
 
   while (data.length > 0) {

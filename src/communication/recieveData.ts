@@ -3,7 +3,7 @@ import { ackData } from '../communication/sendData';
 import { commands } from '../config';
 const { ACK_PACKET } = commands;
 
-//returns the recieved data value in hex for the supplied command
+// returns the recieved data value in hex for the supplied command
 export const recieveCommand = (connection: any, command: any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
@@ -30,8 +30,8 @@ export const recieveCommand = (connection: any, command: any) => {
   });
 };
 
-//returns the commandType and the data recieved from device
-//open channel: will catch every command and data
+// returns the commandType and the data recieved from device
+// open channel: will catch every command and data
 export const recieveData = (connection: any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {

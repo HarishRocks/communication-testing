@@ -14,9 +14,9 @@ import deviceReady from '../communication/deviceReady';
 import { query_list } from './cli_input';
 
 export const allAvailableCoins = async (wallet_id: any) => {
-  let added_coins: any = await getCoinsFromWallet(wallet_id);
+  const added_coins: any = await getCoinsFromWallet(wallet_id);
   // console.log(added_coins);
-  let all_coins: any = [
+  const all_coins: any = [
     {
       name: 'BITCOIN',
       value: COINS.BTC,
@@ -39,7 +39,7 @@ export const allAvailableCoins = async (wallet_id: any) => {
     },
   ];
 
-  for (let i in all_coins) {
+  for (const i in all_coins) {
     if (added_coins.indexOf(all_coins[i].value) == -1) {
       delete all_coins[i];
       // console.log("Ping")
@@ -52,13 +52,13 @@ export const allAvailableCoins = async (wallet_id: any) => {
 };
 
 export const recieveTransaction = async (wallet_id: any, coinType: any) => {
-  //will get xPub from wallet_id and the coin_type
+  // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
   connection.open();
 
   if (process.env.NODE_ENV!.trim() == 'cli') {
-    let coins_available = await allAvailableCoins(wallet_id);
+    const coins_available = await allAvailableCoins(wallet_id);
     coinType = await query_list(coins_available, 'Select Coin type');
   }
 
@@ -67,13 +67,13 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
   if (ready) {
     // wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
     // coinType = COINS.BTC_TESTNET;
-    let xpub = await getXpubFromWallet(wallet_id, coinType);
+    const xpub = await getXpubFromWallet(wallet_id, coinType);
 
     const wallet = new Wallet(xpub, coinType);
     // console.log("Total Amount in your wallet")
     // console.log(await wallet.get_total_balance());
-    let derivation_path = await wallet.create_derivation_path();
-    let recieve_address = await wallet.get_recieve_address();
+    const derivation_path = await wallet.create_derivation_path();
+    const recieve_address = await wallet.get_recieve_address();
 
     console.log('Destop : Sending Wallet ID and Derivation Path.');
     console.log('Wallet id: ' + wallet_id);

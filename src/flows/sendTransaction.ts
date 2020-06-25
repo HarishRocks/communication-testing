@@ -1,5 +1,5 @@
-//ToDo, create a universal coinType object for refrence in whole system - done (kind of)
-//ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
+// ToDo, create a universal coinType object for refrence in whole system - done (kind of)
+// ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
 import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
@@ -10,16 +10,16 @@ import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
 
-//Bitcoin (Mainnet) - 00
-//Bitcoin (Testnet) - 6f
-//Litecoin - 30
-//Dash - 4c
-//Doge - 1e
+// Bitcoin (Mainnet) - 00
+// Bitcoin (Testnet) - 6f
+// Litecoin - 30
+// Dash - 4c
+// Doge - 1e
 
-//Get Coin type from address
+// Get Coin type from address
 export const getCoinType = (address: string) => {
-  let decodedString = base58.decode(address).toString('hex');
-  let addressVersion = decodedString.slice(0, 2);
+  const decodedString = base58.decode(address).toString('hex');
+  const addressVersion = decodedString.slice(0, 2);
 
   if (addressVersion === '00') return COINS.BTC;
   if (addressVersion === '6f') return COINS.BTC_TESTNET;
@@ -28,12 +28,12 @@ export const getCoinType = (address: string) => {
   if (addressVersion === '1e') return COINS.DOGE;
 };
 
-//ToDo
+// ToDo
 const broadcastTransaction = (transaction: any) => {
   return 1;
 };
 
-//Only for CLI
+// Only for CLI
 const makeOutputList = async () => {
   let rec_addr = await query_input('Input the Reciepient Address');
 
@@ -49,7 +49,7 @@ const makeOutputList = async () => {
   ];
 
   while (1) {
-    let selection = await query_list(
+    const selection = await query_list(
       ['yes', 'no'],
       'Do you want to add more addresses?'
     );
@@ -59,7 +59,7 @@ const makeOutputList = async () => {
 
       send_amount = await query_number('Input the amount');
 
-      let tempCoinType = getCoinType(rec_addr);
+      const tempCoinType = getCoinType(rec_addr);
 
       if (coinType === tempCoinType) {
         output_list.push({
@@ -79,26 +79,26 @@ const makeOutputList = async () => {
   return { output_list, coinType };
 };
 
-//Output list is
-//let output = [
+// Output list is
+// let output = [
 // {
 //     "address":output_address,
 //     "value":amount
 // }];
-//Yet to complete this function.
+// Yet to complete this function.
 export const sendTransaction = async (
   wallet_id: any,
   output_list: any,
   coinType: any,
   fee_rate: any
 ) => {
-  //will get xPub from wallet_id and the coin_type
+  // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
   connection.open();
 
   if (process.env.NODE_ENV!.trim() == 'cli') {
-    let t = await makeOutputList();
+    const t = await makeOutputList();
     output_list = t.output_list;
     coinType = t.coinType;
 
@@ -115,10 +115,10 @@ export const sendTransaction = async (
   const ready = await deviceReady(connection);
 
   if (ready) {
-    let xpub = await getXpubFromWallet(wallet_id, coinType);
+    const xpub = await getXpubFromWallet(wallet_id, coinType);
 
-    let wallet = new Wallet(xpub, coinType);
-    let txn_metadata = await wallet.generateMetaData(output_list);
+    const wallet = new Wallet(xpub, coinType);
+    const txn_metadata = await wallet.generateMetaData(output_list);
 
     console.log('Destop : Sending Wallet ID and Txn Metadata.');
     console.log('Wallet id: ' + wallet_id);
@@ -135,7 +135,7 @@ export const sendTransaction = async (
       return 0;
     }
 
-    let unsigned_txn: any = await wallet.generate_unsigned_transaction(
+    const unsigned_txn: any = await wallet.generate_unsigned_transaction(
       output_list,
       'm'
     );
@@ -162,7 +162,7 @@ export const sendTransaction = async (
     console.log('From Device (Signed Transaction) : ');
     console.log(signedTransaction);
 
-    let s = broadcastTransaction(signedTransaction);
+    const s = broadcastTransaction(signedTransaction);
 
     if (s !== undefined) {
       await sendData(connection, 42, '01');

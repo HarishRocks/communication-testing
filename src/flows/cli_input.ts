@@ -15,7 +15,7 @@ export const query_list = async (
     {
       type: 'list',
       name: 'choice',
-      message: message,
+      message,
       choices: selections,
     },
   ]);
@@ -27,7 +27,7 @@ export const query_input = async (message: string) => {
     {
       type: 'input',
       name: 'choice',
-      message: message,
+      message,
     },
   ]);
   return q.choice;
@@ -41,7 +41,7 @@ export const query_checkbox = async (
     {
       type: 'checkbox',
       name: 'choice',
-      message: message,
+      message,
       choices: selections,
     },
   ]);
@@ -54,7 +54,7 @@ export const query_number = async (message: string) => {
     {
       type: 'number',
       name: 'choice',
-      message: message,
+      message,
     },
   ]);
   return q.choice;
