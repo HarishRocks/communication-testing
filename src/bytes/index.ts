@@ -47,7 +47,7 @@ const intToUintByte = (ele: any, _radix: number) => {
   return res + val;
 };
 
-const hexToAscii = (str1 : any) => {
+const hexToAscii = (str1: any) => {
   const hex = str1.toString();
   let str = '';
   for (let n = 0; n < hex.length; n += 2) {

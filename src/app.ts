@@ -6,9 +6,8 @@ import { sendTransaction } from './flows/sendTransaction';
 import { recieveTransaction } from './flows/recieveTransaction';
 import { query_list } from './flows/cli_input';
 import customAction from './flows/custom';
-import { provision } from "./flows/provision";
-import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
-
+import { provision } from './flows/provision';
+import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
 
 (async () => {
   let selection = await query_list([
@@ -26,49 +25,52 @@ import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
       await cardAuth();
       break;
     case 'Select Wallet':
-      let wallet_id = await query_list(await allWalletsList() , 'Select your wallet');
+      let wallet_id = await query_list(
+        await allWalletsList(),
+        'Select your wallet'
+      );
 
       selection = await query_list([
         'Add Coin',
         'Send Transaction',
-        'Recieve Transaction'
+        'Recieve Transaction',
       ]);
 
-      switch(selection){
+      switch (selection) {
         case 'Add Coin':
           await addCoin(wallet_id, undefined);
           break;
         case 'Send Transaction':
-          await sendTransaction(wallet_id , undefined , undefined, undefined);
+          await sendTransaction(wallet_id, undefined, undefined, undefined);
           break;
 
         case 'Recieve Transaction':
-          await recieveTransaction(wallet_id , undefined);
+          await recieveTransaction(wallet_id, undefined);
           break;
       }
       break;
     case 'Custom':
       const actions = [
         {
-          type:'SEND',
-          command:70,
-          data: '00'
+          type: 'SEND',
+          command: 70,
+          data: '00',
         },
         {
-          type:'RECEIVE',
-          command:13,
+          type: 'RECEIVE',
+          command: 13,
         },
         {
-          type:'SEND',
-          command:16,
-          data: '12345678'
+          type: 'SEND',
+          command: 16,
+          data: '12345678',
         },
         {
-          type:'RECEIVE',
-          command:17,
-        }
-      ]
-        await customAction(actions)
+          type: 'RECEIVE',
+          command: 17,
+        },
+      ];
+      await customAction(actions);
       break;
   }
 })().catch((err) => console.log(err));

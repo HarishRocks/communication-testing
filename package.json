@@ -8,6 +8,7 @@
     "dev": "cross-env NODE_ENV=cli yarn live",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/app.js",
+    "lint": "prettier --write 'src/**/*.ts'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -32,9 +33,16 @@
     "@types/node": "^14.0.11",
     "@types/serialport": "^8.0.1",
     "cross-env": "^7.0.2",
+    "husky": "^4.2.5",
     "onchange": "^7.0.2",
+    "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
     "typescript": "^3.9.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
