@@ -177,7 +177,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
 
 
   //If CLI, take input from user.
-  if (process.env.NODE_ENV == 'cli ') {
+  if (process.env.NODE_ENV.trim() == 'cli') {
     const available_coins = await coinsNotAdded(wallet_id);
 
     coinTypes = await query_checkbox(available_coins , 'Choose your coins');
