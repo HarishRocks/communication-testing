@@ -5,7 +5,7 @@ import cardAuth from './flows/cardAuth';
 import { sendTransaction } from './flows/sendTransaction';
 import { recieveTransaction } from './flows/recieveTransaction';
 import { query_list } from './flows/cli_input';
-
+import customAction from './flows/custom';
 import { provision } from "./flows/provision";
 import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
 
@@ -15,6 +15,7 @@ import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
     'Select Wallet',
     'Add Wallet',
     'Card Authentication',
+    'Custom',
   ]);
 
   switch (selection) {
@@ -25,7 +26,6 @@ import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
       await cardAuth();
       break;
     case 'Select Wallet':
-      
       let wallet_id = await query_list(await allWalletsList() , 'Select your wallet');
 
       selection = await query_list([
@@ -38,7 +38,6 @@ import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
         case 'Add Coin':
           await addCoin(wallet_id, undefined);
           break;
-        
         case 'Send Transaction':
           await sendTransaction(wallet_id , undefined , undefined, undefined);
           break;
@@ -47,6 +46,29 @@ import { deviceAuthandUpgrade } from "./flows/authAndUpgrade";
           await recieveTransaction(wallet_id , undefined);
           break;
       }
+      break;
+    case 'Custom':
+      const actions = [
+        {
+          type:'SEND',
+          command:70,
+          data: '00'
+        },
+        {
+          type:'RECEIVE',
+          command:13,
+        },
+        {
+          type:'SEND',
+          command:16,
+          data: '12345678'
+        },
+        {
+          type:'RECEIVE',
+          command:17,
+        }
+      ]
+        await customAction(actions)
       break;
   }
 })().catch((err) => console.log(err));
