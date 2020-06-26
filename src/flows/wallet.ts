@@ -866,25 +866,25 @@ export const pinSetWallet = async (wallet_id: any) => {
   });
 };
 
-export const balanceAllCoins = async (wallet_id : any) => {
-  const all_coins : any = getCoinsFromWallet(wallet_id);
+export const balanceAllCoins = async (wallet_id: any) => {
+  const all_coins: any = getCoinsFromWallet(wallet_id);
 
-  let balance : any = [];
+  let balance: any = [];
 
-  for(let i in all_coins){
+  for (let i in all_coins) {
     let xpub = await getXpubFromWallet(wallet_id, all_coins[i]);
-    let w = new Wallet(xpub,all_coins[i]);
+    let w = new Wallet(xpub, all_coins[i]);
 
-    let b = { coinType : all_coins[i] , balance : w.get_total_balance};
+    let b = { coinType: all_coins[i], balance: w.get_total_balance };
     balance.push(b);
   }
 
   return balance;
-}
+};
 
 //only for CLI;
-export const displayAllBalance = (balance : any) => {
-  for(let i in balance){
+export const displayAllBalance = (balance: any) => {
+  for (let i in balance) {
     console.log(`${i} : ${balance[i]}`);
   }
-}
+};

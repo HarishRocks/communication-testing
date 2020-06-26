@@ -4,7 +4,13 @@ import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-import { getXpubFromWallet, Wallet, pinSetWallet, balanceAllCoins, displayAllBalance } from './wallet';
+import {
+  getXpubFromWallet,
+  Wallet,
+  pinSetWallet,
+  balanceAllCoins,
+  displayAllBalance,
+} from './wallet';
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
@@ -98,7 +104,6 @@ export const sendTransaction = async (
   connection.open();
 
   if (process.env.NODE_ENV!.trim() == 'cli') {
-
     let balance = await balanceAllCoins(wallet_id);
     displayAllBalance(balance);
 
@@ -137,6 +142,11 @@ export const sendTransaction = async (
         'From Device: User did not confirm coin.\nExiting Function...'
       );
       return 0;
+    }
+
+    if(!(await wallet.funds_check(wallet_id))){
+      console.log("Funds not sufficient");
+      return;
     }
 
     const unsigned_txn: any = await wallet.generate_unsigned_transaction(

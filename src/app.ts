@@ -10,7 +10,7 @@ import { provision } from './flows/provision';
 import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
 
 (async () => {
-  while(1){
+  while (1) {
     await (async () => {
       let selection = await query_list([
         'Select Wallet',
@@ -18,7 +18,7 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
         'Card Authentication',
         'Custom',
       ]);
-    
+
       switch (selection) {
         case 'Add Wallet':
           await addWallet();
@@ -31,13 +31,13 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
             await allWalletsList(),
             'Select your wallet'
           );
-    
+
           selection = await query_list([
             'Add Coin',
             'Send Transaction',
             'Recieve Transaction',
           ]);
-    
+
           switch (selection) {
             case 'Add Coin':
               await addCoin(wallet_id, undefined);
@@ -45,7 +45,7 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
             case 'Send Transaction':
               await sendTransaction(wallet_id, undefined, undefined, undefined);
               break;
-    
+
             case 'Recieve Transaction':
               await recieveTransaction(wallet_id, undefined);
               break;
@@ -77,8 +77,7 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
       }
     })().catch((err) => console.log(err));
   }
-})().catch((err) => console.log(err));;
-
+})().catch((err) => console.log(err));
 
 // provision();
 // deviceAuthandUpgrade();
