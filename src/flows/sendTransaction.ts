@@ -4,7 +4,7 @@ import { createPort } from '../communication/port';
 import { sendData } from '../communication/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, recieveCommand } from '../communication/recieveData';
-import { getXpubFromWallet, Wallet, pinSetWallet } from './wallet';
+import { getXpubFromWallet, Wallet, pinSetWallet, balanceAllCoins, displayAllBalance } from './wallet';
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
@@ -37,7 +37,7 @@ const broadcastTransaction = (transaction: any) => {
 const makeOutputList = async () => {
   let rec_addr = await query_input('Input the Reciepient Address');
 
-  let send_amount = await query_number('Input the amount');
+  let send_amount = await query_number('Input the amount in satoshis');
 
   const coinType = getCoinType(rec_addr);
 
@@ -98,6 +98,10 @@ export const sendTransaction = async (
   connection.open();
 
   if (process.env.NODE_ENV!.trim() == 'cli') {
+
+    let balance = await balanceAllCoins(wallet_id);
+    displayAllBalance(balance);
+
     const t = await makeOutputList();
     output_list = t.output_list;
     coinType = t.coinType;
@@ -116,7 +120,7 @@ export const sendTransaction = async (
 
   if (ready) {
     const xpub = await getXpubFromWallet(wallet_id, coinType);
-
+    //ToDo: check if xpub is generated, if not, give error.
     const wallet = new Wallet(xpub, coinType);
     const txn_metadata = await wallet.generateMetaData(output_list);
 

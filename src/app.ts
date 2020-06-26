@@ -10,69 +10,75 @@ import { provision } from './flows/provision';
 import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
 
 (async () => {
-  let selection = await query_list([
-    'Select Wallet',
-    'Add Wallet',
-    'Card Authentication',
-    'Custom',
-  ]);
-
-  switch (selection) {
-    case 'Add Wallet':
-      await addWallet();
-      break;
-    case 'Card Authentication':
-      await cardAuth();
-      break;
-    case 'Select Wallet':
-      const wallet_id = await query_list(
-        await allWalletsList(),
-        'Select your wallet'
-      );
-
-      selection = await query_list([
-        'Add Coin',
-        'Send Transaction',
-        'Recieve Transaction',
+  while(1){
+    await (async () => {
+      let selection = await query_list([
+        'Select Wallet',
+        'Add Wallet',
+        'Card Authentication',
+        'Custom',
       ]);
-
+    
       switch (selection) {
-        case 'Add Coin':
-          await addCoin(wallet_id, undefined);
+        case 'Add Wallet':
+          await addWallet();
           break;
-        case 'Send Transaction':
-          await sendTransaction(wallet_id, undefined, undefined, undefined);
+        case 'Card Authentication':
+          await cardAuth();
           break;
-
-        case 'Recieve Transaction':
-          await recieveTransaction(wallet_id, undefined);
+        case 'Select Wallet':
+          const wallet_id = await query_list(
+            await allWalletsList(),
+            'Select your wallet'
+          );
+    
+          selection = await query_list([
+            'Add Coin',
+            'Send Transaction',
+            'Recieve Transaction',
+          ]);
+    
+          switch (selection) {
+            case 'Add Coin':
+              await addCoin(wallet_id, undefined);
+              break;
+            case 'Send Transaction':
+              await sendTransaction(wallet_id, undefined, undefined, undefined);
+              break;
+    
+            case 'Recieve Transaction':
+              await recieveTransaction(wallet_id, undefined);
+              break;
+          }
+          break;
+        case 'Custom':
+          const actions = [
+            {
+              type: 'SEND',
+              command: 70,
+              data: '00',
+            },
+            {
+              type: 'RECEIVE',
+              command: 13,
+            },
+            {
+              type: 'SEND',
+              command: 16,
+              data: '12345678',
+            },
+            {
+              type: 'RECEIVE',
+              command: 17,
+            },
+          ];
+          await customAction(actions);
           break;
       }
-      break;
-    case 'Custom':
-      const actions = [
-        {
-          type: 'SEND',
-          command: 70,
-          data: '00',
-        },
-        {
-          type: 'RECEIVE',
-          command: 13,
-        },
-        {
-          type: 'SEND',
-          command: 16,
-          data: '12345678',
-        },
-        {
-          type: 'RECEIVE',
-          command: 17,
-        },
-      ];
-      await customAction(actions);
-      break;
+    })().catch((err) => console.log(err));
   }
-})().catch((err) => console.log(err));
+})().catch((err) => console.log(err));;
+
+
 // provision();
 // deviceAuthandUpgrade();
