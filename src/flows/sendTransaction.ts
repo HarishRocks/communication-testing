@@ -15,6 +15,8 @@ import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
+import axios from 'axios';
+const log = require('simple-node-logger').createSimpleFileLogger('project.log');
 
 // Bitcoin (Mainnet) - 00
 // Bitcoin (Testnet) - 6f
@@ -36,7 +38,23 @@ export const getCoinType = (address: string) => {
 
 // ToDo
 const broadcastTransaction = (transaction: any) => {
-  return 1;
+  axios
+    .post('https://api.blockcypher.com/v1/btc/test3/txs/push', {
+      tx: transaction,
+    })
+    .then((res: any) => {
+      log.info(JSON.stringify(res.data));
+      if (res.data.tx.hash) {
+        console.log('Transaction Hash :' + res.data.tx.hash);
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+    .catch((err) => {
+      console.log('An error occured');
+      return 0;
+    });
 };
 
 // Only for CLI
@@ -144,8 +162,8 @@ export const sendTransaction = async (
       return 0;
     }
 
-    if(!(await wallet.funds_check(wallet_id))){
-      console.log("Funds not sufficient");
+    if (!(await wallet.funds_check(output_list))) {
+      console.log('Funds not sufficient');
       return;
     }
 

@@ -25,7 +25,8 @@
     "nedb": "^1.8.0",
     "prompt": "^1.0.0",
     "prompt-sync": "^4.2.0",
-    "serialport": "^9.0.0"
+    "serialport": "^9.0.0",
+    "simple-node-logger": "^18.12.24"
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",

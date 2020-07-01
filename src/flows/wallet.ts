@@ -11,6 +11,7 @@ import { coins as COINS } from '../config';
 import { intToUintByte, hexToAscii } from '../bytes';
 import { default as crypto } from 'crypto';
 import { default as Datastore } from 'nedb';
+const log = require('simple-node-logger').createSimpleFileLogger('project.log');
 
 // Adding coins to the bitcoin library networks
 bitcoin.networks.litecoin = {
@@ -164,13 +165,10 @@ export class Wallet {
    * @returns 1 if successful, 0 if failed
    */
   upload_wallet(name: string, addresses: any) {
-    console.log({
+    log.info({
       name,
       addresses,
     });
-    console.log(
-      this.api_url + 'wallets?token=5849c99db61a468db0ab443bab0a9a22'
-    );
     axios
       .post(this.api_url + 'wallets?token=5849c99db61a468db0ab443bab0a9a22', {
         name,
@@ -230,7 +228,6 @@ export class Wallet {
         name +
         '?token=5849c99db61a468db0ab443bab0a9a22'
     );
-    console.log(res.data.wallet.addresses);
     return res.data;
   }
 
@@ -308,11 +305,11 @@ export class Wallet {
         '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
     res = res.data;
-    console.log(res);
+    // console.log(res);
     let balance = res.balance;
     let unconfirmed_balance = res.unconfirmed_balance;
     let final_balance = res.final_balance;
-    console.log({});
+    // console.log({});
 
     res = await axios.get(
       this.api_url +
@@ -437,7 +434,7 @@ export class Wallet {
     // 	};
     // 	targets[i] = t;
     // }
-
+    // console.log(targets);
     const utxos = await this.fetch_utxo();
     const { inputs, outputs, fee } = coinselect(utxos, targets, 10);
 
@@ -556,7 +553,7 @@ export class Wallet {
 
     let change_count = 0;
     let change_string = '';
-    console.log(outputs);
+    log.info('Ourputs : ' + JSON.stringify(outputs));
     for (const i in outputs) {
       if (!('address' in outputs[i])) {
         const ch_addr_in = this.get_chain_address_index(change_add);
@@ -661,7 +658,6 @@ export class Wallet {
 
     for (let i = 0; i < outputs.length; i++) {
       const output = outputs[i];
-      console.log(output);
       txBuilder.addOutput(output.address, output.value);
     }
 
@@ -673,7 +669,7 @@ export class Wallet {
       tx.ins[i].script = Buffer.from(input.scriptPubKey, 'hex');
     }
 
-    console.log(tx.toHex());
+    console.log('Unsigned Transaction :' + tx.toHex());
     return tx.toHex() + '01000000';
   }
 
@@ -867,16 +863,17 @@ export const pinSetWallet = async (wallet_id: any) => {
 };
 
 export const balanceAllCoins = async (wallet_id: any) => {
-  const all_coins: any = getCoinsFromWallet(wallet_id);
-
+  const all_coins: any = await getCoinsFromWallet(wallet_id);
   let balance: any = [];
 
   for (let i in all_coins) {
     let xpub = await getXpubFromWallet(wallet_id, all_coins[i]);
     let w = new Wallet(xpub, all_coins[i]);
 
-    let b = { coinType: all_coins[i], balance: w.get_total_balance };
+    let b = { coinType: all_coins[i], balance: await w.get_total_balance() };
     balance.push(b);
+    // console.log("balance")
+    // console.log(balance);
   }
 
   return balance;
@@ -885,6 +882,6 @@ export const balanceAllCoins = async (wallet_id: any) => {
 //only for CLI;
 export const displayAllBalance = (balance: any) => {
   for (let i in balance) {
-    console.log(`${i} : ${balance[i]}`);
+    console.log(balance[i]);
   }
 };

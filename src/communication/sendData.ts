@@ -2,6 +2,7 @@ import { constants, commands, radix } from '../config';
 import { xmodemDecode, xmodemEncode } from '../xmodem';
 import { intToUintByte, byteStuffing } from '../bytes';
 import { crc16 } from './crc';
+const log = require('simple-node-logger').createSimpleFileLogger('project.log');
 
 const { START_OF_FRAME } = constants;
 
@@ -16,7 +17,7 @@ const writePacket = (connection: any, packet: any) => {
       data.forEach((d) => {
         const { commandType } = d;
         if (Number(commandType) === commands.ACK_PACKET) {
-          console.log('ack recieved');
+          log.info('ack recieved');
           /**
            * We got a packet so just accept
            */
@@ -46,7 +47,7 @@ const writePacket = (connection: any, packet: any) => {
 
 const sendData = async (connection: any, command: number, data: string) => {
   const packetsList = xmodemEncode(data, command);
-  console.log('Packets List ' + packetsList.length);
+  log.info('Number of packets sending ' + packetsList.length);
   /**
    * Create a list of each packet and self contained retries and listener
    */
@@ -55,12 +56,13 @@ const sendData = async (connection: any, command: number, data: string) => {
       let tries = 1;
       while (tries <= 5) {
         try {
-          console.log('for command ' + String(command) + ' try no. ' + tries);
+          log.info('for command ' + String(command) + ' try no. ' + tries);
           await writePacket(connection, d);
           resolve(true);
           return;
         } catch (e) {
-          console.log('Caught error');
+          log.error('Caught error');
+          console.log('Caught Error');
         }
         tries++;
       }

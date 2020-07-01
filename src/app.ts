@@ -8,6 +8,7 @@ import { query_list } from './flows/cli_input';
 import customAction from './flows/custom';
 import { provision } from './flows/provision';
 import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
+const log = require('simple-node-logger').createSimpleFileLogger('project.log');
 
 (async () => {
   while (1) {
@@ -21,16 +22,20 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
 
       switch (selection) {
         case 'Add Wallet':
+          log.info('Add Wallet selected');
           await addWallet();
+          log.info('Add wallet completed');
           break;
         case 'Card Authentication':
           await cardAuth();
           break;
         case 'Select Wallet':
+          log.info('Selecting Wallet');
           const wallet_id = await query_list(
             await allWalletsList(),
             'Select your wallet'
           );
+          log.info('Selected Wallet ID: ' + wallet_id);
 
           selection = await query_list([
             'Add Coin',
@@ -40,14 +45,21 @@ import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
 
           switch (selection) {
             case 'Add Coin':
+              log.info('Add coin initiated');
               await addCoin(wallet_id, undefined);
+              log.info('Add coin finished');
               break;
             case 'Send Transaction':
+              log.info('Send transaction initiated');
               await sendTransaction(wallet_id, undefined, undefined, undefined);
+              log.info('Send transaction finished');
               break;
 
             case 'Recieve Transaction':
+              log.info('Recieve transaction initiated');
               await recieveTransaction(wallet_id, undefined);
+              log.info('Recieve transaction finished');
+
               break;
           }
           break;

@@ -13,6 +13,7 @@ import { hexToAscii } from '../bytes';
 const base58 = require('bs58');
 import deviceReady from '../communication/deviceReady';
 import { query_list, query_checkbox } from './cli_input';
+const log = require('simple-node-logger').createSimpleFileLogger('project.log');
 
 /**
  *Adds xpubs database and uploads them.
