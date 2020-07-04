@@ -8,7 +8,11 @@ import { query_list } from './flows/cli_input';
 import customAction from './flows/custom';
 import { provision } from './flows/provision';
 import { deviceAuthandUpgrade } from './flows/authAndUpgrade';
-const log = require('simple-node-logger').createSimpleFileLogger('project.log');
+// const log = import('simple-node-logger').createSimpleFileLogger('project.log');
+// @ts-ignore
+import * as logs from 'simple-node-logger';
+
+const log = logs.createSimpleFileLogger('project.log');
 
 (async () => {
   while (1) {

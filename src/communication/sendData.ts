@@ -2,7 +2,10 @@ import { constants, commands, radix } from '../config';
 import { xmodemDecode, xmodemEncode } from '../xmodem';
 import { intToUintByte, byteStuffing } from '../bytes';
 import { crc16 } from './crc';
-const log = require('simple-node-logger').createSimpleFileLogger('project.log');
+// @ts-ignore
+import * as logs from 'simple-node-logger';
+
+const log = logs.createSimpleFileLogger('project.log');
 
 const { START_OF_FRAME } = constants;
 
@@ -11,8 +14,8 @@ const writePacket = (connection: any, packet: any) => {
     /**
      * Ensure is listener is activated first before writing
      */
-    const eListener = (packet: any) => {
-      const data = xmodemDecode(packet);
+    const eListener = (ePacket: any) => {
+      const data = xmodemDecode(ePacket);
       // console.log(data);
       data.forEach((d) => {
         const { commandType } = d;
@@ -75,15 +78,27 @@ const sendData = async (connection: any, command: number, data: string) => {
    * after 5 retries or hardware disconnet
    * fail immideatly
    */
-  for (let i = 0; i < dataList.length; i++) {
+  //changed for linting purposes
+  // for (let i = 0; i < dataList.length; i++) {
+  //   try {
+  //     await new Promise((res, rej) => {
+  //       dataList[i](res, rej);
+  //     });
+  //   } catch (e) {
+  //     throw new Error('error writing');
+  //   }
+  // }
+
+  for (const i of dataList) {
     try {
       await new Promise((res, rej) => {
-        dataList[i](res, rej);
+        i(res, rej);
       });
     } catch (e) {
       throw new Error('error writing');
     }
   }
+
 };
 
 const ackData = (commandType: number, packetNumber: string) => {

@@ -10,13 +10,17 @@ import {
   pinSetWallet,
 } from './wallet';
 import { hexToAscii } from '../bytes';
-const base58 = require('bs58');
 import deviceReady from '../communication/deviceReady';
 import { query_list, query_checkbox } from './cli_input';
-const log = require('simple-node-logger').createSimpleFileLogger('project.log');
+// @ts-ignore
+import * as logs from 'simple-node-logger';
+// @ts-ignore
+import * as logs from 'simple-node-logger';
+
+const log = logs.createSimpleFileLogger('project.log');
 
 /**
- *Adds xpubs database and uploads them.
+ * Adds xpubs database and uploads them.
  *
  * @remarks
  * Adds the raw xpubs obtained from the device to the database and also uploads them to the blockcypher website.
@@ -36,13 +40,17 @@ const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinTypes: any) => {
 
     await addCoinsToDB(wallet_id, account_xpub, coinTypes[i]);
 
-    const w = new Wallet(account_xpub, coinTypes[i]);
-    const re_addr = w.address_list(0, 0, 20);
-    const ch_addr = w.address_list(1, 0, 20);
-    w.upload_wallet(w.external, re_addr);
-    w.upload_wallet(w.internal, ch_addr);
-    // console.log(w.external);
-    // console.log(w.internal);
+    //only push them to blockcypher if they're not ethereum coins
+    if(!(coinTypes[i] === COINS.ETH))
+    {
+      const w = new Wallet(account_xpub, coinTypes[i]);
+      const re_addr = w.address_list(0, 0, 20);
+      const ch_addr = w.address_list(1, 0, 20);
+      w.upload_wallet(w.external, re_addr);
+      w.upload_wallet(w.internal, ch_addr);
+      // console.log(w.external);
+      // console.log(w.internal);
+    }
   }
 };
 
@@ -61,14 +69,16 @@ const makeCoinIndexList = (coinTypes: any) => {
   const coinsIndexList: any = [];
 
   for (const i in coinTypes) {
-    const coinType = coinTypes[i];
-    if (coinType === COINS.BTC)
-      // x
-      coinsIndexList[i] = '80000000';
-    if (coinType === COINS.BTC_TESTNET) coinsIndexList[i] = '80000001';
-    if (coinType === COINS.LTC) coinsIndexList[i] = '80000002';
-    if (coinType === COINS.DASH) coinsIndexList[i] = '80000005';
-    if (coinType === COINS.DOGE) coinsIndexList[i] = '80000003';
+    if(coinTypes.hasOwnProperty(i)){
+      const coinType = coinTypes[i];
+      if (coinType === COINS.BTC) coinsIndexList[i] = '80000000';
+      else if (coinType === COINS.BTC_TESTNET) coinsIndexList[i] = '80000001';
+      else if (coinType === COINS.LTC) coinsIndexList[i] = '80000002';
+      else if (coinType === COINS.DASH) coinsIndexList[i] = '80000005';
+      else if (coinType === COINS.DOGE) coinsIndexList[i] = '80000003';
+      // else if(coinType === COINS.ETH) coinsIndexList[i] = '8000003c';
+      else throw new Error("Wrong Coin Type Provided");
+    }
   }
   return coinsIndexList;
 };
@@ -146,6 +156,10 @@ export const coinsNotAdded = async (wallet_id: any) => {
       name: 'DASHCOIN',
       value: COINS.DASH,
     },
+    // {
+    //   name : 'ETHEREUM',
+    //   value : COINS.ETH,
+    // },
   ];
 
   for (const i in all_coins) {
@@ -172,7 +186,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
   connection.open();
 
   // If CLI, take input from user.
-  if (process.env.NODE_ENV!.trim() == 'cli') {
+  if (process.env.NODE_ENV!.trim() === 'cli') {
     const available_coins = await coinsNotAdded(wallet_id);
 
     coinTypes = await query_checkbox(available_coins, 'Choose your coins');
@@ -190,7 +204,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('Message: ' + wallet_id + coins.join('') + '\n\n');
 
     const coinsConfirmed: any = await recieveCommand(connection, 46);
-    if (!!parseInt(coinsConfirmed)) {
+    if (!!parseInt(coinsConfirmed , 10)) {
       console.log('From Device: User confirmed coins');
     } else {
       console.log(

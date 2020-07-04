@@ -37,3 +37,302 @@
 18:33:19.868 INFO  for command 52 try no. 1 
 18:33:20.069 INFO  ack recieved 
 18:33:37.099 INFO  Send transaction finished 
+00:01:41.771 INFO  Selecting Wallet 
+00:01:42.372 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:01:47.301 INFO  Send transaction initiated 
+00:02:11.516 INFO  Selecting Wallet 
+00:02:11.827 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:02:12.715 INFO  Recieve transaction initiated 
+00:02:13.518 INFO  Number of packets sending 1 
+00:02:13.519 INFO  for command 41 try no. 1 
+00:02:13.537 INFO  ack recieved 
+00:02:15.196 INFO  Recieve transaction finished 
+00:02:18.051 INFO  Selecting Wallet 
+00:02:18.476 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:02:19.398 INFO  Send transaction initiated 
+00:02:33.666 INFO  Number of packets sending 1 
+00:02:33.666 INFO  for command 41 try no. 1 
+00:02:35.667 ERROR Caught error 
+00:02:35.668 INFO  for command 41 try no. 2 
+00:02:37.670 ERROR Caught error 
+00:02:37.670 INFO  for command 41 try no. 3 
+00:02:39.673 ERROR Caught error 
+00:02:39.674 INFO  for command 41 try no. 4 
+00:05:09.577 INFO  Selecting Wallet 
+00:05:10.186 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:05:11.282 INFO  Recieve transaction initiated 
+00:05:12.075 INFO  Number of packets sending 1 
+00:05:12.075 INFO  for command 41 try no. 1 
+00:05:12.089 INFO  ack recieved 
+00:05:13.695 INFO  Recieve transaction finished 
+00:05:15.874 INFO  Selecting Wallet 
+00:05:16.353 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:05:17.171 INFO  Send transaction initiated 
+00:05:31.419 INFO  Number of packets sending 1 
+00:05:31.419 INFO  for command 41 try no. 1 
+00:05:31.441 INFO  ack recieved 
+00:07:17.662 INFO  Selecting Wallet 
+00:07:18.093 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:07:19.965 INFO  Send transaction initiated 
+00:07:24.744 INFO  Selecting Wallet 
+00:07:25.282 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:07:26.099 INFO  Send transaction initiated 
+00:07:32.604 INFO  Selecting Wallet 
+00:07:33.278 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:07:34.044 INFO  Send transaction initiated 
+00:07:50.678 INFO  Number of packets sending 1 
+00:07:50.679 INFO  for command 41 try no. 1 
+00:07:50.697 INFO  ack recieved 
+00:10:23.325 INFO  Selecting Wallet 
+00:10:23.998 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:10:25.029 INFO  Send transaction initiated 
+00:10:42.403 INFO  Number of packets sending 1 
+00:10:42.404 INFO  for command 41 try no. 1 
+00:10:42.417 INFO  ack recieved 
+00:10:44.286 INFO  Send transaction finished 
+00:11:25.649 INFO  Number of packets sending 1 
+00:11:25.649 INFO  for command 41 try no. 1 
+00:11:25.681 INFO  ack recieved 
+00:11:25.884 INFO  Number of packets sending 1 
+00:11:25.884 INFO  for command 70 try no. 1 
+00:11:26.103 INFO  ack recieved 
+21:05:05.973 INFO  Selecting Wallet 
+21:05:06.417 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:05:07.333 INFO  Recieve transaction initiated 
+21:05:08.379 INFO  Number of packets sending 1 
+21:05:08.379 INFO  for command 41 try no. 1 
+21:05:08.398 INFO  ack recieved 
+21:07:48.446 INFO  Selecting Wallet 
+21:07:48.831 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:07:49.647 INFO  Recieve transaction initiated 
+21:07:50.486 INFO  Number of packets sending 1 
+21:07:50.486 INFO  for command 41 try no. 1 
+21:07:50.515 INFO  ack recieved 
+21:10:17.992 INFO  Selecting Wallet 
+21:11:42.834 INFO  Selecting Wallet 
+21:11:43.599 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:11:45.474 INFO  Recieve transaction initiated 
+21:11:46.112 INFO  Number of packets sending 1 
+21:11:46.112 INFO  for command 41 try no. 1 
+21:11:46.127 INFO  ack recieved 
+21:11:48.136 INFO  Recieve transaction finished 
+21:12:26.762 INFO  Selecting Wallet 
+21:12:27.198 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:12:28.134 INFO  Recieve transaction initiated 
+21:12:28.864 INFO  Number of packets sending 1 
+21:12:28.864 INFO  for command 41 try no. 1 
+21:12:28.879 INFO  ack recieved 
+21:12:30.429 INFO  Recieve transaction finished 
+21:12:38.398 INFO  Selecting Wallet 
+21:12:39.054 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:12:40.057 INFO  Recieve transaction initiated 
+21:12:40.852 INFO  Number of packets sending 1 
+21:12:40.853 INFO  for command 41 try no. 1 
+21:12:40.870 INFO  ack recieved 
+21:12:43.097 INFO  Number of packets sending 2 
+21:12:43.097 INFO  for command 59 try no. 1 
+21:12:43.117 INFO  ack recieved 
+21:12:43.117 INFO  for command 59 try no. 1 
+21:12:43.318 INFO  ack recieved 
+21:13:44.744 INFO  Selecting Wallet 
+21:13:51.712 INFO  Add Wallet selected 
+21:13:51.872 INFO  Number of packets sending 1 
+21:13:51.872 INFO  for command 41 try no. 1 
+21:13:51.943 INFO  ack recieved 
+21:13:52.145 INFO  Number of packets sending 1 
+21:13:52.145 INFO  for command 43 try no. 1 
+21:13:52.364 INFO  ack recieved 
+21:13:55.871 INFO  Number of packets sending 1 
+21:13:55.871 INFO  for command 42 try no. 1 
+21:13:56.076 INFO  ack recieved 
+21:13:56.078 INFO  Add wallet completed 
+21:13:59.153 INFO  Selecting Wallet 
+21:13:59.817 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:14:00.393 INFO  Add coin initiated 
+21:14:03.817 INFO  Number of packets sending 1 
+21:14:03.817 INFO  for command 41 try no. 1 
+21:14:03.824 INFO  ack recieved 
+21:14:04.026 INFO  Number of packets sending 2 
+21:14:04.026 INFO  for command 45 try no. 1 
+21:14:04.246 INFO  ack recieved 
+21:14:04.246 INFO  for command 45 try no. 1 
+21:14:04.447 INFO  ack recieved 
+21:14:58.662 INFO  Selecting Wallet 
+21:14:59.120 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:15:02.705 INFO  Add coin initiated 
+21:15:05.886 INFO  Number of packets sending 1 
+21:15:05.887 INFO  for command 41 try no. 1 
+21:15:05.902 INFO  ack recieved 
+21:15:06.102 INFO  Number of packets sending 2 
+21:15:06.102 INFO  for command 45 try no. 1 
+21:15:06.321 INFO  ack recieved 
+21:15:06.321 INFO  for command 45 try no. 1 
+21:15:06.522 INFO  ack recieved 
+21:15:26.569 INFO  {"name":"red57bc9a3c827c352ae21","addresses":["1Em2yR3qa2k6GCBwDuyc8rwqJwnWgAtVrF","1FFkvi8KYq4Th7Htz698bfUxcafKGEU2Fd","1NZDDZHjjkNMLaG1HXqatgi1NjtYwBMiKf","132zYdg1mMoocCXTPtpcL1QbejNmXEzS1i","18bZk4nsBAcpxv7QroGghtfGmpY4G1FpDE","1A1YSCNsLWgy4ckVvL7rzEHFNKxbFhBNPR","16BfxPNXzG24WThk6uAwkeCS4VWjADEvJC","1Hdxj6UsGVbaESqXmZeq28LrfnPTkzGCee","19vUnHRbz7xc2LdD3GdvwFmjUUJZTRFpBP","15x7YYftK5X1WXHT8YaoiWKF22vAECWWXN","18CMNGf5cDQY6owACADQXJJ7GS4Pq4QRb9","1EBeQHBHrXBMFN3WMYeVrLpdnBJJ6BjCmu","1PJdPzV38XXYytYJaPMy37UBf7wxFo5P9c","1DE4Y5CUdGkiRaHrMLoHfJnjQu28AJaeB2","17WXBGxJT98o3J91zWLnXZfoV8gxUxYxEY","1aazrw3XM9NjHY5eHuo2Ze5F233GaiAGx","18H6bduUgTe8suvfujQHpzQ6mm3Hf8LfJe","1QAwiV9BrrEhvS1WeED6uHA8QjRgfyTUKe","17sjEVGeVEi41QVFhDNr8Kd5hs4sUmDtpU","1NJa59mY3RMxkrS4wmpsL65fu4fTRhuH56"]} 
+21:15:26.569 INFO  {"name":"chd57bc9a3c827c352ae21","addresses":["1CMe42dd4ky17B4A2CVQ4PrqiYytzFkmbz","1GuPdeTxojb44YgYB49tt7XrZbMHoKoKj3","1C7ZjbavLyoMDyAFNZtTYzcAbzFHruyUCc","1PZctyMt4AcSu25AKRxbvsdAmxu76V1mUe","1BPNgNYyTF6VQ7AwtKeG6zUhMa8A7aUGUn","1PqmEnBjwqePuUqJUFf8BiTWxggfdrow7N","1Nt92HcYkHpsxttgCLkfqZ3nACX3Lan9CV","1A3TcdrDZ3sfikZAHZ9pcabPGVKb7uRryJ","1AFBuHJrEPttkSpjyhnFuwYaJjHFor7v2z","1asZg1yZ6Ht4fjuTtGqmGjJCD2hBPr2xy","1MAhoGWnJjSmVgu141JoXqgvY1NtxeyMdJ","1KmKk3XjRJQhUj5gKwpjYBfe5pvwNH6Wfc","1MTDuPnfL6qgiE9mZGV1cvXwugERDvY5x6","18jMztWn3LKBVjPbNZKzxhiiTHAa4szWcv","12r2bGC19DroNqDmN5Wzwzdu73TUUfKyaD","1Hf1Fum1BhqCGfQMrF2FpxM1tncrNeYfSU","113shKe1EJ2m288Mz3rUwy1QLRuuNMWpqQ","1LNYY13H8TGNqES6SQkKJjWv14PvrykoTX","1HujarZGUFj3CLqckHp16rzhvumg1HXRa5","1bNXFTMQ1Jypm39VZ16GzmdxRSBCUWzQv"]} 
+21:16:18.762 INFO  Selecting Wallet 
+21:16:19.615 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:16:25.088 INFO  Recieve transaction initiated 
+21:16:32.070 INFO  Number of packets sending 1 
+21:16:32.070 INFO  for command 41 try no. 1 
+21:16:34.073 ERROR Caught error 
+21:16:34.074 INFO  for command 41 try no. 2 
+21:16:36.076 ERROR Caught error 
+21:16:36.077 INFO  for command 41 try no. 3 
+21:16:38.080 ERROR Caught error 
+21:16:38.080 INFO  for command 41 try no. 4 
+21:16:40.083 ERROR Caught error 
+21:16:40.083 INFO  for command 41 try no. 5 
+21:16:46.369 INFO  Selecting Wallet 
+21:16:46.676 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+21:16:47.711 INFO  Add coin initiated 
+21:16:49.997 INFO  Number of packets sending 1 
+21:16:49.997 INFO  for command 41 try no. 1 
+21:16:50.022 INFO  ack recieved 
+21:16:50.221 INFO  Number of packets sending 2 
+21:16:50.221 INFO  for command 45 try no. 1 
+21:16:50.440 INFO  ack recieved 
+21:16:50.440 INFO  for command 45 try no. 1 
+21:16:50.641 INFO  ack recieved 
+21:23:10.164 INFO  Selecting Wallet 
+21:23:15.950 INFO  Add Wallet selected 
+21:23:16.120 INFO  Number of packets sending 1 
+21:23:16.120 INFO  for command 41 try no. 1 
+21:23:16.202 INFO  ack recieved 
+21:23:16.402 INFO  Number of packets sending 1 
+21:23:16.402 INFO  for command 43 try no. 1 
+21:23:16.622 INFO  ack recieved 
+21:23:20.044 INFO  Number of packets sending 1 
+21:23:20.044 INFO  for command 42 try no. 1 
+21:23:20.253 INFO  ack recieved 
+21:23:20.255 INFO  Add wallet completed 
+21:23:23.457 INFO  Selecting Wallet 
+21:23:24.252 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:23:24.871 INFO  Add coin initiated 
+21:23:28.446 INFO  Number of packets sending 1 
+21:23:28.447 INFO  for command 41 try no. 1 
+21:23:28.463 INFO  ack recieved 
+21:23:28.665 INFO  Number of packets sending 2 
+21:23:28.665 INFO  for command 45 try no. 1 
+21:23:28.885 INFO  ack recieved 
+21:23:28.885 INFO  for command 45 try no. 1 
+21:23:29.086 INFO  ack recieved 
+21:23:50.261 INFO  {"name":"red792bf630b1a590ce10b","addresses":["1Q3MWm7M3b243DPGrmVi1ZUKbaECUcgjeA","14Q6GBP32WGTfjpk4HDH3i4aunib6QPcx5","1MVEfrFJxHqSWgQziX6RaWiBD4Ke1xpDQ1","1Q25LJSeWCp7pF2zFSoj4brYuEK9tJzqU8","1EEG9SjEHHjFusf7e3aZAqxFBc3mJiDN23","1AVeF56jqMGJ6KouDDP28EmYiUxuobu57Z","12eC9cziqexLRjfViNj4STstb1B7VaeAhm","1NWmBcwzos1gq2R4MtmB5GkzBYbfkc5zpb","1NptJfj9Nn9Q2xnPZ2UBZYhDq5gCwQtZvz","1GZd4JB1WvoFNVg6BQzZSXZNm5E6TeA9q4","1Eg3xNcpnrUvinxa7E7nrjkZ6FRE8QygLh","1M28DmcFVcm8ceYB2D6WJoSYjKomim2eAF","13GbzEYHVhbviuKzy8h9EHxQpkMD8cuiC4","15TEcMXEyvw2kbLPrPADT1jPsC3vFK4rVg","1PmeGPRqgvU2xcM6fn5x52sfH68yYRbjTn","1QHuinrEqhESzScRK449MqnVqUpZLtyc6L","17L5oGL89KmFKdDpKzh7LvBk1rAFwBgUPk","1PXnaTUPiCHn27QWHme31dmUtafJUq49J9","1LhGGC45WiL1iWn3eSLCPSNFVnbp3iDkMR","1GsBjdQAVTu1DsQ9HnRgRCmpHUQn7Yx2YK"]} 
+21:23:50.262 INFO  {"name":"chd792bf630b1a590ce10b","addresses":["1JZcnMNoX3KPx3CQnsayKo7iAmbYosmdfX","1A3agBnvYaXW7eBJJQJ2Muv5tVbLoVD6oM","1ENtBMkPKBzHEBidBkA2oG6iZ3QKsxVPHf","1JQaSKvtPGh4gdT2ekZpZjNXdGyckwDZ3E","1FQ8HYyQv8YUNGmy7Pv55Eco4oAMGtL3sS","1Hd5HX1s4vND75Z4cRBVaCRjdrH1K6sw7k","1KcRunKV656ki8Nk9Vp49mjgNzAbjE9RkF","1KManb1j4389p544U1TM1kDWaBxQRSZRBT","1FZrzWbbfRMByyxb5xu9kTL977gpbkULiX","1Fw2yvEMkStFGkCojzRAnX41rvWS89TDP9","1Hxsby7obzehYxe1dPnEojd7kbQjCgYMDU","1A9byJzqLuFQVqWsj16VQGd1HpLB1aV4UJ","1MfJ64u2qL6VV52MmYFZ2Zj1UjFNtpiNNS","1DDEN5WVHGy8HVsNjoa6DZc4TWhjGdrwEy","19Jk4UePjfZnnxDsEzwpMS3wP9ghzNmbQS","1CoSVyZZC2XVCfyKvVKyLM98KZnMRW23pa","1CUZoeuBP1viENef6Eac7uYUZ5Hr3AFCbw","1A5ZySSfCDQbvK6Pj36CuA284EezgBPwtD","12GwQBSchcJfYM9K2TrDm653wqmCynyL2g","1K9hRbFwu7k7MpLorksrhDuJccV7vgHvUF"]} 
+21:23:50.302 INFO  {"name":"re58c16c3526a90716cd80","addresses":["mi9L6mZNa4gvEbqrjS4pfFQhbz9wZRDYxi","mhaPu7ycsYtY7AHBkJ6qC6DqQD7F4SSP5U","mnrrB8tdStfT5MT3GHEXYemMkSE4a6uf2w","ms9FDkvHULCyxpawF3RAAg3Jgz93NmdWW2","mqNWcVoab8J9GMwuJzUJiBE2r6b6fnD2zk","n2oM8DLqsJH1D91chtXLUHat8rqqbaceZb","mm8xLknowWsMPcYUqtACJzHMQDQLDDfxBw","msaBYeKzcB7TfkWZGbMFHdR3GhZm2zFDPD","mkWGg5eBMaV5W1h1Qt4DKKMzmPP9u6d8fj","mmCZ2kr4t84LvWTdZYVPn4qQ776mEURR4U","myajZjxbJ2CTzydjKt3QX9QiCVA7ZfMWDV","mxhAd8gHT9o3af6Cb8kY7yM5DoK8RhHZvg","muCqLiVivvHPBRE1yXCpzcNCLeWuCin35Z","msG7KJNgzUdNTitaLsJKtNTq7hJWmFrpfK","mtc46hQfVdEwYzKWS5aTMxCaFezftfFVq6","mwxTemrCUUtndm5dBo1QJUBHsV19VuLonk","mwTC1DTjpywAAfovJFXo1Ug7bZZXdVqU99","mnDStSL3ZqymV6AVMbCUfdjpkqzUA1QXTE","myXGCcpTZKUR5tKivVguMSezxuWWH9SPEy","n2CXCQqjEFveZRY4G7y7i4eZXFMyqqcweG"]} 
+21:23:50.302 INFO  {"name":"ch58c16c3526a90716cd80","addresses":["n41UdLAQeHsiN1LnaH4UjS4XT4trgJJdQM","mtB1CZhY9Dn6aXQZ1gxW6Ghij5CabgnQh9","mwMZ2GUYjDxvGKtbZD9cDCXGgG77Vc5aku","mhfgL5prieuthWMQKtXfoVk6eJ3orggqXQ","mjvHFn6UTvzUjC5E4mBnmN45LhorRfCzwW","mvGXPyvQH2EPVe4paU9V3udmsqb3TFVvTk","mvG3GYAdb4LCQgL9zcEGahsRoML6gKDUR5","msH1FQ1jMJNFmwASQ5VeRihMmytcEj5Jn5","n3jx2Qi8UV8t8j4K3FViXVxLDZU7WectF7","mfkEz3vgjrKHxTiMargyAvr53ipS8nFAiz","mjJuGteRozUCjGHDxvFtGLGg4fDjtX8xYK","mm4YMQZLmdA3tQy1qxoz94r3JDCS1FfT1y","mg2iiyXikkBrP9e17oMX4MYL584PexdA2p","mu9j13NQZA4ASvzCbwvGoHRSq5JtSpwA8S","mp6cUNzcvJnN1wAwgPiP5NophNj9UWzttg","n2fzgcbEg5xRksPbr5m4MwEFkTUqabaezz","mywQvieveHKunsHSriaLmxHDY1tLoYQK7S","mkXyjeajNSTocxJ74sPCBRJ8UEYLzwS5ta","mn1NR5piidAyGHfPdyzqzxoGhukNQkmwRP","mkgKDDxGj74crHPPHT9Qh6Xr9bXJEykAWN"]} 
+21:23:50.326 INFO  {"name":"re02ce4672c94036c4c4fd","addresses":["LNFi4GkSBWf4SCruzQn4PJPfETLkL1D3P3","LWfPkaT76kMLq3Q6tvG9rgbF3w78jiS7yF","LLnobaBSXXZqKRsmSsyZwaojr52tdbetZB","LNxBLRR8rhATH7DYf9M3MKLbYvNGiuT564","LU8VUvHtnJ5MAdB5g3EZkndXRi7jdRzNmL","LUPorq66YDqCtbDWimN4Us72e1BAEssfp1","LXsrKpJSueNhNxzYbUrCvRrAgsX2rrKbBc","LiVdrRr8FxpmxGkoLn2TWCzuoQQREK8qKh","LXQpSuLrzevvnnJsrZCmEp3pMtAvUDmeCT","LY67ocdhnhxnSTrpFH5W7SzxvQ7rUqQaHb","LYbxGyYqwxkRmMKMPmJQAfXigyBuwL2PQ7","LNrXXA161EqDz9xgNo4ARYzSP929KxHuej","LUQoZZZPWoM6yusPkYC8rLbGcVvsKBZBbg","LcAHjhuiuqqBBZxeS9v7Ch9acNnoqNsmxE","LgkE9CsYAFck1H8pP8a6SdGk1cdsexgCoT","LNXW2gBXQ3Sx3SmHxWkdF2U9t466EUxHEi","LScwdAQHuX3NczGkQPmt7erH1oGJBPQHs6","Lc91bakWtymKz6675is2kUpDtGKnonZNxd","LcwK2gu597sjmJEVLRMcJxnN77KksthZ3Q","LLRwvzDSkTVkxuHzPi2PobbJBBKzBEqRXn"]} 
+21:23:50.326 INFO  {"name":"ch02ce4672c94036c4c4fd","addresses":["LSgjWxajaYK33QrRdVkVDCn5h1oESZxJES","LR9XmYRwq8py8eewAHM5bPsSLwcitLijBo","LRtC2RQwhwbZzdW9qiygdZniRqRispcdao","LQCAJtQoqDrgrCmHnJp2efvhniCtAK6w7m","LiSQ4svZHjd5WHqTD1iEdAd8sDq9jDiGp4","LUx8RSxrpcAvKdHRk14gvUWSe2wUKMEvkd","LRHty9fJBE3YfKiWUuZLPbTGBpStk9p48P","LWLHPzD3bkJ2mzsbc59kmmhH5MK4iFVMie","LTa6fPExwnEgz8hmEfmhy6NsUhRh4KMkuq","LcRw5etwnb276AWw7fG3g1EMLm6ay3vK8H","LesPKx3LGKDehbQGC6XXbmog3dRpFgAspx","LZNGKunVWDMR2hrYxt6fWBNvVQwHi2hRFt","LePtHQfiqFfVk6wcgGM5bHicM45SZDCDds","LVRedchhUFPXEFqxZi5n2y8iJWNThbBFNn","LKpXropKgaAUjTHfPbJsh1gJeZhWX3fAJV","LexQFX9YeU8qqUdWEbhrdvuZ7b76NoM3rK","LftcvhWe7TLGwkxEsoyybGqMNhsgQKVkbt","LYP387oLfJ2po2UQ6ZE5oPrXDMuwDqG95w","LLzMRfN2hjfWL4xvUVcHiCm9YAVKWkf7Ld","LWc2RwuhTowYhE9jefYx3ET59RfB7VRDtU"]} 
+21:28:56.947 INFO  Selecting Wallet 
+21:28:57.517 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:28:58.781 INFO  Recieve transaction initiated 
+21:29:02.216 INFO  Number of packets sending 1 
+21:29:02.216 INFO  for command 41 try no. 1 
+21:29:02.221 INFO  ack recieved 
+21:29:10.101 INFO  Selecting Wallet 
+21:29:10.817 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:29:12.110 INFO  Add coin initiated 
+21:29:21.161 INFO  Selecting Wallet 
+21:29:21.538 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:29:22.251 INFO  Add coin initiated 
+21:29:29.328 INFO  Number of packets sending 1 
+21:29:29.329 INFO  for command 41 try no. 1 
+21:29:29.351 INFO  ack recieved 
+21:29:29.551 INFO  Number of packets sending 2 
+21:29:29.551 INFO  for command 45 try no. 1 
+21:29:29.770 INFO  ack recieved 
+21:29:29.771 INFO  for command 45 try no. 1 
+21:29:29.971 INFO  ack recieved 
+21:29:44.797 INFO  {"name":"re2629842a06d8c0552719","addresses":["XiaKFujnWVwfXN6YMcRQscsMDQsuXG2st7","Xx9VniYCyWshKvrWTx4M34F6qGakJqQ5am","XucCxdE8SaYSdvCd3aoWZSVTt432KZD5ht","XazZNnwgV4QsTNnoGwXdf8Tm2sUsZUZ8E8","XtHzW1EzYADNYGhnjfwx4Ym9XHFwfUTDcu","XovYs6vWWQ7cNn91eg9jJBvphBtpBzgRkt","XfhXb4roq3G75dVpHszpwWUynrhetyBhyK","XecQDCKPhNW9JT9c8qMMKrWLUXjnZq67j2","Xe5Nw32tqm12vs4EhDk7mTZ6Bxhfa4Uuor","XpPUCRuFJyCSxnsmQLRxgRYsfmqPPDGKTY","XjjoKaXQo3boWfPgZoAEWiRYbaVVbB8eXQ","XyUjo1mkMmftQc5P7YWhNHSuNvwZkYh34F","XiMhZ4nyR8fNCigZfq2SEoNjDzu3AYAwDp","XmP81jdrktJ8caAmgVDxBitremnZSRgwyY","Xn4HzQA5CKoWPP8vJgTXVHLLqJtSCBA2w5","XvjYYhXV3hudeLSwkGUpQip5X7qVjbFxLf","XqeXNeNewzn25697ubrjf2freYyWxFs2mM","XjCPcPAtvLPLwJDgfvosMjyYGaqaiWvK1T","Xh6E4yiJ4JNzHMdyNVCv4mPqbVswhntZn7","XumsombUKpHqQQvv78NDvBdch9uXz5Ld13"]} 
+21:29:44.806 INFO  Number of packets sending 1 
+21:29:44.798 INFO  {"name":"ch2629842a06d8c0552719","addresses":["XfAp5RHhEaFsDYV2LqFmwa8Z7p9BgtfRqP","Xhkhezo48Jm6vHB7oY3R6CJFf55R2FqEqg","XuFBXfihaYg81CJw5yxTFFEfn7vB4shyjM","XpXE8knesXQEBrjvJdk8iBZkxYxwCSRgvF","Xk3yWz84ZrehaVVf6VszSmpEhAcDUinKTx","XiPEqqgvr1JnbPaiCECE48QjUx4UTEBnRy","Xs9KJQgnXb1PQWnEtSs4PXruF2k3ndWRtJ","Xo5FFvXkDUmdqbP88XcFbQVV1n6JysnT5q","XeGwmr4DYUcQQZKBXM3GBG4445gPiqMEf7","XhZbGafW1tq7pSTFs7vftY4YMQS5v2gpAx","XtrowJBZz8T1tZeRd61gMyCDzWdHsjJoLg","Xiz3Gw4LHRuxj2fLTiMwqaYDK2Q5XqKPHv","XhqJUMuLqZgHfSqZSERzxPeYa6etZbzHjS","XjPvYresfuRRGTtvE6RAj87GRym3XjbDnp","XhGqPeidDQWG3tHAzy4tpDBJLFEeCY6mRX","Xd5oR3Rti7ejvmeMvuTXPkKGcxqXDVAJtf","Xv6HXhNBxPVaSYE3U8rY5YJPhW6AAMGfmK","XgzFYCEyozQLC35xWboPb9kjpNpAac7wLk","Xx4AfcR1rB6g73wTAAdcWgh8WSR2YbYuuS","XsuAzCZWmMdvRRFaxwwdavaBQMHjmvFtuk"]} 
+21:29:44.806 INFO  for command 42 try no. 1 
+21:29:44.913 INFO  ack recieved 
+21:29:44.914 INFO  Add coin finished 
+21:30:54.382 INFO  Selecting Wallet 
+21:30:54.639 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:30:55.500 INFO  Add coin initiated 
+21:30:57.246 INFO  Number of packets sending 1 
+21:30:57.246 INFO  for command 41 try no. 1 
+21:30:57.255 INFO  ack recieved 
+21:30:57.456 INFO  Number of packets sending 2 
+21:30:57.457 INFO  for command 45 try no. 1 
+21:30:57.676 INFO  ack recieved 
+21:30:57.676 INFO  for command 45 try no. 1 
+21:30:57.876 INFO  ack recieved 
+21:31:22.095 INFO  Selecting Wallet 
+21:31:22.803 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:31:24.309 INFO  Recieve transaction initiated 
+21:31:29.153 INFO  Number of packets sending 1 
+21:31:29.153 INFO  for command 41 try no. 1 
+21:31:31.154 ERROR Caught error 
+21:31:31.155 INFO  for command 41 try no. 2 
+21:31:33.155 ERROR Caught error 
+21:31:33.156 INFO  for command 41 try no. 3 
+21:31:35.158 ERROR Caught error 
+21:31:35.159 INFO  for command 41 try no. 4 
+21:31:39.623 INFO  Selecting Wallet 
+21:31:40.135 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:31:41.037 INFO  Recieve transaction initiated 
+21:31:42.717 INFO  Number of packets sending 1 
+21:31:42.718 INFO  for command 41 try no. 1 
+21:31:42.730 INFO  ack recieved 
+21:31:44.627 INFO  Number of packets sending 2 
+21:31:44.627 INFO  for command 59 try no. 1 
+21:31:44.636 INFO  ack recieved 
+21:31:44.636 INFO  for command 59 try no. 1 
+21:31:44.839 INFO  ack recieved 
+21:32:44.396 INFO  Selecting Wallet 
+21:32:44.707 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:32:45.333 INFO  Recieve transaction initiated 
+21:32:46.270 INFO  Number of packets sending 1 
+21:32:46.271 INFO  for command 41 try no. 1 
+21:32:46.285 INFO  ack recieved 
+21:32:48.099 INFO  Number of packets sending 2 
+21:32:48.099 INFO  for command 59 try no. 1 
+21:32:48.110 INFO  ack recieved 
+21:32:48.111 INFO  for command 59 try no. 1 
+21:32:48.312 INFO  ack recieved 
+21:32:54.051 INFO  Number of packets sending 1 
+21:32:54.051 INFO  for command 42 try no. 1 
+21:32:54.426 INFO  ack recieved 
+21:32:54.427 INFO  Recieve transaction finished 
+21:33:05.866 INFO  Selecting Wallet 
+21:33:06.468 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:36:33.276 INFO  Selecting Wallet 
+21:36:33.682 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+21:36:34.316 INFO  Add coin initiated 
+21:36:35.559 INFO  Number of packets sending 1 
+21:36:35.559 INFO  for command 41 try no. 1 
+21:36:35.576 INFO  ack recieved 
+21:36:35.775 INFO  Number of packets sending 2 
+21:36:35.775 INFO  for command 45 try no. 1 
+21:36:35.995 INFO  ack recieved 
+21:36:35.995 INFO  for command 45 try no. 1 
+21:36:36.196 INFO  ack recieved 
+12:14:09.488 INFO  Selecting Wallet 
+12:14:09.651 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+12:14:10.784 INFO  Add coin initiated 
+12:14:17.111 INFO  Selecting Wallet 
+12:14:17.333 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+12:14:18.202 INFO  Add coin initiated 
+12:14:32.556 INFO  Selecting Wallet 
+12:14:32.915 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+12:14:33.674 INFO  Add coin initiated 
+12:14:56.220 INFO  Selecting Wallet 
+12:14:56.417 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+12:14:57.179 INFO  Add coin initiated 
+12:14:58.193 INFO  Number of packets sending 1 
+12:14:58.193 INFO  for command 41 try no. 1 
+12:14:58.208 INFO  ack recieved 
+12:14:58.406 INFO  Number of packets sending 2 
+12:14:58.406 INFO  for command 45 try no. 1 
+12:14:58.625 INFO  ack recieved 
+12:14:58.625 INFO  for command 45 try no. 1 
+12:14:58.826 INFO  ack recieved 
+12:15:21.132 INFO  {"name":"ref8bbf96ac8570ab1f13e","addresses":["D8K1KyiNNx8fWwadiJNYZAFAa3LjdVCVvk","D84da1TyapvuzaXUEH6cTrvw4XGYRXT2Hm","DENm7CHceKkA4p66c4bUvLNzxVWrmrzwAA","DAqiDZjFaxZuMGQ29EgMPi29qx9pSu3b8P","DEJK7VsiM2Xd6Z8vcw6g24rL4BoiAe24dc","D5NgvRR1LRCmwqGQX9Q4tTxXXYMQLMsRNi","DLYRYfLacmyw7XeMqQCXdPNh5dGymwE8xv","DQB5Y6M9awmGeY3ts866z8QAGzcXTtptqa","D5JjgureiNSKYupvXMdmXEGwH2EdwAfMyw","DPrfSkYz7gTyRJ6pSAyYgBBhKzXzFfHTDh","DJdxS64BHWfXhLzoZyy7Bn8P7AaUywKJre","DUBDZ6G4gRF18MphYhteh6TrsWZA2MgjMg","DM5rAznaBCMTeG5yvcLAL17y9BxTLWW1vY","DFpk9byvn9qLEhNuK1AagMLjN37gVLN6DM","DC5ojX9bJdHkWFe8aBBUTn8xem7g4szFJJ","DNwneGVuiwX7Qkp4s1uzZA5md6WpaikgK1","DLkxf4jaLEWmX61mEQDBNj2NTHCnKmxNKD","DLSG5xb56gVmXygEcdLj5QdH3muRawiDcY","DBuDFHu7bAZajGxf4ZE5ncERDZKQBUEoHR","DUS1wWRbMV4H6GnvtRGA9WuUywzvNsMCpW"]} 
+12:15:21.142 INFO  Number of packets sending 1 
+12:15:21.132 INFO  {"name":"chf8bbf96ac8570ab1f13e","addresses":["D96QbwRLCLg5Xv37MPLSSsogaNvzHPViMD","D9bzAiMD88qwDgUneC9bMoKNqHSNEpVegj","DMQLK3sRi4ZawvbxTZV4UmZ6P7osiWnFaL","DDGE8XrKQLqigLde4k6jGYbMD34qHaNyci","D8eqTW1iFCD2rkWJ1VbJNQDZzcG26f2yYi","DFUPBa9PcuLH5vXgA9zouNSWtB62QbBADx","DNaLUpmpr2V2yJMVAZkbeDbHkQgkR29ong","DKqEpKbPkWSNNX5PaQVCmoP2Tfxx4R2KMs","DGpAuWRE3CsvELZLtHRXe86f3QvF6AJnR5","DJ9KRivtB6FzPuAXvhBmbsLJBeRx1UFDe5","D6DfhJQNb9WRVtU8Uy1MSB5kr8VbVVHKQt","D7q4GGCPoiJfMo5qL8cfH4bY7nQcv5auTs","DJiekhJ2tPyuWaTcrHng1sxBkXhWEavDb6","D8SSmbSSSQNxtMkXjszc12zFXbX3JZaChw","D9vssFKTiRVHsAGCAqAUpTLJEYHXi74QbL","DCupPDBbyqAX6ZmvNrsA2NcviyUFLAgN3n","DSvcpBkAPPvKdPfK2tH9hxeecZWiY6quSH","DQrSMZ1ahm7qC93HzMwibXk886BdrGcwyM","DNjkJPjLi2SyNbWVqXVF5RpY15iQi5Kt3q","DFqUZ4Gowg87VxQy8J5gVGsXzfvwjF73PQ"]} 
+12:15:21.142 INFO  for command 42 try no. 1 
+12:15:21.256 INFO  ack recieved 
+12:15:21.257 INFO  Add coin finished 

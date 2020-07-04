@@ -6,7 +6,7 @@ import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
-const axios = require('axios');
+import axios from 'axios';
 
 const nulldata = '00000000';
 export const cyBaseURL = 'http://3.6.66.118';

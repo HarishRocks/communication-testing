@@ -37,9 +37,9 @@ const byteStuffing = (inputBuff: Buffer) => {
   return Buffer.from(outputData, 'hex');
 };
 
-const intToUintByte = (ele: any, _radix: number) => {
+const intToUintByte = (ele: any, radix: number) => {
   const val = Number(ele).toString(16);
-  const noOfZeroes = _radix / 4 - val.length;
+  const noOfZeroes = radix / 4 - val.length;
   let res = '';
   for (let i = 0; i < noOfZeroes; i += 1) {
     res += '0';

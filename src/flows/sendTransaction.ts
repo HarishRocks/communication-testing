@@ -16,7 +16,10 @@ import { default as Datastore } from 'nedb';
 import deviceReady from '../communication/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
 import axios from 'axios';
-const log = require('simple-node-logger').createSimpleFileLogger('project.log');
+//@ts-ignore
+import * as logs from 'simple-node-logger';
+const log = logs.createSimpleFileLogger('project.log');
+
 
 // Bitcoin (Mainnet) - 00
 // Bitcoin (Testnet) - 6f
@@ -30,14 +33,19 @@ export const getCoinType = (address: string) => {
   const addressVersion = decodedString.slice(0, 2);
 
   if (addressVersion === '00') return COINS.BTC;
-  if (addressVersion === '6f') return COINS.BTC_TESTNET;
-  if (addressVersion === '30') return COINS.LTC;
-  if (addressVersion === '4c') return COINS.DASH;
-  if (addressVersion === '1e') return COINS.DOGE;
+  else if (addressVersion === '6f') return COINS.BTC_TESTNET;
+  else if (addressVersion === '30') return COINS.LTC;
+  else if (addressVersion === '4c') return COINS.DASH;
+  else if (addressVersion === '1e') return COINS.DOGE;
+  //to-do this is temporary
+  // else if(address.slice(0,2) === "0x") return COINS.ETH;
+  else throw new Error("Invalid Address Type");
+
 };
 
-// ToDo
+
 const broadcastTransaction = (transaction: any) => {
+  console.log("Only for btc testnet for now");
   axios
     .post('https://api.blockcypher.com/v1/btc/test3/txs/push', {
       tx: transaction,
@@ -78,7 +86,7 @@ const makeOutputList = async () => {
       'Do you want to add more addresses?'
     );
 
-    if (selection == 'yes') {
+    if (selection === 'yes') {
       rec_addr = await query_input('Input the Reciepient Address');
 
       send_amount = await query_number('Input the amount');
@@ -121,8 +129,8 @@ export const sendTransaction = async (
   const { connection, serial } = await createPort();
   connection.open();
 
-  if (process.env.NODE_ENV!.trim() == 'cli') {
-    let balance = await balanceAllCoins(wallet_id);
+  if (process.env.NODE_ENV!.trim() === 'cli') {
+    const balance = await balanceAllCoins(wallet_id);
     displayAllBalance(balance);
 
     const t = await makeOutputList();
@@ -137,14 +145,21 @@ export const sendTransaction = async (
       ],
       'Select the transaction fees'
     );
+
   }
 
   const ready = await deviceReady(connection);
 
   if (ready) {
     const xpub = await getXpubFromWallet(wallet_id, coinType);
+
     //ToDo: check if xpub is generated, if not, give error.
     const wallet = new Wallet(xpub, coinType);
+    if (!(await wallet.funds_check(output_list))) {
+      console.log('Funds not sufficient');
+      connection.close();
+      return 0;
+    }
     const txn_metadata = await wallet.generateMetaData(output_list);
 
     console.log('Destop : Sending Wallet ID and Txn Metadata.');
@@ -153,21 +168,17 @@ export const sendTransaction = async (
     await sendData(connection, 50, wallet_id + txn_metadata);
 
     const coinConfirmed: any = await recieveCommand(connection, 51);
-    if (!!parseInt(coinConfirmed)) {
+    if (!!parseInt(coinConfirmed , 10)) {
       console.log('From Device: User confirmed coin.');
     } else {
       console.log(
         'From Device: User did not confirm coin.\nExiting Function...'
       );
+      connection.close();
       return 0;
     }
 
-    if (!(await wallet.funds_check(output_list))) {
-      console.log('Funds not sufficient');
-      return;
-    }
-
-    const unsigned_txn: any = await wallet.generate_unsigned_transaction(
+    const unsigned_txn: any = await wallet.generateUnsignedTransaction(
       output_list,
       'm'
     );
@@ -204,4 +215,5 @@ export const sendTransaction = async (
   } else {
     console.log('Device not ready');
   }
+  connection.close();
 };

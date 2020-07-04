@@ -37,10 +37,14 @@ export const allAvailableCoins = async (wallet_id: any) => {
       name: 'DASHCOIN',
       value: COINS.DASH,
     },
+    // {
+    //   name: 'ETHEREUM',
+    //   value: COINS.ETH,
+    // },
   ];
 
   for (const i in all_coins) {
-    if (added_coins.indexOf(all_coins[i].value) == -1) {
+    if (added_coins.indexOf(all_coins[i].value) === -1) {
       delete all_coins[i];
       // console.log("Ping")
     }
@@ -57,7 +61,7 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
   const { connection, serial } = await createPort();
   connection.open();
 
-  if (process.env.NODE_ENV!.trim() == 'cli') {
+  if (process.env.NODE_ENV!.trim() === 'cli') {
     const coins_available = await allAvailableCoins(wallet_id);
     coinType = await query_list(coins_available, 'Select Coin type');
   }
@@ -75,14 +79,14 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
     const derivation_path = await wallet.create_derivation_path();
     const recieve_address = await wallet.get_recieve_address();
 
-    // console.log('Destop : Sending Wallet ID and Derivation Path.');
-    // console.log('Wallet id: ' + wallet_id);
-    // console.log('Derivation Path' + derivation_path);
-    // await sendData(connection, 59, wallet_id + derivation_path);
+    console.log('Destop : Sending Wallet ID and Derivation Path.');
+    console.log('Wallet id: ' + wallet_id);
+    console.log('Derivation Path' + derivation_path);
+    await sendData(connection, 59, wallet_id + derivation_path);
 
-    // const coinsConfirmed = await recieveCommand(connection, 60);
-    // console.log('From Device (User verified coin) : ');
-    // console.log(coinsConfirmed);
+    const coinsConfirmed = await recieveCommand(connection, 60);
+    console.log('From Device (User verified coin) : ');
+    console.log(coinsConfirmed);
 
     // if (await pinSetWallet(wallet_id)) {
     //     const pinEnteredPin = await recieveCommand(connection, 47);
@@ -98,13 +102,15 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
       'Please verify if this is the same address on the device? \n' +
         recieve_address
     );
-    // const addressesVerified = await recieveCommand(connection, 63);
-    // console.log('From Device (Verified recieve address) : ');
-    // console.log(addressesVerified);
+    const addressesVerified = await recieveCommand(connection, 63);
+    console.log('From Device (Verified recieve address) : ');
+    console.log(addressesVerified);
 
-    // console.log(`\n\nDesktop : Sending Success Command.`);
-    // await sendData(connection, 42, '01');
+    console.log(`\n\nDesktop : Sending Success Command.`);
+    await sendData(connection, 42, '01');
+
   } else {
     console.log('Device not ready');
   }
+  connection.close();
 };

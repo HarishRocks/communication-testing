@@ -7,12 +7,14 @@ import {
   getRandomNumFromServer,
   verifySignedChallenge,
 } from './auth';
-const axios = require('axios');
-const {
+import axios from 'axios';
+import {
   DfuUpdates,
   DfuTransportSerial,
   DfuOperation,
-} = require('./nrf-dfu.cjs');
+  //@ts-ignore
+} from './nrf-dfu.cjs';
+
 
 const sleep = (ms: any) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -55,7 +57,7 @@ export const deviceAuthandUpgrade = async () => {
 
   // const bootloaderMode = recieveCommand(connection, BOOTLOADER_STATUS)
   const bootloaderMode = '01';
-  if (!parseInt(bootloaderMode)) {
+  if (!parseInt(bootloaderMode , 10)) {
     console.log('Device not in bootloader mode.\nExiting function...');
     return 0;
   }
@@ -64,7 +66,7 @@ export const deviceAuthandUpgrade = async () => {
 
   // const authFlowStatus = recieveCommand(connection, BOOTLOADER_STATUS)
   const authFlowStatus = '01';
-  if (!parseInt(authFlowStatus)) {
+  if (!parseInt(authFlowStatus , 10)) {
     console.log('Device denied Start Auth flow.\nExiting function...');
     // return 0;
   }

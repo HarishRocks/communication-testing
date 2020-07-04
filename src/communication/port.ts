@@ -17,7 +17,7 @@ const createPort = async () => {
   let port;
   list.forEach((portParam) => {
     const { vendorId } = portParam;
-    if (vendorId && vendorId == '1915') {
+    if (vendorId && String(vendorId) === '1915') {
       port = portParam;
     }
   });
