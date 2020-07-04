@@ -57,10 +57,9 @@ export const allAvailableCoins = async (wallet_id: any) => {
 
 export const recieveTransaction = async (wallet_id: any, coinType: any) => {
   // will get xPub from wallet_id and the coin_type
-  try{
+  try {
     const { connection, serial } = await createPort();
     connection.open();
-
 
     if (process.env.NODE_ENV!.trim() === 'cli') {
       const coins_available = await allAvailableCoins(wallet_id);
@@ -86,15 +85,16 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
       await sendData(connection, 59, wallet_id + derivation_path);
 
       const coinsConfirmed = await recieveCommand(connection, 60);
-      if(coinsConfirmed === "01"){
+      if (coinsConfirmed === '01') {
         console.log('From Device (User verified coin)');
-      }
-      else if (coinsConfirmed === '00'){
+      } else if (coinsConfirmed === '00') {
         console.log('From Device (Devices Rejected)\n\n');
+        connection.close();
         return 0;
-      }
-      else {
-        console.log("From Device (Unknown Value Recieved) : "+ coinsConfirmed);
+      } else {
+        console.log('From Device (Unknown Value Recieved) : ' + coinsConfirmed);
+        connection.close();
+        return 0;
       }
       // if (await pinSetWallet(wallet_id)) {
       //     const pinEnteredPin = await recieveCommand(connection, 47);
@@ -121,9 +121,8 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
     }
 
     connection.close();
-  }
-  catch (e) {
-    console.log("Error occured " + e);
+  } catch (e) {
+    console.log('Error occured ' + e);
     return 0;
   }
 };

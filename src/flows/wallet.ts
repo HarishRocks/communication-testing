@@ -885,8 +885,7 @@ export const getCoinsFromWallet = (wallet_id: any) => {
       const coins: any = [];
       // console.log(doc)
       for (const i in doc.xPubs) {
-        if (doc.xPubs.hasOwnProperty(i))
-          coins[i] = doc.xPubs[i].coinType;
+        if (doc.xPubs.hasOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
       }
       resolve(coins);
     });
