@@ -57,59 +57,73 @@ export const allAvailableCoins = async (wallet_id: any) => {
 
 export const recieveTransaction = async (wallet_id: any, coinType: any) => {
   // will get xPub from wallet_id and the coin_type
+  try{
+    const { connection, serial } = await createPort();
+    connection.open();
 
-  const { connection, serial } = await createPort();
-  connection.open();
 
-  if (process.env.NODE_ENV!.trim() === 'cli') {
-    const coins_available = await allAvailableCoins(wallet_id);
-    coinType = await query_list(coins_available, 'Select Coin type');
+    if (process.env.NODE_ENV!.trim() === 'cli') {
+      const coins_available = await allAvailableCoins(wallet_id);
+      coinType = await query_list(coins_available, 'Select Coin type');
+    }
+
+    const ready = await deviceReady(connection);
+
+    if (ready) {
+      // wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
+      // coinType = COINS.BTC_TESTNET;
+      const xpub = await getXpubFromWallet(wallet_id, coinType);
+
+      const wallet = new Wallet(xpub, coinType);
+      // console.log("Total Amount in your wallet")
+      // console.log(await wallet.get_total_balance());
+      const derivation_path = await wallet.create_derivation_path();
+      const recieve_address = await wallet.get_recieve_address();
+
+      console.log('Destop : Sending Wallet ID and Derivation Path.');
+      console.log('Wallet id: ' + wallet_id);
+      console.log('Derivation Path' + derivation_path);
+      await sendData(connection, 59, wallet_id + derivation_path);
+
+      const coinsConfirmed = await recieveCommand(connection, 60);
+      if(coinsConfirmed === "01"){
+        console.log('From Device (User verified coin)');
+      }
+      else if (coinsConfirmed === '00'){
+        console.log('From Device (Devices Rejected)\n\n');
+        return 0;
+      }
+      else {
+        console.log("From Device (Unknown Value Recieved) : "+ coinsConfirmed);
+      }
+      // if (await pinSetWallet(wallet_id)) {
+      //     const pinEnteredPin = await recieveCommand(connection, 47);
+      //     console.log('From Device: User entered pin: ')
+      //     console.log(pinEnteredPin);
+      // }
+
+      // const cardsTapped = await recieveCommand(connection, 62);
+      // console.log('From Device (Cards are tapped) : ');
+      // console.log(cardsTapped);
+
+      console.log(
+        'Please verify if this is the same address on the device? \n' +
+          recieve_address
+      );
+      const addressesVerified = await recieveCommand(connection, 63);
+      console.log('From Device (Verified recieve address) : ');
+      console.log(addressesVerified);
+
+      console.log(`\n\nDesktop : Sending Success Command.`);
+      await sendData(connection, 42, '01');
+    } else {
+      console.log('Device not ready');
+    }
+
+    connection.close();
   }
-
-  const ready = await deviceReady(connection);
-
-  if (ready) {
-    // wallet_id = "af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31";
-    // coinType = COINS.BTC_TESTNET;
-    const xpub = await getXpubFromWallet(wallet_id, coinType);
-
-    const wallet = new Wallet(xpub, coinType);
-    // console.log("Total Amount in your wallet")
-    // console.log(await wallet.get_total_balance());
-    const derivation_path = await wallet.create_derivation_path();
-    const recieve_address = await wallet.get_recieve_address();
-
-    console.log('Destop : Sending Wallet ID and Derivation Path.');
-    console.log('Wallet id: ' + wallet_id);
-    console.log('Derivation Path' + derivation_path);
-    await sendData(connection, 59, wallet_id + derivation_path);
-
-    const coinsConfirmed = await recieveCommand(connection, 60);
-    console.log('From Device (User verified coin) : ');
-    console.log(coinsConfirmed);
-
-    // if (await pinSetWallet(wallet_id)) {
-    //     const pinEnteredPin = await recieveCommand(connection, 47);
-    //     console.log('From Device: User entered pin: ')
-    //     console.log(pinEnteredPin);
-    // }
-
-    // const cardsTapped = await recieveCommand(connection, 62);
-    // console.log('From Device (Cards are tapped) : ');
-    // console.log(cardsTapped);
-
-    console.log(
-      'Please verify if this is the same address on the device? \n' +
-        recieve_address
-    );
-    const addressesVerified = await recieveCommand(connection, 63);
-    console.log('From Device (Verified recieve address) : ');
-    console.log(addressesVerified);
-
-    console.log(`\n\nDesktop : Sending Success Command.`);
-    await sendData(connection, 42, '01');
-  } else {
-    console.log('Device not ready');
+  catch (e) {
+    console.log("Error occured " + e);
+    return 0;
   }
-  connection.close();
 };

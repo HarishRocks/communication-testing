@@ -20,8 +20,12 @@ export const addWallet = async () => {
     await sendData(connection, 43, '00');
 
     // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
-    console.log('Wallet Details From Device: ');
     const walletDetails = await recieveCommand(connection, 44);
+    if(walletDetails === "00"){
+      console.log("From Device (Rejected Request)\n");
+      return 0;
+    }
+    console.log('Wallet Details From Device: ');
     console.log(walletDetails);
 
     addWalletToDB(walletDetails);

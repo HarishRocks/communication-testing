@@ -883,8 +883,10 @@ export const getCoinsFromWallet = (wallet_id: any) => {
 
     db.findOne({ _id: wallet_id }, (err: any, doc: any) => {
       const coins: any = [];
+      // console.log(doc)
       for (const i in doc.xPubs) {
-        if (doc.xpubs.haveOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
+        if (doc.xPubs.hasOwnProperty(i))
+          coins[i] = doc.xPubs[i].coinType;
       }
       resolve(coins);
     });
@@ -904,7 +906,7 @@ export const pinSetWallet = async (wallet_id: any) => {
     db.findOne({ _id: wallet_id }, (err: any, doc: any) => {
       const coins: any = [];
       for (const i in doc.xPubs) {
-        if (doc.xpubs.haveOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
+        if (doc.xpubs.hasOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
       }
       resolve(!!doc.passwordSet);
     });
