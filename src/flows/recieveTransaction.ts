@@ -108,7 +108,6 @@ export const recieveTransaction = async (wallet_id: any, coinType: any) => {
 
     console.log(`\n\nDesktop : Sending Success Command.`);
     await sendData(connection, 42, '01');
-
   } else {
     console.log('Device not ready');
   }

@@ -67,7 +67,7 @@ export const deviceAuth = async () => {
 
   // const bootloaderMode = recieveCommand(connection, BOOTLOADER_STATUS)
   const bootloaderMode = '01';
-  if (!parseInt(bootloaderMode , 10)) {
+  if (!parseInt(bootloaderMode, 10)) {
     console.log('Device not in bootloader mode.\nExiting function...');
     return 0;
   }
@@ -76,7 +76,7 @@ export const deviceAuth = async () => {
 
   // const authFlowStatus = recieveCommand(connection, BOOTLOADER_STATUS)
   const authFlowStatus = '01';
-  if (!parseInt(authFlowStatus , 10)) {
+  if (!parseInt(authFlowStatus, 10)) {
     console.log('Device denied Start Auth flow.\nExiting function...');
     // return 0;
   }

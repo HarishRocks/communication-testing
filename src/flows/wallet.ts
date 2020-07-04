@@ -20,7 +20,11 @@ import { default as Datastore } from 'nedb';
 import * as logs from 'simple-node-logger';
 import Web3 from 'web3';
 //check this
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/a4f75c8bc5324e10b1b54f79f4e84986'));
+const web3 = new Web3(
+  new Web3.providers.HttpProvider(
+    'https://ropsten.infura.io/v3/a4f75c8bc5324e10b1b54f79f4e84986'
+  )
+);
 
 const log = logs.createSimpleFileLogger('project.log');
 
@@ -58,7 +62,7 @@ bitcoin.networks.dogecoin = {
   },
   pubKeyHash: 0x1e,
   scriptHash: 0x16,
-  wif: 0x9e
+  wif: 0x9e,
 };
 
 // Class Wallet:
@@ -174,8 +178,8 @@ export class Wallet {
   }
 
   getEthAddress = () => {
-    return "0xA4028f8dC64D18F0a66668d97473C47444A561Ea";
-  }
+    return '0xA4028f8dC64D18F0a66668d97473C47444A561Ea';
+  };
 
   /**
    * Uploades the list of addresses to the server.
@@ -217,9 +221,9 @@ export class Wallet {
     axios
       .post(
         this.api_url +
-        'wallets/' +
-        name +
-        '/addresses?token=5849c99db61a468db0ab443bab0a9a22',
+          'wallets/' +
+          name +
+          '/addresses?token=5849c99db61a468db0ab443bab0a9a22',
         {
           name,
           addresses,
@@ -245,9 +249,9 @@ export class Wallet {
   async fetch_wallet(name: string) {
     const res = await axios.get(
       this.api_url +
-      '/addrs/' +
-      name +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        '/addrs/' +
+        name +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     return res.data;
   }
@@ -262,9 +266,9 @@ export class Wallet {
 
     let res: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
 
     res = res.data.txrefs;
@@ -287,9 +291,9 @@ export class Wallet {
 
     res = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
 
     res = res.data.txrefs;
@@ -320,9 +324,9 @@ export class Wallet {
   async get_total_balance() {
     let res: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
     res = res.data;
     // console.log(res);
@@ -333,9 +337,9 @@ export class Wallet {
 
     res = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
     res = res.data;
     balance = balance + res.balance;
@@ -352,9 +356,9 @@ export class Wallet {
   async get_change_address() {
     let change_addresses: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     change_addresses = change_addresses.data;
 
@@ -396,9 +400,9 @@ export class Wallet {
     }
     let recieveAddress: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     recieveAddress = recieveAddress.data;
 
@@ -664,10 +668,7 @@ export class Wallet {
     }
 
     for (const i of inputs) {
-      i.scriptPubKey = bitcoin.address.toOutputScript(
-        i.address,
-        this.network
-      );
+      i.scriptPubKey = bitcoin.address.toOutputScript(i.address, this.network);
     }
 
     const txBuilder = new bitcoin.TransactionBuilder(this.network);
@@ -689,21 +690,27 @@ export class Wallet {
     const tx: any = txBuilder.buildIncomplete();
 
     for (const i in inputs) {
-      if(inputs.hasOwnProperty(i)){
+      if (inputs.hasOwnProperty(i)) {
         const input = inputs[i];
 
         tx.ins[i].script = Buffer.from(input.scriptPubKey, 'hex');
       }
-
     }
 
     console.log('Unsigned Transaction :' + tx.toHex());
     return tx.toHex() + '01000000';
   }
 
-  async generateUnsignedTransactionEth(address: any, gasPrice: any, gasLimit: any, value: any) {
+  async generateUnsignedTransactionEth(
+    address: any,
+    gasPrice: any,
+    gasLimit: any,
+    value: any
+  ) {
     const rawTx = {
-      nonce: await web3.eth.getTransactionCount('0xA4028f8dC64D18F0a66668d97473C47444A561Ea'),
+      nonce: await web3.eth.getTransactionCount(
+        '0xA4028f8dC64D18F0a66668d97473C47444A561Ea'
+      ),
       gasPrice: Web3.utils.toHex(20000000000),
       gasLimit: Web3.utils.toHex(100000),
       to: address,
@@ -877,8 +884,7 @@ export const getCoinsFromWallet = (wallet_id: any) => {
     db.findOne({ _id: wallet_id }, (err: any, doc: any) => {
       const coins: any = [];
       for (const i in doc.xPubs) {
-        if(doc.xpubs.haveOwnProperty(i))
-          coins[i] = doc.xPubs[i].coinType;
+        if (doc.xpubs.haveOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
       }
       resolve(coins);
     });
@@ -898,8 +904,7 @@ export const pinSetWallet = async (wallet_id: any) => {
     db.findOne({ _id: wallet_id }, (err: any, doc: any) => {
       const coins: any = [];
       for (const i in doc.xPubs) {
-        if(doc.xpubs.haveOwnProperty(i))
-          coins[i] = doc.xPubs[i].coinType;
+        if (doc.xpubs.haveOwnProperty(i)) coins[i] = doc.xPubs[i].coinType;
       }
       resolve(!!doc.passwordSet);
     });

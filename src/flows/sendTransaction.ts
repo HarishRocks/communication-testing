@@ -20,7 +20,6 @@ import axios from 'axios';
 import * as logs from 'simple-node-logger';
 const log = logs.createSimpleFileLogger('project.log');
 
-
 // Bitcoin (Mainnet) - 00
 // Bitcoin (Testnet) - 6f
 // Litecoin - 30
@@ -39,13 +38,11 @@ export const getCoinType = (address: string) => {
   else if (addressVersion === '1e') return COINS.DOGE;
   //to-do this is temporary
   // else if(address.slice(0,2) === "0x") return COINS.ETH;
-  else throw new Error("Invalid Address Type");
-
+  else throw new Error('Invalid Address Type');
 };
 
-
 const broadcastTransaction = (transaction: any) => {
-  console.log("Only for btc testnet for now");
+  console.log('Only for btc testnet for now');
   axios
     .post('https://api.blockcypher.com/v1/btc/test3/txs/push', {
       tx: transaction,
@@ -145,7 +142,6 @@ export const sendTransaction = async (
       ],
       'Select the transaction fees'
     );
-
   }
 
   const ready = await deviceReady(connection);
@@ -168,7 +164,7 @@ export const sendTransaction = async (
     await sendData(connection, 50, wallet_id + txn_metadata);
 
     const coinConfirmed: any = await recieveCommand(connection, 51);
-    if (!!parseInt(coinConfirmed , 10)) {
+    if (!!parseInt(coinConfirmed, 10)) {
       console.log('From Device: User confirmed coin.');
     } else {
       console.log(

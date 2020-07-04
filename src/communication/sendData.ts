@@ -98,7 +98,6 @@ const sendData = async (connection: any, command: number, data: string) => {
       throw new Error('error writing');
     }
   }
-
 };
 
 const ackData = (commandType: number, packetNumber: string) => {

@@ -41,8 +41,7 @@ const addXPubsToDB = async (wallet_id: any, xpubraw: any, coinTypes: any) => {
     await addCoinsToDB(wallet_id, account_xpub, coinTypes[i]);
 
     //only push them to blockcypher if they're not ethereum coins
-    if(!(coinTypes[i] === COINS.ETH))
-    {
+    if (!(coinTypes[i] === COINS.ETH)) {
       const w = new Wallet(account_xpub, coinTypes[i]);
       const re_addr = w.address_list(0, 0, 20);
       const ch_addr = w.address_list(1, 0, 20);
@@ -69,7 +68,7 @@ const makeCoinIndexList = (coinTypes: any) => {
   const coinsIndexList: any = [];
 
   for (const i in coinTypes) {
-    if(coinTypes.hasOwnProperty(i)){
+    if (coinTypes.hasOwnProperty(i)) {
       const coinType = coinTypes[i];
       if (coinType === COINS.BTC) coinsIndexList[i] = '80000000';
       else if (coinType === COINS.BTC_TESTNET) coinsIndexList[i] = '80000001';
@@ -77,7 +76,7 @@ const makeCoinIndexList = (coinTypes: any) => {
       else if (coinType === COINS.DASH) coinsIndexList[i] = '80000005';
       else if (coinType === COINS.DOGE) coinsIndexList[i] = '80000003';
       // else if(coinType === COINS.ETH) coinsIndexList[i] = '8000003c';
-      else throw new Error("Wrong Coin Type Provided");
+      else throw new Error('Wrong Coin Type Provided');
     }
   }
   return coinsIndexList;
@@ -204,7 +203,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('Message: ' + wallet_id + coins.join('') + '\n\n');
 
     const coinsConfirmed: any = await recieveCommand(connection, 46);
-    if (!!parseInt(coinsConfirmed , 10)) {
+    if (!!parseInt(coinsConfirmed, 10)) {
       console.log('From Device: User confirmed coins');
     } else {
       console.log(

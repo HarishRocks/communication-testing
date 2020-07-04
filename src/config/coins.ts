@@ -4,5 +4,5 @@ export default {
   DOGE: 'doge', // dogecoin mainnet
   DASH: 'dash', // dashcoin mainnet
   LTC: 'ltc', // litecoin mainnet
-  ETH: 'eth' // Etherium
+  ETH: 'eth', // Etherium
 };
