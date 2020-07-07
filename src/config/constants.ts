@@ -1,3 +1,4 @@
+//ToDo : better naming of this file
 export default {
   START_OF_FRAME: 'AA',
   ACK_BYTE: '06',

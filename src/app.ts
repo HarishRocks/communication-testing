@@ -10,6 +10,7 @@ import * as sendTransaction from './flows/sendTransaction';
 import * as recieveTransaction from './flows/recieveTransaction';
 import * as wallet from './flows/wallet';
 import { createPort } from './communication/port';
+import deviceReady from './communication/deviceReady';
 
 if (process.env.NODE_ENV!.trim() === 'cli') {
   cli_tool().catch((err) => console.log(err));
@@ -24,5 +25,6 @@ export {
   sendTransaction,
   recieveTransaction,
   wallet,
-  createPort
+  createPort,
+  deviceReady
 };

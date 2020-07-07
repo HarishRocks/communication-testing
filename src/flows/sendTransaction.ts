@@ -114,7 +114,6 @@ const makeOutputList = async () => {
 //     "address":output_address,
 //     "value":amount
 // }];
-// Yet to complete this function.
 export const sendTransaction = async (
   wallet_id: any,
   output_list: any,

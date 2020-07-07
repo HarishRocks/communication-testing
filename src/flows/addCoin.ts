@@ -14,8 +14,6 @@ import deviceReady from '../communication/deviceReady';
 import { query_list, query_checkbox } from './cli_input';
 // @ts-ignore
 import * as logs from 'simple-node-logger';
-// @ts-ignore
-import * as logs from 'simple-node-logger';
 
 const log = logs.createSimpleFileLogger('project.log');
 
@@ -106,17 +104,17 @@ const makeCoinIndexList = (coinTypes: any) => {
 export const allWalletsList = async () => {
   let wallets: any;
   wallets = await allAvailableWallets();
-  const display_wallets: any = [];
+  const displayWallets: any = [];
 
   // make a list for inquirer with name and ID.
   wallets.forEach((element: any) => {
-    display_wallets.push({
+    displayWallets.push({
       name: element.name,
       value: element._id,
     });
   });
 
-  return display_wallets;
+  return displayWallets;
 };
 
 /**
@@ -127,14 +125,14 @@ export const allWalletsList = async () => {
  * The coins which are already added in the wallet provided, will have an extra property called 'disabled' to prevent the user from selecting it.
  * This object is used in the inquirerjs library to render the CLI.
  *
- * @param wallet_id - Wallet id to refrence a wallet from the database
+ * @param walletID - Wallet id to refrence a wallet from the database
  *
  * @returns List of objects containing coin names.
  */
-export const coinsNotAdded = async (wallet_id: any) => {
-  const added_coins: any = await getCoinsFromWallet(wallet_id);
-  // console.log(added_coins);
-  const all_coins: any = [
+export const coinsNotAdded = async (walletID: any) => {
+  const addedCoins: any = await getCoinsFromWallet(walletID);
+  // console.log(addedCoins);
+  const allCoins: any = [
     {
       name: 'BITCOIN',
       value: COINS.BTC,
@@ -161,14 +159,14 @@ export const coinsNotAdded = async (wallet_id: any) => {
     // },
   ];
 
-  for (const i in all_coins) {
-    if (added_coins.indexOf(all_coins[i].value) > -1) {
-      all_coins[i].disabled = 'Already Added';
+  for (const i in allCoins) {
+    if (addedCoins.indexOf(allCoins[i].value) > -1) {
+      allCoins[i].disabled = 'Already Added';
       // console.log("Ping")
     }
   }
 
-  return all_coins;
+  return allCoins;
 };
 
 /**
@@ -176,17 +174,17 @@ export const coinsNotAdded = async (wallet_id: any) => {
  *
  * @remarks
  * Sends the coin indexes to the hardware, which returns the corrosponding xpubs and we store it in the database and upload it to the server.
- * @param wallet_id - Wallet Id of the wallet in which coins are to be added.
+ * @param walletID - Wallet Id of the wallet in which coins are to be added.
  * @param coinTypes - The coin types which are to be added.
  */
 
-export const addCoin = async (wallet_id: any, coinTypes: any) => {
+export const addCoin = async (walletID: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
   connection.open();
 
   // If CLI, take input from user.
   if (process.env.NODE_ENV!.trim() === 'cli') {
-    const available_coins = await coinsNotAdded(wallet_id);
+    const available_coins = await coinsNotAdded(walletID);
 
     coinTypes = await query_checkbox(available_coins, 'Choose your coins');
   }
@@ -199,8 +197,8 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
 
     const coins = makeCoinIndexList(coinTypes);
     const num_coins = coins.length;
-    await sendData(connection, 45, wallet_id + coins.join(''));
-    console.log('Message: ' + wallet_id + coins.join('') + '\n\n');
+    await sendData(connection, 45, walletID + coins.join(''));
+    console.log('Message: ' + walletID + coins.join('') + '\n\n');
 
     const coinsConfirmed: any = await recieveCommand(connection, 46);
     if (!!parseInt(coinsConfirmed, 10)) {
@@ -227,7 +225,7 @@ export const addCoin = async (wallet_id: any, coinTypes: any) => {
     console.log('From Device: all xPubs');
     console.log(xPubDetails);
 
-    await addXPubsToDB(wallet_id, xPubDetails, coinTypes);
+    await addXPubsToDB(walletID, xPubDetails, coinTypes);
 
     console.log(`Desktop : Sending Success Command.`);
     await sendData(connection, 42, '01');

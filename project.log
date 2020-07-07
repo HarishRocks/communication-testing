@@ -520,3 +520,83 @@
 15:18:46.362 INFO  Number of packets sending 1 
 15:18:46.362 INFO  for command 43 try no. 1 
 15:18:46.581 INFO  ack recieved 
+22:29:32.368 INFO  Add Wallet selected 
+22:29:44.658 INFO  Selecting Wallet 
+22:29:52.926 INFO  Add Wallet selected 
+22:29:53.154 INFO  Number of packets sending 1 
+22:29:53.154 INFO  for command 41 try no. 1 
+22:29:53.236 INFO  ack recieved 
+22:29:53.438 INFO  Number of packets sending 1 
+22:29:53.438 INFO  for command 43 try no. 1 
+22:29:53.657 INFO  ack recieved 
+22:29:56.652 INFO  Number of packets sending 1 
+22:29:56.652 INFO  for command 42 try no. 1 
+22:29:56.866 INFO  ack recieved 
+22:29:56.868 INFO  Add wallet completed 
+22:26:44.059 INFO  Selecting Wallet 
+22:26:44.479 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+22:26:45.259 INFO  Add coin initiated 
+22:26:58.543 INFO  Selecting Wallet 
+22:26:58.798 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+22:26:59.295 INFO  Add coin initiated 
+22:27:25.235 INFO  Selecting Wallet 
+22:27:25.771 INFO  Selected Wallet ID: bb137f940fb296cfdf63bf0b295de4d9464e7d1dcd95bc4f2bb55fa52bbcf9c5 
+22:27:26.212 INFO  Add coin initiated 
+13:53:47.675 INFO  Add Wallet selected 
+13:53:47.824 INFO  Number of packets sending 1 
+13:53:47.824 INFO  for command 41 try no. 1 
+13:53:47.907 INFO  ack recieved 
+13:53:48.106 INFO  Number of packets sending 1 
+13:53:48.106 INFO  for command 43 try no. 1 
+13:53:48.326 INFO  ack recieved 
+13:54:23.991 INFO  Add Wallet selected 
+13:54:24.117 INFO  Number of packets sending 1 
+13:54:24.117 INFO  for command 41 try no. 1 
+13:54:24.159 INFO  ack recieved 
+13:54:24.361 INFO  Number of packets sending 1 
+13:54:24.361 INFO  for command 43 try no. 1 
+13:54:24.580 INFO  ack recieved 
+13:54:27.843 INFO  Number of packets sending 1 
+13:54:27.843 INFO  for command 42 try no. 1 
+13:54:28.050 INFO  ack recieved 
+13:54:28.054 INFO  Add wallet completed 
+13:54:37.012 INFO  Selecting Wallet 
+13:54:37.264 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:54:38.094 INFO  Add coin initiated 
+13:54:41.730 INFO  Number of packets sending 1 
+13:54:41.731 INFO  for command 41 try no. 1 
+13:54:41.744 INFO  ack recieved 
+13:54:41.945 INFO  Number of packets sending 2 
+13:54:41.945 INFO  for command 45 try no. 1 
+13:54:42.162 INFO  ack recieved 
+13:54:42.162 INFO  for command 45 try no. 1 
+13:54:42.364 INFO  ack recieved 
+13:55:19.324 INFO  {"name":"red57bc9a3c827c352ae21","addresses":["1Em2yR3qa2k6GCBwDuyc8rwqJwnWgAtVrF","1FFkvi8KYq4Th7Htz698bfUxcafKGEU2Fd","1NZDDZHjjkNMLaG1HXqatgi1NjtYwBMiKf","132zYdg1mMoocCXTPtpcL1QbejNmXEzS1i","18bZk4nsBAcpxv7QroGghtfGmpY4G1FpDE","1A1YSCNsLWgy4ckVvL7rzEHFNKxbFhBNPR","16BfxPNXzG24WThk6uAwkeCS4VWjADEvJC","1Hdxj6UsGVbaESqXmZeq28LrfnPTkzGCee","19vUnHRbz7xc2LdD3GdvwFmjUUJZTRFpBP","15x7YYftK5X1WXHT8YaoiWKF22vAECWWXN","18CMNGf5cDQY6owACADQXJJ7GS4Pq4QRb9","1EBeQHBHrXBMFN3WMYeVrLpdnBJJ6BjCmu","1PJdPzV38XXYytYJaPMy37UBf7wxFo5P9c","1DE4Y5CUdGkiRaHrMLoHfJnjQu28AJaeB2","17WXBGxJT98o3J91zWLnXZfoV8gxUxYxEY","1aazrw3XM9NjHY5eHuo2Ze5F233GaiAGx","18H6bduUgTe8suvfujQHpzQ6mm3Hf8LfJe","1QAwiV9BrrEhvS1WeED6uHA8QjRgfyTUKe","17sjEVGeVEi41QVFhDNr8Kd5hs4sUmDtpU","1NJa59mY3RMxkrS4wmpsL65fu4fTRhuH56"]} 
+13:55:19.325 INFO  {"name":"chd57bc9a3c827c352ae21","addresses":["1CMe42dd4ky17B4A2CVQ4PrqiYytzFkmbz","1GuPdeTxojb44YgYB49tt7XrZbMHoKoKj3","1C7ZjbavLyoMDyAFNZtTYzcAbzFHruyUCc","1PZctyMt4AcSu25AKRxbvsdAmxu76V1mUe","1BPNgNYyTF6VQ7AwtKeG6zUhMa8A7aUGUn","1PqmEnBjwqePuUqJUFf8BiTWxggfdrow7N","1Nt92HcYkHpsxttgCLkfqZ3nACX3Lan9CV","1A3TcdrDZ3sfikZAHZ9pcabPGVKb7uRryJ","1AFBuHJrEPttkSpjyhnFuwYaJjHFor7v2z","1asZg1yZ6Ht4fjuTtGqmGjJCD2hBPr2xy","1MAhoGWnJjSmVgu141JoXqgvY1NtxeyMdJ","1KmKk3XjRJQhUj5gKwpjYBfe5pvwNH6Wfc","1MTDuPnfL6qgiE9mZGV1cvXwugERDvY5x6","18jMztWn3LKBVjPbNZKzxhiiTHAa4szWcv","12r2bGC19DroNqDmN5Wzwzdu73TUUfKyaD","1Hf1Fum1BhqCGfQMrF2FpxM1tncrNeYfSU","113shKe1EJ2m288Mz3rUwy1QLRuuNMWpqQ","1LNYY13H8TGNqES6SQkKJjWv14PvrykoTX","1HujarZGUFj3CLqckHp16rzhvumg1HXRa5","1bNXFTMQ1Jypm39VZ16GzmdxRSBCUWzQv"]} 
+13:55:19.372 INFO  {"name":"reca13a7eafb71db838d14","addresses":["mfkxQYAdYuzqgJZaN4CV7DaJ9US7PJZDC5","mw5CtkVtVAY1tf7DcUUHGBzEdyR1t7PaZQ","mudTZVrST5NkuRGWAwyRmduEvJQYVkXjDq","mgcooLV2RiSTU1KexvwPWPAufhyjTEq7QB","mwWRjLuW2HvBhVuEvdymdbMWZNTuK7N3cm","mqehcvsQPAvXDeF7BCgfvcbmt1do5Z4v9z","n1YrjX1KpqwuA2kd2yM8EbUyriXNXzVSHR","mmLQRFugaN4a3p4AKQNDe4wswaGmTLCheH","mwgbEzJV9ou6HGw28GrJKrNbcKHnkGc5mc","mrJAo4M21ve3DfuYjzZLyrtmnQNFJmoEEV","mkxeujAduyrHjAaG7ipAaLPChcYWheyck6","msKj1uqXQqmRudZTTWUfPvwhNvRN8K6dHp","mwKNjUt3PTUGM2Wx8jRERBMvg2fUHijb7J","mqmMC5bAF3KUAp6HCq1PZ86db7eG9T7oPC","mzoY3rpFd39jpTvZc6i8nd2ue1bJ6GNBmc","mmqgw4idA9V4dmSeBR8SiMZjTVpdSw87xc","mjqvTnfXTk1uNEnyYLvUYyV5Bdx9HZvVFm","mwE4XbGpmYYQVkrowUZuBxsRcKCngnKK3r","mh1sAKKcirwE1NWeLx6Wn2CdVGuWPuKet3","mjCx1CYz5RXyB83pvSoM6hDdsRMDEhSC2E"]} 
+13:55:19.372 INFO  {"name":"chca13a7eafb71db838d14","addresses":["muYMoAhi4CVpExepDqVpS3i6PT8QzTRkJE","mquDwE2ik3moV8WTzTFK96xJ6LQh9L6hAS","mndD3GWDgURCBmNyqxxyCYqtP6b5Vpe5gK","miQ7iq3dF5TegFLtmwedfzrAhxzdWxf2Nt","mhQvv3RpzENqxK8Sf5U4zMwy22JggRsbDu","mqdtvVRakGxo59hx6nDeLGdBd7mBcatNM5","miw8uiUEhUddDJxBGsTjH17v5vkoXeu6Qy","mikDfmEQ9qSJHEaPQ3YBxkATSMV2wwRrS3","mwWjyuBHg1XiwXHsVdxYUXgLmvBwbSLNnV","mvQHpkKX4x2ScEe725S4AaUT6skuHW7j2Y","muwDVSzMHMwmnV3b5fK6BaYZE2iYt5rq5K","mhxVmp4dt66he6U7o7d46ES3gCArh3m8ju","msgi5tYK82wyxYWVEmPu9ApViQhXXSoPZ2","mrY5JDgMU52MQPRyYEfgqsgz49physEHPY","mjAuwL965egDtXFXyez9kjpuBMS1mLFUy5","myb15otj9sXhexBGPSrrzFx1yeeyEJ9aLF","mp2AJSrNy3X6HqDdw5HYEHHucUf9vpfy9k","mzGnfq1PpeiFprK5e5Y3Epc5M4Y1efgmqg","mwvrDGQGmWEjhC3cSrqeWhN8bxG4BfWWr7","n2Hsf5kW87xJ4po5qtwNyKLgt8yia2mvHi"]} 
+13:55:19.418 INFO  {"name":"re78a248661ee3f4bf453e","addresses":["LVjZ5ikU2JgUvL5Zx22Gd35Mnrh6ta1NUd","LPUYcea2YPXzpE6TD3MKNkNRfjfGN2CF9a","LeSsLoxaAFfq7EGyiABHqrLq2MVkhcy411","LaMSrdYDerAtiiCoNmN45iGYY9gfEfTiJ7","LTd4m1i5UfgfjsR95FWztpAFvtGVzTPx3A","LcjG9MgKhcYvqftS761mtCongsgcUgEyGz","LZr3p3pkyYZt6LMrKvp9KF8EnfpkV3KQ3k","LTfzhdidCLYrduWUpJVUpk1KmniMM5gsAR","LSWvtshRJTRbWDVNFtFnFdYbVV3g4jfRN8","LQ7sG5pvFF2779XPoQTusxT6ADQW6fP5kE","LNVn6A1XVca5pSWowg2sKU981UUV5MagyR","LXBZ5na7C9zCtbFfFaF5HNmhGo3m77Hga6","LW2WeodtTcpcE45Uhs7YUsqr8AdS4iwu7U","LWsWGTxrsdJGSwXtC2haRym96viHTQQnDg","LVJMiKtKYEAK6gui72HojCZtXLCPLJ71b2","Leb7X64DwhFNgfCmBwPYkAoSTc133z2zef","LNhZAmb2ueeQ5cQscxwnTvg9cKZqtBLkxV","LSHbT7R4tjuznAWysnbVfBJeNXTgzXLhav","Ldq8jMEYy6B2cp6kydq6krYiFvAE97Te8Z","LWdU71irjPX1k1CoqcnUfY23vRZKo1ehQm"]} 
+13:55:19.419 INFO  {"name":"ch78a248661ee3f4bf453e","addresses":["Lej6ojmVQ4rqgLpD2oeWxc7c23rhLTdpRi","LiW4HRFNzcsp5nMKNUgxqBszEBsBCP4pNe","LL15wHpvyEXYR1Npw8Q5mFTQmikpAMxKvN","LTYy6EhQ2UxpDvC9QbXNMnEvDzMjek1EZd","LL4bKxXmRLH283EaLm52Hk8N92J2uVoLaZ","LMzzjG1seAD3Hob3XuqNoDRwtnXSD2kwx6","Lh1qPmdvEHiHjxvS7a9x6Jna9fGxPZZksA","Laq78z2JUzFAuTJm7QVfQdvfZ4E8knpUXM","LKLyFvn47huEVLPTnTFVwGZMFg6p7nczr4","LeK3B38w6LbPcFe5LbHKr2MGMRxwbv85er","LPnMj8jpFceaiqopEAdwPJkitcFX9Zpxav","Lh8kY2GKwbA9DCnWrQtGfubPXub68wgkWd","LRciZb3TNNbjM3S8QdQDq2GjqGfQs3wyP4","LXcz7gnZuZKWbNhQkjC2Tm9zFtH7QWPHNM","LRPyauN5YkHBc9UedsSTF8QKds12DQ8mkn","LdegvsyHGjyaaVkHnqxQMTig743i83idcj","La8ACeuJ81rQr6DSQqDS6nnzQe3XLEzsGF","LQfqynvGgbSKM7qvd23WitG9BcnkjfYHGK","LRKRnRi1ADsTYHPwrutYiG8YgeV9FVvqvn","LfWZ2MHVdzYEW39NKSD9NDvvr8YPuLdujG"]} 
+13:55:19.447 INFO  {"name":"re1ef691310687fefc089c","addresses":["D8N4uPWeaAo36DbjXKr9sZXxJoVH4FJimq","DH6xcpDchzctftuZbyZyHp6GH9wBUaLwN6","DH7oFAQrRjsCWX6Ljwwo48xB32gST4LUrs","D9RdMb3ZGQA5wbHdTe52f5CaxBJqanmwzK","DH4TFQaeVahk5iMLsxHVqSaSjxMfnAejzo","DLmdeoWbk1gyDWTmC1ShGoMagfWKKQkcYD","DJTWqV1aKfG73kJD2RpU4sAL3uQ25hi3hs","D7siyZ4W85JunrercYWcDLCdcNqJvunpbq","DAv5Ew5RQonDr55HaMKer2EWfHkx1s7EUq","DRZaAjyR1F3nqCTAiTwKuEE7nhoWXPn2mi","DHSr5SV3tKei6tHkj1U1MyFnLKLjZk3aBy","DT2W6sFGsavkNwxbG5yRSCkYucojRs3Wa7","DTfgkJCsYGnWvJPtuom2MiSrsJBNytNyyh","D7noXPPbyPoDfmzNYtMgTeL9faXXwxziYB","DQfF8vNG1bAr6DX6dm6uY5SNDXqe7DPAyn","DUNt8HVVFRThkD7PyccZENcuhFkDNz23AY","DCQWkRgR7ALmHPwAzCq5hB61Jt5kD2ycJM","DJMvbvEcYUL4cNa543ado68TDjhNAU2EEi","DBpUDwM8jT7RCmJVs4y66hMRs2Ly8pB7Ak","DEtvat6Jdd82X6aZZuRVvCdUy2USw91F9F"]} 
+13:55:19.447 INFO  {"name":"ch1ef691310687fefc089c","addresses":["DJQHiEj6r4YGEK3jJ3JZBahpQNnCRQoufu","D68EVHFzeXKiw36CA1sjvr3kh2NpaRvEkw","D8owzdoz6nk7gNA4SmBowLw6Bm5pZ1RbFJ","DQyoUbuisyThSDhsJGWK4dFdMgBJyjGABh","DRzmEhS8KAR1nUrmU6S4pcgy9sn4guSDER","DMZS3aVUUzWPzY5kk155wdbKHTDgEfJyiq","DBXc4Kp4XM9YJBzJFoYX9e4mbZExwbQqJX","DKnCPQvg4WENWpt1XNyHw73mZG4hbzyj8e","D98DJBqa4D2BybV5YgJNgiefxKQ5xGnubS","DFtQq1G2PsT7KTxpcr9srKDPh4GGo7QfNS","DFSCCpaby9Wmv2385H4urHMeqiEv5AHwKp","DCsUFRFDbfCJkTqdYgva47mLzfk7TVCDH5","DJfohC6CXHMkHLUvdjwDdBA85bCv4cy53j","DQkBLs9eq19ygCasRynGsgNFDznesMKeDq","DTD7A1jNbCTZ6HidmFywB4NUa8kLVZqoH3","DPSREHAzgKbNDUeFTNLMwAV1D2SBKVUaWf","DPY9PcRQGRxUTDmpiV5MhX3LYZ5aTLWUQ3","DK4jhnayQGF9NEuftYSJ8q3jYvXjQPTzJF","DJyjDXMMzT8MEhNuApqsyNC7b1yJG2vGxU","DMX4k2vQtvD4LqawBHXik2kge6AmqeLWip"]} 
+13:55:19.472 INFO  {"name":"re6d4921bb06592c77ecf3","addresses":["XpheMepzGZoUyMwRmqr4r3YXSZoNtvPffi","XfELXLMd5FDZBeuynyFm22q1cUxhFS12v5","Xhz4ZLPriTEiADQdJEFtN5q6qRRQiFuDsH","XqYwdF5RTuVJd6GLdAiELWqHUHqAQPQW81","XtdRWHyDZBQ8NdWbbgzeR7WTLeVQs43WHV","XcwKqXrhdcj6R5RD5YM83i4spMshMmGd7d","XaoLZ8tTTfpvkcGqyQ6isynuLtH5xoyFPB","Xi4gxUxdMvMLkzBx6ASpUSfr1oaZrH3Evz","XsosuWXYUftBJ6cXaSK6BqhpHQv8DPLMwF","XnNDnoBA2S1woW6B77RYr7VmnqaFPuAyQ2","XibzRX5dbx1JWmN7QVnhF5GAQ1z4JvwZBG","XazvCjJV5yRbrcXopZzih9LUAef9b6jYpU","Xp2dx6T2JhL55tPwjaJSRkXtx9uwxszRFg","XjAXwFtwRtNQb8HUMfvLgPBmm4jsmHcJNj","XpS7c7SaU3uJkGLH8amV7tbYdt5ab62LdH","XpokwtTv2xsobZ2CnDxVEYEmeZVh8dKh14","Xwy3WPms4LGrAi42eBc6cKKdQTbCkdQ4Yo","Xi7LAkGCDv6s8K2cqA94G6oYhWvuCagKT7","XhBi497y3i7gJrYcLhRvqFLqVt81MoFJUo","Xj8iSVVbarsEsN8rmGn2e8a1naLTLoCu3U"]} 
+13:55:19.473 INFO  Number of packets sending 1 
+13:55:19.472 INFO  {"name":"ch6d4921bb06592c77ecf3","addresses":["XyzMKrW7y94M4yTwbqKLfSL4ccADyDDRks","Xoym197D9dBsseixHYpEvBCYDqkeLFqUbM","Xvd78aUtraL9QeGFYKbp4umZJ1unDyxC4t","XmXCnmqnUz1w5YB5qgF5AA1JvnKbJ1GCn9","XjM1hNy3GnTt2g29sTHfguAgSmeFV81yfj","Xirm8dvEDncLH778KaJudz3cxeq2UA4enC","XxM7JmEQz4WDuUsSMhCUbTje2ou3RGEhPj","Xed7kkJRWf28DFfZpiK1NmESbt9xigmYsD","XfxDNMaHKnCmqrvcCbFvx3nVpmfddKTc4y","Xys54Nwp6RmnJ4QcKbrAkKdCfsTAn5qzwt","XpzWrr786fRfnXjfw7NGGxH1VHWFTePBjC","XpmcksPx1qsXUpThamnWQgDfzZr5bqqwf5","XfHodAAE4rLXVyput8uKguUht5T1VStSA9","XqgAXPXE11Tda4bzCT99VnNpvJdGBgUm5M","XsqEAMJGV5B6khJ1HKm5JL6GhnzSgEb7Se","XbKK6hrcwSq7cqb6FPyyPEB7zkGEZpYNep","XiZMcxHD7J7dMTWa2bs5Hg52i3MoQR4Yvo","Xd9nRsY6MwPzHzUsZkMkUU5SGHdTZrUBWL","XvRdfUEcKTYnU6XfdRWEKJMdagtkbpVZMV","Xuypc4WCmt7Ri51SuqWT896d37qXk5De4S"]} 
+13:55:19.473 INFO  for command 42 try no. 1 
+13:55:19.490 INFO  ack recieved 
+13:55:19.491 INFO  Add coin finished 
+13:56:12.138 INFO  Selecting Wallet 
+13:56:12.479 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:56:13.329 INFO  Recieve transaction initiated 
+13:56:16.688 INFO  Number of packets sending 1 
+13:56:16.689 INFO  for command 41 try no. 1 
+13:56:16.713 INFO  ack recieved 
+13:56:19.247 INFO  Number of packets sending 2 
+13:56:19.247 INFO  for command 59 try no. 1 
+13:56:19.261 INFO  ack recieved 
+13:56:19.261 INFO  for command 59 try no. 1 
+13:56:19.462 INFO  ack recieved 
+13:56:33.230 INFO  Number of packets sending 1 
+13:56:33.230 INFO  for command 42 try no. 1 
+13:56:33.606 INFO  ack recieved 
+13:56:33.607 INFO  Recieve transaction finished 

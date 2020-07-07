@@ -698,6 +698,8 @@ export class Wallet {
     }
 
     console.log('Unsigned Transaction :' + tx.toHex());
+
+    //01000000 is the SigHash code for unsigned transaction
     return tx.toHex() + '01000000';
   }
 

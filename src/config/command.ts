@@ -1,4 +1,5 @@
 export default {
+  //Communication Specific
   ACK_PACKET: 1,
   TRANSACTION_PACKET: 2, // only received
   WALLET_INDEX_PACKET: 3, // only sent
@@ -7,6 +8,8 @@ export default {
   SIGNED_TRANSACTION_PACKET: 6, // only sent
   ERROR_PACKET: 7,
   USB_CONNECTION_STATE_PACKET: 8, // with user name/
+
+  //Application specific
   GO_TO_DFU_MODE: 9,
   ADD_COINS: 10,
   RECEIVE_ADDRESS: 11,
