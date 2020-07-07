@@ -113,9 +113,10 @@ export const allWalletsList = async () => {
       value: element._id,
     });
   });
-
+  console.log(displayWallets);
   return displayWallets;
 };
+
 
 /**
  * Returns a list of objects with coins which are not added in a wallet.

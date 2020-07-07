@@ -271,6 +271,9 @@ export class Wallet {
         '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
 
+    log.info("External UTXOs fetched :");
+    log.info(JSON.stringify(res));
+
     res = res.data.txrefs;
     //changed for ts-lint
     for (const i of res) {
@@ -297,6 +300,11 @@ export class Wallet {
     );
 
     res = res.data.txrefs;
+
+
+    log.info("Internal UTXOs fetched :");
+    log.info(JSON.stringify(res));
+
 
     for (const i of res) {
       // addresses.push(res["data"]["txrefs"][i]["address"]);

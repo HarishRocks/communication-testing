@@ -26,5 +26,5 @@ export {
   recieveTransaction,
   wallet,
   createPort,
-  deviceReady
+  deviceReady,
 };
