@@ -601,3 +601,145 @@
 13:56:33.606 INFO  ack recieved 
 13:56:33.607 INFO  Recieve transaction finished 
 14:37:52.225 INFO  Selecting Wallet 
+14:58:03.888 INFO  Add Wallet selected 
+14:58:04.098 INFO  Number of packets sending 1 
+14:58:04.098 INFO  for command 41 try no. 1 
+14:58:04.175 INFO  ack recieved 
+14:58:04.376 INFO  Number of packets sending 1 
+14:58:04.376 INFO  for command 43 try no. 1 
+14:58:04.596 INFO  ack recieved 
+14:58:08.280 INFO  Number of packets sending 1 
+14:58:08.280 INFO  for command 42 try no. 1 
+14:58:08.491 INFO  ack recieved 
+14:58:08.494 INFO  Add wallet completed 
+14:58:16.284 INFO  Selecting Wallet 
+14:58:17.277 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+14:58:19.193 INFO  Add coin initiated 
+14:58:21.460 INFO  Number of packets sending 1 
+14:58:21.461 INFO  for command 41 try no. 1 
+14:58:21.479 INFO  ack recieved 
+14:58:21.676 INFO  Number of packets sending 2 
+14:58:21.676 INFO  for command 45 try no. 1 
+14:58:21.895 INFO  ack recieved 
+14:58:21.895 INFO  for command 45 try no. 1 
+14:58:22.096 INFO  ack recieved 
+14:59:10.309 INFO  Selecting Wallet 
+14:59:10.499 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+14:59:11.163 INFO  Recieve transaction initiated 
+15:07:55.005 INFO  Selecting Wallet 
+15:07:58.360 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+15:08:13.989 INFO  Add coin initiated 
+15:08:17.784 INFO  Number of packets sending 1 
+15:08:17.785 INFO  for command 41 try no. 1 
+15:08:17.791 INFO  ack recieved 
+15:08:17.994 INFO  Number of packets sending 2 
+15:08:17.995 INFO  for command 45 try no. 1 
+15:08:18.214 INFO  ack recieved 
+15:08:18.214 INFO  for command 45 try no. 1 
+15:08:18.414 INFO  ack recieved 
+13:38:40.324 INFO  Selecting Wallet 
+13:38:42.568 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:38:43.680 INFO  Send transaction initiated 
+13:41:05.403 INFO  Selecting Wallet 
+13:41:06.329 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:41:08.465 INFO  Send transaction initiated 
+13:43:19.782 INFO  Add Wallet selected 
+13:43:19.904 INFO  Number of packets sending 1 
+13:43:19.904 INFO  for command 41 try no. 1 
+13:43:19.970 INFO  ack recieved 
+13:43:20.173 INFO  Number of packets sending 1 
+13:43:20.173 INFO  for command 43 try no. 1 
+13:43:20.422 INFO  ack recieved 
+13:43:23.486 INFO  Number of packets sending 1 
+13:43:23.486 INFO  for command 42 try no. 1 
+13:43:23.729 INFO  ack recieved 
+13:43:23.730 INFO  Add wallet completed 
+13:43:36.367 INFO  Selecting Wallet 
+13:43:36.626 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:43:37.585 INFO  Add coin initiated 
+13:43:39.341 INFO  Number of packets sending 1 
+13:43:39.341 INFO  for command 41 try no. 1 
+13:43:39.359 INFO  ack recieved 
+13:43:39.559 INFO  Number of packets sending 2 
+13:43:39.559 INFO  for command 45 try no. 1 
+13:43:39.808 INFO  ack recieved 
+13:43:39.808 INFO  for command 45 try no. 1 
+13:43:40.008 INFO  ack recieved 
+13:45:49.514 INFO  Selecting Wallet 
+13:45:49.742 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+13:45:50.863 INFO  Add coin initiated 
+13:45:52.442 INFO  Number of packets sending 1 
+13:45:52.443 INFO  for command 41 try no. 1 
+13:45:52.446 INFO  ack recieved 
+13:45:52.447 INFO  Number of packets sending 2 
+13:45:52.447 INFO  for command 45 try no. 1 
+13:45:52.448 INFO  ack recieved 
+13:45:52.449 INFO  for command 45 try no. 1 
+13:45:52.449 INFO  ack recieved 
+13:59:00.175 INFO  External UTXOs fetched : 
+13:59:18.091 INFO  External UTXOs fetched : 
+14:01:41.790 INFO  External UTXOs fetched : 
+14:01:42.998 INFO  Internal UTXOs fetched : 
+14:02:28.104 INFO  External UTXOs fetched : 
+14:02:30.001 INFO  Internal UTXOs fetched : 
+14:02:44.392 INFO  External UTXOs fetched : 
+14:02:45.710 INFO  Internal UTXOs fetched : 
+14:21:54.105 INFO  External UTXOs fetched : 
+14:21:55.819 INFO  Internal UTXOs fetched : 
+14:21:56.538 INFO  External UTXOs fetched : 
+14:21:57.458 INFO  Internal UTXOs fetched : 
+14:23:53.897 INFO  External UTXOs fetched : 
+14:23:55.938 INFO  Internal UTXOs fetched : 
+14:23:56.084 INFO  External UTXOs fetched : 
+14:23:56.916 INFO  Internal UTXOs fetched : 
+14:28:17.267 INFO  External UTXOs fetched : 
+14:28:18.190 INFO  Internal UTXOs fetched : 
+14:28:19.630 INFO  External UTXOs fetched : 
+14:28:20.548 INFO  Internal UTXOs fetched : 
+14:28:55.053 INFO  External UTXOs fetched : 
+14:28:55.947 INFO  Internal UTXOs fetched : 
+14:28:57.305 INFO  External UTXOs fetched : 
+14:28:57.900 INFO  Internal UTXOs fetched : 
+14:29:22.095 INFO  External UTXOs fetched : 
+14:29:22.945 INFO  Internal UTXOs fetched : 
+14:29:24.339 INFO  External UTXOs fetched : 
+14:29:25.265 INFO  Internal UTXOs fetched : 
+14:30:16.889 INFO  External UTXOs fetched : 
+14:32:14.075 INFO  External UTXOs fetched : 
+14:32:15.044 INFO  Internal UTXOs fetched : 
+14:32:16.783 INFO  External UTXOs fetched : 
+14:32:17.827 INFO  Internal UTXOs fetched : 
+14:34:06.351 INFO  External UTXOs fetched : 
+14:34:07.394 INFO  Internal UTXOs fetched : 
+14:34:09.524 INFO  External UTXOs fetched : 
+14:34:10.752 INFO  Internal UTXOs fetched : 
+14:35:31.961 INFO  External UTXOs fetched : 
+14:35:32.883 INFO  Internal UTXOs fetched : 
+14:35:34.313 INFO  External UTXOs fetched : 
+14:35:35.332 INFO  Internal UTXOs fetched : 
+14:37:28.184 INFO  External UTXOs fetched : 
+14:37:29.103 INFO  Internal UTXOs fetched : 
+14:37:30.437 INFO  External UTXOs fetched : 
+14:37:31.355 INFO  Internal UTXOs fetched : 
+14:38:20.822 INFO  External UTXOs fetched : 
+14:38:21.836 INFO  Internal UTXOs fetched : 
+14:44:00.430 INFO  External UTXOs fetched : 
+14:44:01.363 INFO  Internal UTXOs fetched : 
+14:44:35.115 INFO  External UTXOs fetched : 
+14:44:36.038 INFO  Internal UTXOs fetched : 
+14:46:23.423 INFO  Selecting Wallet 
+14:46:24.726 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+14:46:26.335 INFO  Add coin initiated 
+14:46:29.325 INFO  Number of packets sending 1 
+14:46:29.325 INFO  for command 41 try no. 1 
+14:46:29.337 INFO  ack recieved 
+14:46:29.534 INFO  Number of packets sending 2 
+14:46:29.534 INFO  for command 45 try no. 1 
+14:46:29.783 INFO  ack recieved 
+14:46:29.783 INFO  for command 45 try no. 1 
+14:46:29.984 INFO  ack recieved 
+14:51:09.482 INFO  External UTXOs fetched : 
+14:51:10.534 INFO  Internal UTXOs fetched : 
+14:51:11.527 INFO  Ourputs : [{"address":"n3A6ysiw1u8wV6d1YZQ5GSETBkcjkrD3Dr","value":600},{"value":83100}] 
+14:51:11.545 INFO  External UTXOs fetched : 
+14:51:12.542 INFO  Internal UTXOs fetched : 

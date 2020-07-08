@@ -17,7 +17,6 @@
   "rules": {
     "no-console": false,
     "comment-format": [false],
-    "variable-name": [true,"allow-snake-case"]
   },
   "rulesDirectory": []
 }
