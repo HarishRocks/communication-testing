@@ -127,7 +127,7 @@ export const sendTransaction = async (
 
   if (process.env.NODE_ENV!.trim() === 'cli') {
     const balance = await balanceAllCoins(wallet_id);
-    console.log("Balance");
+    console.log('Balance');
     displayAllBalance(balance);
 
     const t = await makeOutputList();

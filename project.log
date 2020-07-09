@@ -743,3 +743,221 @@
 14:51:11.527 INFO  Ourputs : [{"address":"n3A6ysiw1u8wV6d1YZQ5GSETBkcjkrD3Dr","value":600},{"value":83100}] 
 14:51:11.545 INFO  External UTXOs fetched : 
 14:51:12.542 INFO  Internal UTXOs fetched : 
+00:21:51.540 INFO  Selecting Wallet 
+00:21:52.464 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:21:53.398 INFO  Recieve transaction initiated 
+00:22:25.699 INFO  Selecting Wallet 
+00:22:26.353 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:22:27.337 INFO  Add coin initiated 
+00:22:31.970 INFO  Number of packets sending 1 
+00:22:31.970 INFO  for command 41 try no. 1 
+00:22:31.988 INFO  ack recieved 
+00:22:31.989 INFO  Number of packets sending 2 
+00:22:31.989 INFO  for command 45 try no. 1 
+00:22:31.997 INFO  ack recieved 
+00:22:31.997 INFO  for command 45 try no. 1 
+00:22:32.000 INFO  ack recieved 
+00:31:09.992 INFO  Selecting Wallet 
+00:31:23.450 INFO  Selecting Wallet 
+00:32:17.128 INFO  Selecting Wallet 
+00:32:18.504 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:32:21.083 INFO  Recieve transaction initiated 
+00:32:43.630 INFO  Selecting Wallet 
+00:32:44.261 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:32:45.205 INFO  Recieve transaction initiated 
+00:45:07.450 INFO  Selecting Wallet 
+00:45:07.832 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:45:09.327 INFO  Recieve transaction initiated 
+00:45:10.132 INFO  Number of packets sending 1 
+00:45:10.133 INFO  for command 41 try no. 1 
+00:45:10.177 INFO  ack recieved 
+00:45:23.368 INFO  Selecting Wallet 
+00:45:24.079 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:45:25.600 INFO  Recieve transaction initiated 
+00:45:27.651 INFO  Number of packets sending 1 
+00:45:27.651 INFO  for command 41 try no. 1 
+00:45:27.683 INFO  ack recieved 
+00:45:28.717 INFO  Recieve transaction finished 
+00:53:49.798 INFO  Selecting Wallet 
+00:53:50.019 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:53:50.827 INFO  Add coin initiated 
+00:55:08.307 INFO  Selecting Wallet 
+00:55:09.062 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:55:09.694 INFO  Recieve transaction initiated 
+00:55:10.678 INFO  Number of packets sending 1 
+00:55:10.679 INFO  for command 41 try no. 1 
+00:55:10.697 INFO  ack recieved 
+00:55:12.406 INFO  Number of packets sending 2 
+00:55:12.406 INFO  for command 59 try no. 1 
+00:55:12.450 INFO  ack recieved 
+00:55:12.450 INFO  for command 59 try no. 1 
+00:55:12.650 INFO  ack recieved 
+00:55:15.040 INFO  Recieve transaction finished 
+00:55:38.618 INFO  Selecting Wallet 
+00:55:38.852 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:55:39.534 INFO  Add coin initiated 
+00:55:47.724 INFO  Selecting Wallet 
+00:55:47.978 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:55:48.674 INFO  Add coin initiated 
+00:56:00.413 INFO  Selecting Wallet 
+00:56:00.599 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:56:01.211 INFO  Add coin initiated 
+00:56:07.090 INFO  Number of packets sending 1 
+00:56:07.091 INFO  for command 41 try no. 1 
+00:56:07.172 INFO  ack recieved 
+00:56:07.374 INFO  Number of packets sending 2 
+00:56:07.374 INFO  for command 45 try no. 1 
+00:56:07.623 INFO  ack recieved 
+00:56:07.623 INFO  for command 45 try no. 1 
+00:56:07.824 INFO  ack recieved 
+00:58:01.999 INFO  Selecting Wallet 
+00:58:02.487 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:58:03.366 INFO  Add coin initiated 
+00:58:07.196 INFO  Number of packets sending 1 
+00:58:07.200 INFO  for command 41 try no. 1 
+00:58:07.240 INFO  ack recieved 
+00:58:07.426 INFO  Number of packets sending 2 
+00:58:07.427 INFO  for command 45 try no. 1 
+00:58:07.661 INFO  ack recieved 
+00:58:07.662 INFO  for command 45 try no. 1 
+00:58:07.862 INFO  ack recieved 
+00:58:37.955 INFO  Selecting Wallet 
+00:58:38.159 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+00:58:38.698 INFO  Add coin initiated 
+00:58:40.436 INFO  Number of packets sending 1 
+00:58:40.437 INFO  for command 41 try no. 1 
+00:58:40.454 INFO  ack recieved 
+00:58:40.655 INFO  Number of packets sending 2 
+00:58:40.655 INFO  for command 45 try no. 1 
+00:58:40.905 INFO  ack recieved 
+00:58:40.905 INFO  for command 45 try no. 1 
+00:58:41.105 INFO  ack recieved 
+01:00:50.320 INFO  Selecting Wallet 
+01:00:50.502 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:00:51.838 INFO  Recieve transaction initiated 
+01:00:52.640 INFO  Number of packets sending 1 
+01:00:52.641 INFO  for command 41 try no. 1 
+01:00:52.676 INFO  ack recieved 
+01:00:55.566 INFO  Number of packets sending 2 
+01:00:55.566 INFO  for command 59 try no. 1 
+01:00:55.583 INFO  ack recieved 
+01:00:55.583 INFO  for command 59 try no. 1 
+01:00:55.784 INFO  ack recieved 
+01:01:38.546 INFO  Number of packets sending 1 
+01:01:38.546 INFO  for command 42 try no. 1 
+01:01:38.952 INFO  ack recieved 
+01:01:38.954 INFO  Recieve transaction finished 
+01:01:57.356 INFO  Selecting Wallet 
+01:01:58.109 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:01:58.943 INFO  Recieve transaction initiated 
+01:01:59.682 INFO  Number of packets sending 1 
+01:01:59.682 INFO  for command 41 try no. 1 
+01:01:59.695 INFO  ack recieved 
+01:02:02.025 INFO  Number of packets sending 2 
+01:02:02.025 INFO  for command 59 try no. 1 
+01:02:02.049 INFO  ack recieved 
+01:02:02.049 INFO  for command 59 try no. 1 
+01:02:02.250 INFO  ack recieved 
+01:02:18.776 INFO  Selecting Wallet 
+01:02:19.125 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:02:19.869 INFO  Recieve transaction initiated 
+01:02:20.656 INFO  Number of packets sending 1 
+01:02:20.657 INFO  for command 41 try no. 1 
+01:02:20.703 INFO  ack recieved 
+01:02:22.400 INFO  Number of packets sending 2 
+01:02:22.400 INFO  for command 59 try no. 1 
+01:02:22.407 INFO  ack recieved 
+01:02:22.407 INFO  for command 59 try no. 1 
+01:02:22.607 INFO  ack recieved 
+01:03:01.920 INFO  Selecting Wallet 
+01:03:02.839 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:03:03.654 INFO  Recieve transaction initiated 
+01:03:04.609 INFO  Number of packets sending 1 
+01:03:04.610 INFO  for command 41 try no. 1 
+01:03:04.657 INFO  ack recieved 
+01:03:06.432 INFO  Number of packets sending 2 
+01:03:06.432 INFO  for command 59 try no. 1 
+01:03:06.461 INFO  ack recieved 
+01:03:06.461 INFO  for command 59 try no. 1 
+01:03:06.661 INFO  ack recieved 
+01:04:47.911 INFO  Selecting Wallet 
+01:04:48.442 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:04:49.209 INFO  Recieve transaction initiated 
+01:04:50.036 INFO  Number of packets sending 1 
+01:04:50.036 INFO  for command 41 try no. 1 
+01:04:50.083 INFO  ack recieved 
+01:04:51.907 INFO  Number of packets sending 2 
+01:04:51.907 INFO  for command 59 try no. 1 
+01:04:51.934 INFO  ack recieved 
+01:04:51.935 INFO  for command 59 try no. 1 
+01:04:52.136 INFO  ack recieved 
+01:04:53.827 INFO  Recieve transaction finished 
+01:10:55.920 INFO  Selecting Wallet 
+01:10:56.627 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:10:57.449 INFO  Recieve transaction initiated 
+01:10:58.227 INFO  Number of packets sending 1 
+01:10:58.227 INFO  for command 41 try no. 1 
+01:10:58.265 INFO  ack recieved 
+01:10:59.914 INFO  Number of packets sending 2 
+01:10:59.914 INFO  for command 59 try no. 1 
+01:10:59.941 INFO  ack recieved 
+01:10:59.941 INFO  for command 59 try no. 1 
+01:11:00.142 INFO  ack recieved 
+01:11:10.615 INFO  Number of packets sending 1 
+01:11:10.615 INFO  for command 42 try no. 1 
+01:11:11.020 INFO  ack recieved 
+01:11:11.022 INFO  Recieve transaction finished 
+01:12:38.774 INFO  Selecting Wallet 
+01:12:39.295 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:12:39.954 INFO  Recieve transaction initiated 
+01:12:40.909 INFO  Number of packets sending 1 
+01:12:40.909 INFO  for command 41 try no. 1 
+01:12:40.920 INFO  ack recieved 
+01:12:43.002 INFO  Number of packets sending 2 
+01:12:43.002 INFO  for command 59 try no. 1 
+01:12:43.023 INFO  ack recieved 
+01:12:43.023 INFO  for command 59 try no. 1 
+01:12:43.223 INFO  ack recieved 
+01:13:37.769 INFO  Selecting Wallet 
+01:13:38.048 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:13:39.017 INFO  Recieve transaction initiated 
+01:13:39.995 INFO  Number of packets sending 1 
+01:13:39.995 INFO  for command 41 try no. 1 
+01:13:40.018 INFO  ack recieved 
+01:13:41.704 INFO  Number of packets sending 2 
+01:13:41.704 INFO  for command 59 try no. 1 
+01:13:41.723 INFO  ack recieved 
+01:13:41.723 INFO  for command 59 try no. 1 
+01:13:41.924 INFO  ack recieved 
+01:14:22.220 INFO  Recieve transaction finished 
+01:18:15.572 INFO  Selecting Wallet 
+01:18:15.831 INFO  Selected Wallet ID: fd379dff528794c898cf7c8ba042f0f1d2d3098b7cb81014ac2eff9b9392e8fe 
+01:18:16.527 INFO  Send transaction initiated 
+01:18:26.424 INFO  Number of packets sending 1 
+01:18:26.424 INFO  for command 41 try no. 1 
+01:18:26.471 INFO  ack recieved 
+01:18:27.424 INFO  External UTXOs fetched : 
+01:18:28.071 INFO  Internal UTXOs fetched : 
+01:18:28.828 INFO  External UTXOs fetched : 
+01:18:29.536 INFO  Internal UTXOs fetched : 
+01:18:30.198 INFO  Ourputs : [{"address":"mgcooLV2RiSTU1KexvwPWPAufhyjTEq7QB","value":10000},{"value":987740}] 
+01:18:30.212 INFO  Number of packets sending 3 
+01:18:30.212 INFO  for command 50 try no. 1 
+01:18:30.229 INFO  ack recieved 
+01:18:30.229 INFO  for command 50 try no. 1 
+01:18:30.431 INFO  ack recieved 
+01:18:30.431 INFO  for command 50 try no. 1 
+01:18:30.632 INFO  ack recieved 
+01:18:35.172 INFO  External UTXOs fetched : 
+01:18:35.813 INFO  Internal UTXOs fetched : 
+01:18:35.828 INFO  Number of packets sending 5 
+01:18:35.828 INFO  for command 52 try no. 1 
+01:18:35.835 INFO  ack recieved 
+01:18:35.835 INFO  for command 52 try no. 1 
+01:18:36.036 INFO  ack recieved 
+01:18:36.037 INFO  for command 52 try no. 1 
+01:18:36.238 INFO  ack recieved 
+01:18:36.238 INFO  for command 52 try no. 1 
+01:18:36.439 INFO  ack recieved 
+01:18:36.439 INFO  for command 52 try no. 1 
+01:18:36.639 INFO  ack recieved 

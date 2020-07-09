@@ -12,7 +12,7 @@ import * as wallet from './flows/wallet';
 import { createPort } from './communication/port';
 import deviceReady from './communication/deviceReady';
 
-let node_env = process.env.NODE_ENV || ''
+let node_env = process.env.NODE_ENV || '';
 if (node_env.trim() === 'cli') {
   cli_tool().catch((err) => console.log(err));
 }

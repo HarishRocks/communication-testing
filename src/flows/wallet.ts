@@ -221,9 +221,9 @@ export class Wallet {
     axios
       .post(
         this.api_url +
-        'wallets/' +
-        name +
-        '/addresses?token=5849c99db61a468db0ab443bab0a9a22',
+          'wallets/' +
+          name +
+          '/addresses?token=5849c99db61a468db0ab443bab0a9a22',
         {
           name,
           addresses,
@@ -249,9 +249,9 @@ export class Wallet {
   async fetch_wallet(name: string) {
     const res = await axios.get(
       this.api_url +
-      '/addrs/' +
-      name +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        '/addrs/' +
+        name +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     return res.data;
   }
@@ -266,9 +266,9 @@ export class Wallet {
 
     let res: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
 
     log.info('External UTXOs fetched :');
@@ -294,9 +294,9 @@ export class Wallet {
 
     res = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
 
     res = res.data.txrefs;
@@ -330,9 +330,9 @@ export class Wallet {
   async get_total_balance() {
     let res: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
     res = res.data;
     // console.log(res);
@@ -343,9 +343,9 @@ export class Wallet {
 
     res = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22&unspentOnly=true'
     );
     res = res.data;
     balance = balance + res.balance;
@@ -362,9 +362,9 @@ export class Wallet {
   async get_change_address() {
     let change_addresses: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.internal +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        'addrs/' +
+        this.internal +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     change_addresses = change_addresses.data;
 
@@ -406,11 +406,13 @@ export class Wallet {
     }
     let recieveAddress: any = await axios.get(
       this.api_url +
-      'addrs/' +
-      this.external +
-      '?token=5849c99db61a468db0ab443bab0a9a22'
+        'addrs/' +
+        this.external +
+        '?token=5849c99db61a468db0ab443bab0a9a22'
     );
     recieveAddress = recieveAddress.data;
+
+    console.log(recieveAddress)
 
     const original_length = recieveAddress.wallet.addresses.length;
 
@@ -674,13 +676,16 @@ export class Wallet {
     }
 
     for (const i in inputs) {
-      inputs[i].scriptPubKey = bitcoin.address.toOutputScript(inputs[i].address, this.network);
+      inputs[i].scriptPubKey = bitcoin.address.toOutputScript(
+        inputs[i].address,
+        this.network
+      );
     }
 
     const txBuilder = new bitcoin.TransactionBuilder(this.network);
 
     for (const i in inputs) {
-      let input = inputs[i]
+      let input = inputs[i];
       const scriptPubKey = input.scriptPubKey;
       txBuilder.addInput(
         input.txId,
