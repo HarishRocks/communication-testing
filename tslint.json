@@ -16,7 +16,7 @@
   },
   "rules": {
     "no-console": false,
-    "comment-format": [false],
+    "comment-format": [false]
   },
   "rulesDirectory": []
 }

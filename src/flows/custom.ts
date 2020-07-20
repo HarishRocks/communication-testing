@@ -1,7 +1,7 @@
-import { createPort } from '../communication/port';
-import deviceReady from '../communication/deviceReady';
-import { sendData } from '../communication/sendData';
-import { recieveCommand } from '../communication/recieveData';
+import { createPort } from '../core/port';
+import deviceReady from '../core/deviceReady';
+import { sendData } from '../core/sendData';
+import { receiveCommand } from '../core/recieveData';
 
 export default async (actions: any[]) => {
   const { connection, serial } = await createPort();
@@ -16,7 +16,7 @@ export default async (actions: any[]) => {
           await sendData(connection, action.command, action.data);
           break;
         case 'RECEIVE':
-          const received = await recieveCommand(connection, action.command);
+          const received = await receiveCommand(connection, action.command);
           console.log('Received: ', received);
           break;
         default:

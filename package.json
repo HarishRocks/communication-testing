@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "live": "onchange -i -k 'src/**/*.ts' 'config/*' -- ts-node src/app.ts",
-    "dev": "cross-env NODE_ENV=cli yarn live",
+    "run:live": "onchange -i -k 'src/**/*.ts' 'config/*' -- ts-node src/app.ts",
+    "run:cli": "onchange -i -k 'src/**/*.ts' 'config/*' -- ts-node src/cli/index.ts",
+    "dev": "yarn run:live",
+    "cli": "cross-env NODE_ENV=cli yarn run:cli",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/app.js",
     "lint": "tslint  -p tsconfig.json -c tslint.json --fix",
@@ -27,7 +29,8 @@
     "nedb": "^1.8.0",
     "serialport": "^9.0.0",
     "simple-node-logger": "^18.12.24",
-    "web3": "^1.2.9"
+    "web3": "^1.2.9",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",

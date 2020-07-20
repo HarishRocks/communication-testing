@@ -1,6 +1,6 @@
-import { createPort } from '../communication/port';
-import { sendData } from '../communication/sendData';
-import { recieveCommand } from '../communication/recieveData';
+import { createPort } from '../core/port';
+import { sendData } from '../core/sendData';
+import { receiveCommand } from '../core/recieveData';
 import { coins as COINS } from '../config';
 import {
   Wallet,
@@ -10,7 +10,7 @@ import {
   pinSetWallet,
 } from './wallet';
 import { hexToAscii } from '../bytes';
-import deviceReady from '../communication/deviceReady';
+import deviceReady from '../core/deviceReady';
 import { query_list, query_checkbox } from './cli_input';
 // @ts-ignore
 import * as logs from 'simple-node-logger';
@@ -200,7 +200,7 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
     await sendData(connection, 45, walletID + coins.join(''));
     console.log('Message: ' + walletID + coins.join('') + '\n\n');
 
-    const coinsConfirmed: any = await recieveCommand(connection, 46);
+    const coinsConfirmed: any = await receiveCommand(connection, 46);
     if (!!parseInt(coinsConfirmed, 10)) {
       console.log('From Device: User confirmed coins');
     } else {
@@ -212,16 +212,16 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
     }
 
     // if(await pinSetWallet(wallet_id)){
-    //   const pinEnteredPin = await recieveCommand(connection, 47);
+    //   const pinEnteredPin = await receiveCommand(connection, 47);
     //   console.log('From Device: User entered pin: ')
     //   console.log(pinEnteredPin);
     // }
 
-    const tappedCards = await recieveCommand(connection, 48);
+    const tappedCards = await receiveCommand(connection, 48);
     console.log('From Device: User tapped cards: ');
     console.log(tappedCards);
 
-    const xPubDetails = await recieveCommand(connection, 49);
+    const xPubDetails = await receiveCommand(connection, 49);
     console.log('From Device: all xPubs');
     console.log(xPubDetails);
 

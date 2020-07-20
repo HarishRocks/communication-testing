@@ -1,9 +1,9 @@
 import { sendData } from './sendData';
-import { recieveCommand } from './recieveData';
+import { receiveCommand } from './recieveData';
 
 const deviceReady = (connection: any) => {
   return new Promise(async (resolve, reject) => {
-    recieveCommand(connection, 42).then((deviceResponse: any) => {
+    receiveCommand(connection, 42).then((deviceResponse: any) => {
       console.log('Ready Response: ' + String(deviceResponse));
       resolve(String(deviceResponse).slice(0, 2) === '02');
     });

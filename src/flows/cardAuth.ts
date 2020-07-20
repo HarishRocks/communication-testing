@@ -1,8 +1,8 @@
-import { createPort } from '../communication/port';
-import { ackData, sendData } from '../communication/sendData';
+import { createPort } from '../core/port';
+import { ackData, sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
-import { recieveData, recieveCommand } from '../communication/recieveData';
-import deviceReady from '../communication/deviceReady';
+import { recieveData, receiveCommand } from '../core/recieveData';
+import deviceReady from '../core/deviceReady';
 
 const cardAuth = async () => {
   const { connection, serial } = await createPort();
@@ -13,11 +13,11 @@ const cardAuth = async () => {
   if (ready) {
     await sendData(connection, 70, '00');
 
-    const receivedHash = await recieveCommand(connection, 13);
+    const receivedHash = await receiveCommand(connection, 13);
     console.log('receivedHash: ', receivedHash);
     await sendData(connection, 16, '12345678');
 
-    const challangeHash = await recieveCommand(connection, 17);
+    const challangeHash = await receiveCommand(connection, 17);
     console.log('challangeHash :', challangeHash);
   } else {
     console.log('device not ready');

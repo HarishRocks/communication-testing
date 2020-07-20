@@ -1,6 +1,6 @@
 import { constants, radix } from '../config';
 import { intToUintByte, byteStuffing, byteUnstuffing } from '../bytes';
-import { crc16 } from '../communication';
+import { crc16 } from '../core';
 
 const { CHUNK_SIZE, START_OF_FRAME } = constants;
 

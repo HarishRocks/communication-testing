@@ -1,10 +1,10 @@
-import { createPort } from '../communication/port';
-import { sendData } from '../communication/sendData';
+import { createPort } from '../core/port';
+import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
-import { recieveCommand } from '../communication/recieveData';
+import { receiveCommand } from '../core/recieveData';
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
-import deviceReady from '../communication/deviceReady';
+import deviceReady from '../core/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
 import axios from 'axios';
 
@@ -47,7 +47,7 @@ export const provision = async () => {
 
     await sendData(connection, 20, nulldata);
 
-    const provisionStatus: any = !!Number(await recieveCommand(connection, 21));
+    const provisionStatus: any = !!Number(await receiveCommand(connection, 21));
     console.log('From Device : Provision status: ' + provisionStatus);
 
     if (provisionStatus) {
@@ -59,7 +59,7 @@ export const provision = async () => {
 
     await sendData(connection, 22, serialNumber);
 
-    const publicKey = await recieveCommand(connection, 25);
+    const publicKey = await receiveCommand(connection, 25);
 
     await uploadPublicKey(serialNumber, publicKey);
 
@@ -70,7 +70,7 @@ export const provision = async () => {
 
     await sendData(connection, 26, '00000001');
 
-    const lockStatus = await recieveCommand(connection, 27);
+    const lockStatus = await receiveCommand(connection, 27);
     console.log('lockStatus ' + lockStatus);
     // if(!Number(lockStatus)){
     //     console.log("Locking unsuccessful, Try again.\nExiting function..");

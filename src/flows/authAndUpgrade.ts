@@ -1,7 +1,7 @@
 // DEVICE_CONFIRM_FOR_DFU_MODE not used
-import { createPort } from '../communication/port';
-import { sendData } from '../communication/sendData';
-import { recieveData, recieveCommand } from '../communication/recieveData';
+import { createPort } from '../core/port';
+import { sendData } from '../core/sendData';
+import { recieveData, receiveCommand } from '../core/recieveData';
 import {
   getAccessToken,
   getRandomNumFromServer,
@@ -54,7 +54,7 @@ export const deviceAuthandUpgrade = async () => {
 
   // await sendData(connection , IN_BOOTLOADER_MODE, "00");
 
-  // const bootloaderMode = recieveCommand(connection, BOOTLOADER_STATUS)
+  // const bootloaderMode = receiveCommand(connection, BOOTLOADER_STATUS)
   const bootloaderMode = '01';
   if (!parseInt(bootloaderMode, 10)) {
     console.log('Device not in bootloader mode.\nExiting function...');
@@ -63,7 +63,7 @@ export const deviceAuthandUpgrade = async () => {
 
   // await sendData(connection, START_AUTH_FLOW, "00");
 
-  // const authFlowStatus = recieveCommand(connection, BOOTLOADER_STATUS)
+  // const authFlowStatus = receiveCommand(connection, BOOTLOADER_STATUS)
   const authFlowStatus = '01';
   if (!parseInt(authFlowStatus, 10)) {
     console.log('Device denied Start Auth flow.\nExiting function...');
@@ -72,19 +72,19 @@ export const deviceAuthandUpgrade = async () => {
 
   await sendData(connection, 23, nulldata);
 
-  const serialNumber = await recieveCommand(connection, 24);
+  const serialNumber = await receiveCommand(connection, 24);
   console.log('From Device: Serial number: ' + serialNumber);
 
   await sendData(connection, 12, nulldata);
 
-  const signature = await recieveCommand(connection, 13);
+  const signature = await receiveCommand(connection, 13);
   console.log('Signature : ' + signature);
 
   const accessToken = await getAccessToken(serialNumber, signature);
 
   await sendData(connection, 14, nulldata);
 
-  const firmwareVersion = await recieveCommand(connection, 15);
+  const firmwareVersion = await receiveCommand(connection, 15);
   console.log('From Device: Firmware Version: ' + firmwareVersion);
 
   // const firmwareVersion = 1;
@@ -96,7 +96,7 @@ export const deviceAuthandUpgrade = async () => {
 
   await sendData(connection, 16, randomNumber);
 
-  const signedChallenge = await recieveCommand(connection, 17);
+  const signedChallenge = await receiveCommand(connection, 17);
 
   const verified = await verifySignedChallenge(
     serialNumber,
@@ -112,7 +112,7 @@ export const deviceAuthandUpgrade = async () => {
 
   await sendData(connection, 18, '00000002');
 
-  const upgradeFirmwareResponse = await recieveCommand(connection, 29);
+  const upgradeFirmwareResponse = await receiveCommand(connection, 29);
   if (!Number(upgradeFirmwareResponse)) {
     console.log(
       'From Device: User Rejected Upgrade Request.\nExiting Function...'

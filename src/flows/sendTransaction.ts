@@ -1,9 +1,9 @@
 // ToDo, create a universal coinType object for refrence in whole system - done (kind of)
 // ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
-import { createPort } from '../communication/port';
-import { sendData } from '../communication/sendData';
+import { createPort } from '../core/port';
+import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
-import { recieveData, recieveCommand } from '../communication/recieveData';
+import { recieveData, receiveCommand } from '../core/recieveData';
 import {
   getXpubFromWallet,
   Wallet,
@@ -13,7 +13,7 @@ import {
 } from './wallet';
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
-import deviceReady from '../communication/deviceReady';
+import deviceReady from '../core/deviceReady';
 import { query_input, query_number, query_list } from './cli_input';
 import axios from 'axios';
 //@ts-ignore
@@ -163,7 +163,7 @@ export const sendTransaction = async (
     console.log('Transaction Metadata' + txn_metadata);
     await sendData(connection, 50, wallet_id + txn_metadata);
 
-    const coinConfirmed: any = await recieveCommand(connection, 51);
+    const coinConfirmed: any = await receiveCommand(connection, 51);
     if (!!parseInt(coinConfirmed, 10)) {
       console.log('From Device: User confirmed coin.');
     } else {
@@ -183,21 +183,21 @@ export const sendTransaction = async (
     console.log('Unsigned Transaction' + unsigned_txn);
     await sendData(connection, 52, unsigned_txn);
 
-    const reciepentVerified = await recieveCommand(connection, 53);
+    const reciepentVerified = await receiveCommand(connection, 53);
     console.log('From Device (User verified reciepient amount and address) : ');
     console.log(reciepentVerified);
 
     // if (await pinSetWallet(wallet_id)) {
-    //     const pinEnteredPin = await recieveCommand(connection, 47);
+    //     const pinEnteredPin = await receiveCommand(connection, 47);
     //     console.log('From Device: User entered pin: ')
     //     console.log(pinEnteredPin);
     // }
 
-    const cardsTapped = await recieveCommand(connection, 48);
+    const cardsTapped = await receiveCommand(connection, 48);
     console.log('From Device (Cards are tapped) : ');
     console.log(cardsTapped);
 
-    const signedTransaction = await recieveCommand(connection, 54);
+    const signedTransaction = await receiveCommand(connection, 54);
     console.log('From Device (Signed Transaction) : ');
     console.log(signedTransaction);
 

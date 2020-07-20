@@ -1,8 +1,8 @@
-import { createPort } from '../communication/port';
-import { sendData } from '../communication/sendData';
-import { recieveData, recieveCommand } from '../communication/recieveData';
+import { createPort } from '../core/port';
+import { sendData } from '../core/sendData';
+import { recieveData, receiveCommand } from '../core/recieveData';
 import { addWalletToDB, allAvailableWallets } from './wallet';
-import deviceReady from '../communication/deviceReady';
+import deviceReady from '../core/deviceReady';
 
 /**
  * Adds the wallet recieved from the hardware to the local database.
@@ -20,7 +20,7 @@ export const addWallet = async () => {
     await sendData(connection, 43, '00');
 
     // Example data to be recieved in hex 4142434400000000000000000000000000af19feeb93dfb733c5cc2e78114bf9b53cc22f3c64a9e6719ea0fa6d4ee2fe31
-    const walletDetails = await recieveCommand(connection, 44);
+    const walletDetails = await receiveCommand(connection, 44);
     if (walletDetails === '00') {
       console.log('From Device (Rejected Request)\n');
       connection.close();
@@ -52,7 +52,7 @@ export const addWallet = async () => {
 //   // initiate them whenever needed to get data otherwise just ignore it
 
 //   console.log('Wallet Details From Device: ');
-//   let d = await recieveCommand(connection, 44);
+//   let d = await receiveCommand(connection, 44);
 //   console.log(d);
 
 //   console.log(`\n\nDesktop : Sending Success Command.`);

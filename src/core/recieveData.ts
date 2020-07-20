@@ -1,10 +1,10 @@
 import { xmodemDecode } from '../xmodem';
-import { ackData } from '../communication/sendData';
+import { ackData } from './sendData';
 import { commands } from '../config';
 const { ACK_PACKET } = commands;
 
-// returns the recieved data value in hex for the supplied command
-export const recieveCommand = (connection: any, command: any) => {
+// returns the received data value in hex for the supplied command
+export const receiveCommand = (connection: any, command: any) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     const eListener = (packet: any) => {
