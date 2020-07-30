@@ -1,14 +1,11 @@
-// resolved
 import receiveTransaction from './handler/receiveTransaction';
-
-
-// ToDo ask suraj sir about the added_coins in receiveTransaction flow
-import {addWallet} from '../flows/addWallet';
-import {addCoin, allWalletsList} from '../flows/addCoin';
-import cardAuth from '../flows/cardAuth';
-import {sendTransaction} from '../flows/sendTransaction';
-import {query_list} from '../flows/cli_input';
-import customAction from '../flows/custom';
+import sendTransaction from './handler/sendTransaction';
+import addCoin from './handler/addCoin';
+import customAction from './handler/customActions';
+import allWalletsList from './handler/walletsList';
+import addWallet from './handler/addWallet';
+import cardAuth from './handler/cardAuth';
+import {queryList} from "./helper/cliInput";
 
 // @ts-ignore
 import * as logs from 'simple-node-logger';
@@ -16,7 +13,7 @@ import * as logs from 'simple-node-logger';
 const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
-    let selection = await query_list([
+    let selection = await queryList([
         'Select Wallet',
         'Add Wallet',
         'Card Authentication',
@@ -34,13 +31,13 @@ const cliTool = async () => {
             break;
         case 'Select Wallet':
             log.info('Selecting Wallet');
-            const walletId = await query_list(
+            const walletId = await queryList(
                 await allWalletsList(),
                 'Select your wallet'
             );
             log.info('Selected Wallet ID: ' + walletId);
 
-            selection = await query_list([
+            selection = await queryList([
                 'Add Coin',
                 'Send Transaction',
                 'Recieve Transaction',
@@ -49,12 +46,12 @@ const cliTool = async () => {
             switch (selection) {
                 case 'Add Coin':
                     log.info('Add coin initiated');
-                    await addCoin(walletId, undefined);
+                    await addCoin(walletId);
                     log.info('Add coin finished');
                     break;
                 case 'Send Transaction':
                     log.info('Send transaction initiated');
-                    await sendTransaction(walletId, undefined, undefined, undefined);
+                    await sendTransaction(walletId);
                     log.info('Send transaction finished');
                     break;
 

@@ -14,7 +14,6 @@ import {
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../core/deviceReady';
-import { query_input, query_number, query_list } from './cli_input';
 import axios from 'axios';
 //@ts-ignore
 import * as logs from 'simple-node-logger';
@@ -62,52 +61,6 @@ const broadcastTransaction = (transaction: any) => {
     });
 };
 
-// Only for CLI
-const makeOutputList = async () => {
-  let rec_addr = await query_input('Input the Reciepient Address');
-
-  let send_amount = await query_number('Input the amount in satoshis');
-
-  const coinType = getCoinType(rec_addr);
-
-  const output_list = [
-    {
-      address: rec_addr,
-      value: send_amount,
-    },
-  ];
-
-  while (1) {
-    const selection = await query_list(
-      ['yes', 'no'],
-      'Do you want to add more addresses?'
-    );
-
-    if (selection === 'yes') {
-      rec_addr = await query_input('Input the Reciepient Address');
-
-      send_amount = await query_number('Input the amount');
-
-      const tempCoinType = getCoinType(rec_addr);
-
-      if (coinType === tempCoinType) {
-        output_list.push({
-          address: rec_addr,
-          value: send_amount,
-        });
-      } else {
-        console.log(
-          'Please enter an addresses for the same coinType as above.\n'
-        );
-      }
-    } else {
-      break;
-    }
-  }
-
-  return { output_list, coinType };
-};
-
 // Output list is
 // let output = [
 // {
@@ -124,25 +77,6 @@ export const sendTransaction = async (
 
   const { connection, serial } = await createPort();
   connection.open();
-
-  if (process.env.NODE_ENV!.trim() === 'cli') {
-    const balance = await balanceAllCoins(wallet_id);
-    console.log('Balance');
-    displayAllBalance(balance);
-
-    const t = await makeOutputList();
-    output_list = t.output_list;
-    coinType = t.coinType;
-
-    fee_rate = await query_list(
-      [
-        { name: 'Low', value: 'l' },
-        { name: 'Medium', value: 'm' },
-        { name: 'High', value: 'h' },
-      ],
-      'Select the transaction fees'
-    );
-  }
 
   const ready = await deviceReady(connection);
 

@@ -7,7 +7,6 @@ import { getXpubFromWallet, Wallet, pinSetWallet } from './wallet';
 import { default as base58 } from 'bs58';
 import { default as Datastore } from 'nedb';
 import deviceReady from '../core/deviceReady';
-import { query_input, query_number, query_list } from './cli_input';
 import axios from 'axios';
 
 const nulldata = '00000000';

@@ -7,11 +7,9 @@ import {
   addCoinsToDB,
   allAvailableWallets,
   getCoinsFromWallet,
-  pinSetWallet,
 } from './wallet';
 import { hexToAscii } from '../bytes';
 import deviceReady from '../core/deviceReady';
-import { query_list, query_checkbox } from './cli_input';
 // @ts-ignore
 import * as logs from 'simple-node-logger';
 
@@ -181,13 +179,6 @@ export const coinsNotAdded = async (walletID: any) => {
 export const addCoin = async (walletID: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
   connection.open();
-
-  // If CLI, take input from user.
-  if (process.env.NODE_ENV!.trim() === 'cli') {
-    const available_coins = await coinsNotAdded(walletID);
-
-    coinTypes = await query_checkbox(available_coins, 'Choose your coins');
-  }
 
   const ready = await deviceReady(connection);
 
