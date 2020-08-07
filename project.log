@@ -131,3 +131,147 @@
 17:33:01.907 INFO  Selected Wallet ID: 0bf2c4df3286955d294f1c1bd7ebcc61471d6289c326bf6a7e450b8ed563e556 
 17:33:02.826 INFO  Send transaction initiated 
 17:34:12.291 INFO  Selecting Wallet 
+22:28:12.782 INFO  Add Wallet selected 
+22:28:12.884 INFO  Number of packets sending 1 
+22:28:12.884 INFO  for command 41 try no. 1 
+22:28:13.056 INFO  ack recieved 
+22:28:13.256 INFO  Number of packets sending 1 
+22:28:13.256 INFO  for command 43 try no. 1 
+22:28:13.505 INFO  ack recieved 
+22:28:23.852 INFO  Add Wallet selected 
+22:28:23.981 INFO  Number of packets sending 1 
+22:28:23.981 INFO  for command 41 try no. 1 
+22:28:24.049 INFO  ack recieved 
+22:28:24.251 INFO  Number of packets sending 1 
+22:28:24.251 INFO  for command 43 try no. 1 
+22:28:24.501 INFO  ack recieved 
+22:28:56.463 INFO  Add Wallet selected 
+22:28:56.582 INFO  Number of packets sending 1 
+22:28:56.582 INFO  for command 41 try no. 1 
+22:28:56.661 INFO  ack recieved 
+22:28:56.860 INFO  Number of packets sending 1 
+22:28:56.860 INFO  for command 43 try no. 1 
+22:28:57.110 INFO  ack recieved 
+22:29:29.961 INFO  Add Wallet selected 
+22:29:30.101 INFO  Number of packets sending 1 
+22:29:30.101 INFO  for command 41 try no. 1 
+22:29:30.174 INFO  ack recieved 
+22:29:30.375 INFO  Number of packets sending 1 
+22:29:30.375 INFO  for command 43 try no. 1 
+22:29:30.625 INFO  ack recieved 
+22:29:33.813 INFO  Number of packets sending 1 
+22:29:33.813 INFO  for command 42 try no. 1 
+22:29:34.051 INFO  ack recieved 
+22:29:34.053 INFO  Add wallet completed 
+22:36:18.294 INFO  Add Wallet selected 
+22:36:29.972 INFO  Add Wallet selected 
+22:36:41.484 INFO  Add Wallet selected 
+22:36:41.652 INFO  Number of packets sending 1 
+22:36:41.652 INFO  for command 41 try no. 1 
+22:36:41.822 INFO  ack recieved 
+22:36:42.020 INFO  Number of packets sending 1 
+22:36:42.020 INFO  for command 71 try no. 1 
+22:36:42.270 INFO  ack recieved 
+22:37:03.521 INFO  Add Wallet selected 
+22:37:03.711 INFO  Number of packets sending 1 
+22:37:03.711 INFO  for command 41 try no. 1 
+22:37:03.877 INFO  ack recieved 
+22:37:04.077 INFO  Number of packets sending 1 
+22:37:04.077 INFO  for command 71 try no. 1 
+22:37:04.325 INFO  ack recieved 
+22:42:58.223 INFO  Add Wallet selected 
+22:42:58.323 INFO  Number of packets sending 1 
+22:42:58.323 INFO  for command 41 try no. 1 
+22:42:58.394 INFO  ack recieved 
+22:42:58.596 INFO  Number of packets sending 1 
+22:42:58.596 INFO  for command 72 try no. 1 
+22:42:58.845 INFO  ack recieved 
+22:53:47.951 INFO  Add Wallet selected 
+22:53:48.093 INFO  Number of packets sending 1 
+22:53:48.093 INFO  for command 41 try no. 1 
+22:53:48.268 INFO  ack recieved 
+22:53:48.468 INFO  Number of packets sending 1 
+22:53:48.468 INFO  for command 72 try no. 1 
+22:53:48.717 INFO  ack recieved 
+22:56:20.186 INFO  Add Wallet selected 
+22:56:20.313 INFO  Number of packets sending 1 
+22:56:20.313 INFO  for command 41 try no. 1 
+22:56:20.485 INFO  ack recieved 
+22:56:20.684 INFO  Number of packets sending 1 
+22:56:20.685 INFO  for command 72 try no. 1 
+22:56:20.936 INFO  ack recieved 
+23:02:08.256 INFO  Add Wallet selected 
+23:02:08.385 INFO  Number of packets sending 1 
+23:02:08.385 INFO  for command 41 try no. 1 
+23:02:08.583 INFO  ack recieved 
+23:02:08.782 INFO  Number of packets sending 1 
+23:02:08.783 INFO  for command 72 try no. 1 
+23:02:09.032 INFO  ack recieved 
+23:02:49.339 INFO  Add Wallet selected 
+23:02:49.466 INFO  Number of packets sending 1 
+23:02:49.466 INFO  for command 41 try no. 1 
+23:02:49.634 INFO  ack recieved 
+23:02:49.834 INFO  Number of packets sending 1 
+23:02:49.834 INFO  for command 72 try no. 1 
+23:02:50.083 INFO  ack recieved 
+23:02:51.102 INFO  Number of packets sending 1 
+23:02:51.102 INFO  for command 42 try no. 1 
+23:02:51.339 INFO  ack recieved 
+23:02:51.341 INFO  Add wallet completed 
+23:03:02.527 INFO  Selecting Wallet 
+23:06:39.218 INFO  Add Wallet selected 
+23:06:47.492 INFO  Add Wallet selected 
+23:06:47.616 INFO  Number of packets sending 1 
+23:06:47.617 INFO  for command 41 try no. 1 
+23:06:47.795 INFO  ack recieved 
+23:06:47.994 INFO  Number of packets sending 1 
+23:06:47.994 INFO  for command 72 try no. 1 
+23:06:48.244 INFO  ack recieved 
+23:06:49.262 INFO  Number of packets sending 1 
+23:06:49.262 INFO  for command 42 try no. 1 
+23:06:49.499 INFO  ack recieved 
+23:06:49.500 INFO  Add wallet completed 
+23:10:11.768 INFO  Add Wallet selected 
+23:10:11.898 INFO  Number of packets sending 1 
+23:10:11.898 INFO  for command 41 try no. 1 
+23:10:12.086 INFO  ack recieved 
+23:10:12.286 INFO  Number of packets sending 1 
+23:10:12.286 INFO  for command 72 try no. 1 
+23:10:12.535 INFO  ack recieved 
+23:10:13.553 INFO  Number of packets sending 1 
+23:10:13.553 INFO  for command 42 try no. 1 
+23:10:13.792 INFO  ack recieved 
+23:10:13.793 INFO  Add wallet completed 
+23:11:08.691 INFO  Add Wallet selected 
+23:11:08.825 INFO  Number of packets sending 1 
+23:11:08.825 INFO  for command 41 try no. 1 
+23:11:08.904 INFO  ack recieved 
+23:11:09.106 INFO  Number of packets sending 1 
+23:11:09.106 INFO  for command 72 try no. 1 
+23:11:09.355 INFO  ack recieved 
+23:11:10.375 INFO  Number of packets sending 1 
+23:11:10.375 INFO  for command 42 try no. 1 
+23:11:10.611 INFO  ack recieved 
+23:11:10.613 INFO  Add wallet completed 
+23:12:27.981 INFO  Add Wallet selected 
+23:12:28.107 INFO  Number of packets sending 1 
+23:12:28.107 INFO  for command 41 try no. 1 
+23:12:28.180 INFO  ack recieved 
+23:12:28.382 INFO  Number of packets sending 1 
+23:12:28.382 INFO  for command 72 try no. 1 
+23:12:28.631 INFO  ack recieved 
+23:12:29.651 INFO  Number of packets sending 1 
+23:12:29.651 INFO  for command 42 try no. 1 
+23:12:29.887 INFO  ack recieved 
+23:12:29.888 INFO  Add wallet completed 
+23:12:39.523 INFO  Add Wallet selected 
+23:12:39.655 INFO  Number of packets sending 1 
+23:12:39.655 INFO  for command 41 try no. 1 
+23:12:39.736 INFO  ack recieved 
+23:12:39.937 INFO  Number of packets sending 1 
+23:12:39.937 INFO  for command 72 try no. 1 
+23:12:40.186 INFO  ack recieved 
+23:12:41.206 INFO  Number of packets sending 1 
+23:12:41.206 INFO  for command 42 try no. 1 
+23:12:41.442 INFO  ack recieved 
+23:12:41.443 INFO  Add wallet completed 

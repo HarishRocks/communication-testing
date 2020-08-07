@@ -5,6 +5,7 @@ import customAction from './handler/customActions';
 import allWalletsList from './handler/walletsList';
 import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
+import addAllWallets from './handler/addAllWallets';
 import {queryList} from "./helper/cliInput";
 
 // @ts-ignore
@@ -15,6 +16,7 @@ const log = logs.createSimpleFileLogger('project.log');
 const cliTool = async () => {
     let selection = await queryList([
         'Select Wallet',
+        'Add All Wallets',
         'Add Wallet',
         'Card Authentication',
         'Custom',
@@ -26,6 +28,13 @@ const cliTool = async () => {
             await addWallet();
             log.info('Add wallet completed');
             break;
+
+        case 'Add All Wallets':
+            log.info('Add Wallet selected');
+            await addAllWallets();
+            log.info('Add wallet completed');
+            break;
+
         case 'Card Authentication':
             await cardAuth();
             break;

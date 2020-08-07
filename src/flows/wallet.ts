@@ -844,6 +844,18 @@ export const addWalletToDB = (rawData: any) => {
   db.insert({ name, passwordSet, _id, xPubs: [] });
 };
 
+export const addAllWalletsToDB = (rawData: any) => {
+  const db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
+
+  const lenth = rawData.slice(0,2);
+  rawData = rawData.slice(2);
+  for(let i = 0 ; i < lenth; i++ )
+  {
+    const { name, passwordSet, _id } = extractWalletDetails(rawData.slice(98*i , 98*i + 98));
+    db.insert({ name, passwordSet, _id, xPubs: [] });
+  }
+}
+
 /**
  * Deletes wallet from the local database.
  *
