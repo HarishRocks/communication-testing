@@ -3,6 +3,55 @@ import { ackData, sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import deviceReady from '../core/deviceReady';
+import axios from 'axios';
+import crypto from 'crypto';
+import { queryInput } from '../cli/helper/cliInput';
+const cyBaseURL =
+  'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
+
+const sha256 = (message: string) => {
+  const hash = crypto.createHash('sha256');
+  hash.update(Buffer.from(message, 'hex'));
+  return (message = hash.digest('hex'));
+};
+
+const verifySerialSignature = async (
+  serial: any,
+  signature: any,
+  message: any
+) => {
+  const res: any = await axios.post(`${cyBaseURL}/verification/verify`, {
+    serial,
+    signature,
+    message,
+  });
+
+  if (res.data.status) {
+    console.log('Challenge = ' + res.data.challenge);
+    return res.data.challenge;
+  } else return 0;
+};
+
+const verifyChallengeSignature = async (
+  serial: string,
+  signature: string,
+  challenge: string
+) => {
+  console.log({
+    serial,
+    signature,
+    challenge,
+    //Dont know why it's needed at the moment.
+    firmwareVersion: '1.1.1',
+  });
+  const res: any = await axios.post(`${cyBaseURL}/verification/challenge`, {
+    serial,
+    signature,
+    challenge,
+    //Dont know why it's needed at the moment.
+    firmwareVersion: '1.1.1',
+  });
+};
 
 const cardAuth = async () => {
   const { connection, serial } = await createPort();
@@ -13,12 +62,35 @@ const cardAuth = async () => {
   if (ready) {
     await sendData(connection, 70, '00');
 
-    const receivedHash = await receiveCommand(connection, 13);
+    const receivedHash: any = await receiveCommand(connection, 13);
     console.log('receivedHash: ', receivedHash);
-    await sendData(connection, 16, '12345678');
 
-    const challangeHash = await receiveCommand(connection, 17);
-    console.log('challangeHash :', challangeHash);
+    const serial = receivedHash.slice(128).toUpperCase();
+    const serialSignature = receivedHash.slice(0, 128);
+
+    const challenge = await verifySerialSignature(
+      serial,
+      serialSignature,
+      sha256(serial)
+    );
+
+    if (!challenge) {
+      console.log('Not verified');
+      return 0;
+    }
+
+    await sendData(connection, 16, challenge);
+
+    const challengeHash: any = await receiveCommand(connection, 17);
+    console.log('challengeHash :', challengeHash);
+
+    const challengeSignature = challengeHash.slice(0, 128);
+
+    const verified = await verifyChallengeSignature(
+      serial,
+      challengeSignature,
+      challenge
+    );
   } else {
     console.log('device not ready');
   }

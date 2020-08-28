@@ -412,7 +412,7 @@ export class Wallet {
     );
     recieveAddress = recieveAddress.data;
 
-    console.log(recieveAddress)
+    console.log(recieveAddress);
 
     const original_length = recieveAddress.wallet.addresses.length;
 
@@ -423,8 +423,10 @@ export class Wallet {
           recieveAddress.txrefs[i].address
         )
       ) {
-        recieveAddress.wallet.addresses.splice(i, 1);
-        break;
+        const index = recieveAddress.wallet.addresses.indexOf(
+          recieveAddress.txrefs[i].address
+        );
+        recieveAddress.wallet.addresses.splice(index, 1);
       }
     }
 
@@ -847,14 +849,15 @@ export const addWalletToDB = (rawData: any) => {
 export const addAllWalletsToDB = (rawData: any) => {
   const db = new Datastore({ filename: 'db/wallet_db.db', autoload: true });
 
-  const lenth = rawData.slice(0,2);
+  const lenth = rawData.slice(0, 2);
   rawData = rawData.slice(2);
-  for(let i = 0 ; i < lenth; i++ )
-  {
-    const { name, passwordSet, _id } = extractWalletDetails(rawData.slice(98*i , 98*i + 98));
+  for (let i = 0; i < lenth; i++) {
+    const { name, passwordSet, _id } = extractWalletDetails(
+      rawData.slice(98 * i, 98 * i + 98)
+    );
     db.insert({ name, passwordSet, _id, xPubs: [] });
   }
-}
+};
 
 /**
  * Deletes wallet from the local database.

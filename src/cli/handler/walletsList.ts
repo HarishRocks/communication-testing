@@ -1,3 +1,3 @@
-import {allWalletsList} from '../../flows/addCoin';
+import { allWalletsList } from '../../flows/addCoin';
 
-export default allWalletsList
+export default allWalletsList;

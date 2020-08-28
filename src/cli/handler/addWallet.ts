@@ -1,3 +1,3 @@
-import {addWallet} from '../../flows/addWallet';
+import { addWallet } from '../../flows/addWallet';
 
-export default addWallet
+export default addWallet;

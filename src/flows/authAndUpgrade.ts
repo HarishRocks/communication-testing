@@ -13,7 +13,7 @@ import {
   DfuTransportSerial,
   DfuOperation,
   //@ts-ignore
-} from './nrf-dfu.cjs';
+} from 'pc-nrf-dfu-js';
 
 const sleep = (ms: any) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -44,6 +44,15 @@ const upgrade = async (connection: any) => {
         upgrade(connection);
       });
     });
+};
+
+const recieveFirmware = (connection: any) => {
+  return new Promise((resolve, reject) => {
+    receiveCommand(connection, 15).then((res) => {
+      resolve(res);
+    });
+    sendData(connection, 14, nulldata);
+  });
 };
 
 export const deviceAuthandUpgrade = async () => {
@@ -81,10 +90,11 @@ export const deviceAuthandUpgrade = async () => {
   console.log('Signature : ' + signature);
 
   const accessToken = await getAccessToken(serialNumber, signature);
+  console.log('here');
 
-  await sendData(connection, 14, nulldata);
+  // await sendData(connection, 14, nulldata);
 
-  const firmwareVersion = await receiveCommand(connection, 15);
+  const firmwareVersion = await recieveFirmware(connection);
   console.log('From Device: Firmware Version: ' + firmwareVersion);
 
   // const firmwareVersion = 1;

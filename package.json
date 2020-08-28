@@ -27,6 +27,7 @@
     "ethers": "^5.0.4",
     "inquirer": "^7.1.0",
     "nedb": "^1.8.0",
+    "pc-nrf-dfu-js": "^0.2.12",
     "serialport": "^9.0.0",
     "simple-node-logger": "^18.12.24",
     "web3": "^1.2.9",

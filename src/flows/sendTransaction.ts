@@ -135,9 +135,9 @@ export const sendTransaction = async (
     console.log('From Device (Signed Transaction) : ');
     console.log(signedTransaction);
 
-    const s = broadcastTransaction(signedTransaction);
+    const s: any = broadcastTransaction(signedTransaction);
 
-    if (s !== undefined) {
+    if (s === 1) {
       await sendData(connection, 42, '01');
     } else {
       console.log('Boradcast Unsuccessful');
