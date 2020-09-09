@@ -863,3 +863,266 @@
 13:04:00.934 INFO  Number of packets sending 1 
 13:04:00.935 INFO  for command 37 try no. 1 
 13:04:01.005 INFO  ack recieved 
+19:49:11.295 INFO  Add Wallet selected 
+19:49:11.439 INFO  Number of packets sending 1 
+19:49:11.439 INFO  for command 41 try no. 1 
+19:49:11.615 INFO  ack recieved 
+19:49:11.816 INFO  Number of packets sending 1 
+19:49:11.816 INFO  for command 43 try no. 1 
+19:49:12.065 INFO  ack recieved 
+19:49:15.245 INFO  Number of packets sending 1 
+19:49:15.245 INFO  for command 42 try no. 1 
+19:49:15.490 INFO  ack recieved 
+19:49:15.491 INFO  Add wallet completed 
+19:49:29.591 INFO  Selecting Wallet 
+19:49:30.146 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+19:49:31.250 INFO  Add coin initiated 
+19:49:34.305 INFO  Number of packets sending 1 
+19:49:34.305 INFO  for command 41 try no. 1 
+19:49:34.385 INFO  ack recieved 
+19:49:34.587 INFO  Number of packets sending 2 
+19:49:34.587 INFO  for command 45 try no. 1 
+19:49:34.835 INFO  ack recieved 
+19:49:34.835 INFO  for command 45 try no. 1 
+19:49:35.036 INFO  ack recieved 
+14:29:40.639 INFO  Selecting Wallet 
+14:29:42.040 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:29:46.039 INFO  Add coin initiated 
+14:29:47.698 INFO  Number of packets sending 1 
+14:29:47.698 INFO  for command 41 try no. 1 
+14:29:47.866 INFO  ack recieved 
+14:29:48.066 INFO  Number of packets sending 2 
+14:29:48.066 INFO  for command 45 try no. 1 
+14:29:48.315 INFO  ack recieved 
+14:29:48.315 INFO  for command 45 try no. 1 
+14:29:48.516 INFO  ack recieved 
+14:31:17.344 INFO  Selecting Wallet 
+14:31:17.522 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:31:18.238 INFO  Add coin initiated 
+14:31:19.135 INFO  Number of packets sending 1 
+14:31:19.136 INFO  for command 41 try no. 1 
+14:31:19.306 INFO  ack recieved 
+14:31:19.506 INFO  Number of packets sending 2 
+14:31:19.506 INFO  for command 45 try no. 1 
+14:31:19.755 INFO  ack recieved 
+14:31:19.756 INFO  for command 45 try no. 1 
+14:31:19.956 INFO  ack recieved 
+14:32:45.576 INFO  Selecting Wallet 
+14:32:45.820 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:32:46.406 INFO  Add coin initiated 
+14:32:47.258 INFO  Number of packets sending 1 
+14:32:47.258 INFO  for command 41 try no. 1 
+14:32:47.440 INFO  ack recieved 
+14:32:47.641 INFO  Number of packets sending 2 
+14:32:47.641 INFO  for command 45 try no. 1 
+14:32:47.890 INFO  ack recieved 
+14:32:47.890 INFO  for command 45 try no. 1 
+14:32:48.091 INFO  ack recieved 
+14:39:42.650 INFO  Selecting Wallet 
+14:39:42.852 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:39:43.347 INFO  Add coin initiated 
+14:39:43.802 INFO  Add coin finished 
+14:39:49.996 INFO  Selecting Wallet 
+14:39:50.233 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:39:50.713 INFO  Add coin initiated 
+14:39:51.297 INFO  Number of packets sending 1 
+14:39:51.297 INFO  for command 41 try no. 1 
+14:39:51.297 ERROR Caught error 
+14:39:51.298 INFO  for command 41 try no. 2 
+14:39:51.298 ERROR Caught error 
+14:39:51.298 INFO  for command 41 try no. 3 
+14:39:51.298 ERROR Caught error 
+14:39:51.299 INFO  for command 41 try no. 4 
+14:39:51.299 ERROR Caught error 
+14:39:51.299 INFO  for command 41 try no. 5 
+14:39:51.299 ERROR Caught error 
+14:42:00.752 INFO  Selecting Wallet 
+14:42:01.061 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:42:01.557 INFO  Add coin initiated 
+14:42:55.834 INFO  Selecting Wallet 
+14:42:56.347 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:42:56.636 INFO  Add coin initiated 
+14:42:57.382 INFO  Add coin finished 
+15:06:34.837 INFO  Selecting Wallet 
+15:06:35.485 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+15:06:35.951 INFO  Add coin initiated 
+15:06:36.734 INFO  Number of packets sending 1 
+15:06:36.734 INFO  for command 41 try no. 1 
+15:06:36.799 INFO  ack recieved 
+15:06:37.003 INFO  Number of packets sending 2 
+15:06:37.003 INFO  for command 45 try no. 1 
+15:06:37.252 INFO  ack recieved 
+15:06:37.252 INFO  for command 45 try no. 1 
+15:06:37.452 INFO  ack recieved 
+15:17:33.179 INFO  Selecting Wallet 
+15:17:33.571 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+15:17:34.280 INFO  Add coin initiated 
+15:17:35.844 INFO  Number of packets sending 1 
+15:17:35.845 INFO  for command 41 try no. 1 
+15:17:36.041 INFO  ack recieved 
+15:17:36.242 INFO  Number of packets sending 2 
+15:17:36.242 INFO  for command 45 try no. 1 
+15:17:36.490 INFO  ack recieved 
+15:17:36.491 INFO  for command 45 try no. 1 
+15:17:36.691 INFO  ack recieved 
+15:19:41.806 INFO  {"name":"re368bfe7f40a345d13b54","addresses":["XfkMdjYh6GQBxzHTAfVFHfohY6H3S5aWbn","Xp9MypZ3SJvt4eUtfBHD7vW72LHQLX8pRk","XvZmNdt77Lf8NeURz7KvnET3TexNEVU7Sf","Xy2CxcEBB8m3QfpTxV4D5toS2Zg6Y4YDwb","XowvzBB1RRPjNCJ4fNuRZTeinWFo6tMWpp","XsjhLYreoepPeREZYL7L8mPZRtoRHwroLD","XsUqkd5s3NwMtGgzaTppeUwUP1mMAGTpke","Xb6M7cpnApkv16v4CPDXoyx4QebQY9yrtw","XbKZFXRcqq25BZj3jX5kxd37hVHVH5URra","XozsZdscT9zGMSxxU8HHJDH3fYKZajstpe","XuMjMUanrvExGYp2b1czm8ZDcoiUeh3Yc5","Xby9WzZGvyyYDQxLomxdaDbY2juRSuqZxk","XyZQJtrmYj2VkBkWVAV1WpSZTZLLAMuGyM","XuWkKspHCQaEf1kG7ztDZUfj6UxAPcBkp5","XobD8f9vNmSHyp13MjuFijKiQKDFgXAGDe","XwoFgK2oYUd52h6J4uzkGeg24xcBbEMrCU","XeKW7zcS1t3WJyytnuwurK76MDd27wWEap","XwAfaZjBv4XVsESxBfRwqcVudgayRYqcvm","XbpzYxDay4XivtCUkBbB2mbmDTK8fgFNag","Xh2hRyzZapA1g8HG3hC2UwBckFNtBSpUqY"]} 
+15:19:43.007 INFO  Number of packets sending 1 
+15:19:41.807 INFO  {"name":"ch368bfe7f40a345d13b54","addresses":["XfjGwUyx5ZcPrepVrXTh9XhmbnmEW3g8gS","XywGvUKzUcEnUYiVRSnq2kYYPLPkHpEAfq","Xq2a2xt7To7M6N2W7tbE63PDh48cYrUNoU","Xdp1w17uG2KmkbejiNEoJAAVD7ZwnCreDv","XteDaGGyTKbBMyxnrx43hN4kRdYSragchC","XoSqb2o7HqTatYDAKaMFSKdGyDbCY92wXx","Xnpzjot2EspqLgSgnQUF2vEPnYU2NjH88z","XbZHTunZun91yECuKfrxhej4XaNDeigfZN","XaoUtdh3Z8AFyXwXiy3eeJ641QbSrnbvRB","XrTWnCmVLUD8FpT9oaKr9Ci3Aj8X7C11Gh","XayFHLXigPrJFxE3NWUUNbSia76jSNqWik","XsQrMQ3eftLg3hGzPUSnidPMvFfv6kcp5a","XrDSVB7G2V6MbBfwS4ngv2C97ByPajDhKt","Xs9aiqr1Vt7ETCsVSjQYi8nuDXfhrCt5SQ","XoAjiF8j5PqnqyztmvxirwwcVd6UWG2uXC","XwqXaFVw8dAUY9ZGpK5byGzYsNFg9kxmnG","XjKhVfjMGYnPs4DKSavTAcfwhCNXtJdxSA","XpDYHR6Nw4e1BwMGZNmfJdCeNNhgyqhsMd","Xtv32tNTpGs7whQWbPXUBj2Rpss7z7zL99","XxwN4zB1vzXzH6KSrzvQse8izDa2CHF96w"]} 
+15:19:43.007 INFO  for command 42 try no. 1 
+15:19:43.030 INFO  ack recieved 
+15:19:43.031 INFO  Add coin finished 
+15:21:04.898 INFO  Add Wallet selected 
+15:21:05.041 INFO  Number of packets sending 1 
+15:21:05.041 INFO  for command 41 try no. 1 
+15:21:05.123 INFO  ack recieved 
+15:21:05.325 INFO  Number of packets sending 1 
+15:21:05.325 INFO  for command 43 try no. 1 
+15:21:05.574 INFO  ack recieved 
+15:21:14.350 INFO  Selecting Wallet 
+15:21:31.045 INFO  Add Wallet selected 
+15:21:43.360 INFO  Add Wallet selected 
+15:21:43.483 INFO  Number of packets sending 1 
+15:21:43.484 INFO  for command 41 try no. 1 
+15:21:43.664 INFO  ack recieved 
+15:21:43.864 INFO  Number of packets sending 1 
+15:21:43.864 INFO  for command 43 try no. 1 
+15:21:44.113 INFO  ack recieved 
+15:21:46.893 INFO  Number of packets sending 1 
+15:21:46.893 INFO  for command 42 try no. 1 
+15:21:47.138 INFO  ack recieved 
+15:21:47.139 INFO  Add wallet completed 
+15:21:54.508 INFO  Selecting Wallet 
+15:21:54.762 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+15:21:55.498 INFO  Add coin initiated 
+15:21:57.425 INFO  Number of packets sending 1 
+15:21:57.425 INFO  for command 41 try no. 1 
+15:21:57.507 INFO  ack recieved 
+15:21:57.707 INFO  Number of packets sending 2 
+15:21:57.707 INFO  for command 45 try no. 1 
+15:21:57.957 INFO  ack recieved 
+15:21:57.957 INFO  for command 45 try no. 1 
+15:21:58.157 INFO  ack recieved 
+15:22:27.380 INFO  {"name":"re4cde7436c613e877e232","addresses":["142YpacdQ5eH4gnJxHnCQXjYHLSHEa9Hc7","1MgPmUXb9raEUgRvrB3EB7KNcrB3m1nZWN","1PqkGhNURdRtVrfk7HL1kh8XwgePc6vpcs","1BE3r4P59u4Q5aXEJWYVaa6SU63ct6DinH","1uFVAUeZKrbvzZ9CtY8CBsQmN5qr3wzjQ","1Cv7p7QyCAuBwGUYyWga4a2WhByYEdZcHm","12mjWz5XTq7ynYMscfc2fUrajk8W32YiLj","1TbfvniVvvqHvNpjCHktiDoXv8V51accj","1PFhLF38HVEuBMBisJJsBa7HJaksR3XswN","1G3u7YuhVgrpGehPkv6ERezmTrUoot2Ybi","14N7gQrE8FDXXUZou27a5ChUXDrPEbkMSm","1Kq291QMsHnAaWSF8xXQuW17uBfA1EDCnt","1KjcmRhPteFLhsWWTCW5QV2UCDrStKx4wn","1D18V81VNLcMVzBarGqv6jFJscYeSfdhNz","1EdoTAVTTvM5vFASHucUaf3fXJFHYxBEPb","1ArJXMLV9cSRdqyzxsHH2Hmc8TXD65wmLm","1ByPzs36CVbJTGXHAsJ2jo3bC5nnktntqj","17RBhcEQzefHBX7zLsVdoTYtsc2bDs2ce3","1GQsgie5P26R9aYjHUFAg3wAHhhP8nxhNw","1DroULGkfXMB79cyRt1YcKukSbSxMXgKF3"]} 
+15:22:28.627 INFO  Number of packets sending 1 
+15:22:27.381 INFO  {"name":"ch4cde7436c613e877e232","addresses":["1GLRxSrAyLhKtssnr3kdaGJi4KZyLbTthZ","19NrpCo9UdtYnGrKkXdWoHcW8uutYuR1xh","1Bz4vmvQyPpoDkoZqhq7P195AUnAGrFxTu","1GV7cHyRKqpLxpck8D6oRnD9riqmPYexdz","1MuD8naAmnfnMQ61AXFKhaP8Dn8K2xyehF","1H1x7bGoy76Pyw6zWUoNenrSZMZvrgmLq1","1MXcATVhzVtT9inE26SEZyK5TEXcg8QiRp","157vH4ZVV4JiXpj56sEsZ5Qcc8h4fw7QcL","1DiQPxHyiS63zRPLby9iQ7bCiGHw4BEG9t","13HmP7dKmvobH6pKoWF7aAWEsEMBt4d5ko","129tAfdQNFsg7BADw8vRDVSUa1hmWFS3Rq","1P721yFJNRAhDSBAX2UB2Fx1B6RA56XDDw","1GXYCks6BkeTLvARpUhvg3v4ajKTA9K6az","1Ej9WbEKwgztXjNr2YEToAZNFCqJP2RKsH","14V4abjx4NwwzrWeCjPW8kJNHHdzXgN9NG","1NPBRwkqndVFQcAQ8QYgyTXH2MExG4vjNX","1G4WUw7ik4dDKeAGdRriyWzZncVKWRxsR8","17LobsnSufsZuVEs6kmmqxzGY1mR87gCBw","12HqnSQw6h8qRciUPsTUP1W4bdBXoZQt4w","1KVt5zQrWUsh84MXWyLysWnKsYkroaW4Dk"]} 
+15:22:28.628 INFO  for command 42 try no. 1 
+15:22:28.641 ERROR Caught error 
+15:22:28.641 INFO  for command 42 try no. 2 
+15:22:30.643 ERROR Caught error 
+15:22:30.643 INFO  for command 42 try no. 3 
+15:22:32.646 ERROR Caught error 
+15:22:32.646 INFO  for command 42 try no. 4 
+15:22:34.649 ERROR Caught error 
+15:22:34.650 INFO  for command 42 try no. 5 
+15:22:36.652 ERROR Caught error 
+15:22:36.653 INFO  Add coin finished 
+14:33:09.402 INFO  Selecting Wallet 
+14:33:09.828 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482299 
+14:33:10.351 INFO  Add coin initiated 
+14:33:12.347 INFO  Number of packets sending 1 
+14:33:12.347 INFO  for command 41 try no. 1 
+14:33:12.505 INFO  ack recieved 
+14:33:12.706 INFO  Number of packets sending 2 
+14:33:12.706 INFO  for command 45 try no. 1 
+14:33:12.955 INFO  ack recieved 
+14:33:12.955 INFO  for command 45 try no. 1 
+14:33:13.155 INFO  ack recieved 
+14:34:27.536 INFO  Selecting Wallet 
+14:34:27.893 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482299 
+14:34:28.431 INFO  Add coin initiated 
+14:34:29.335 INFO  Number of packets sending 1 
+14:34:29.335 INFO  for command 41 try no. 1 
+14:34:29.400 INFO  ack recieved 
+14:34:29.603 INFO  Number of packets sending 2 
+14:34:29.603 INFO  for command 45 try no. 1 
+14:34:29.852 INFO  ack recieved 
+14:34:29.852 INFO  for command 45 try no. 1 
+14:34:30.052 INFO  ack recieved 
+14:35:06.680 INFO  Selecting Wallet 
+14:35:06.817 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:35:07.422 INFO  Add coin initiated 
+14:35:08.897 INFO  Number of packets sending 1 
+14:35:08.897 INFO  for command 41 try no. 1 
+14:35:08.977 INFO  ack recieved 
+14:35:09.178 INFO  Number of packets sending 2 
+14:35:09.178 INFO  for command 45 try no. 1 
+14:35:09.429 INFO  ack recieved 
+14:35:09.429 INFO  for command 45 try no. 1 
+14:35:09.630 INFO  ack recieved 
+14:37:18.102 INFO  Selecting Wallet 
+14:37:18.322 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:37:18.538 INFO  Add coin initiated 
+14:37:19.150 INFO  Add coin finished 
+14:37:24.411 INFO  Selecting Wallet 
+14:37:25.327 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+14:37:25.788 INFO  Add coin initiated 
+14:37:26.674 INFO  Number of packets sending 1 
+14:37:26.674 INFO  for command 41 try no. 1 
+14:37:26.769 INFO  ack recieved 
+14:37:26.970 INFO  Number of packets sending 2 
+14:37:26.970 INFO  for command 45 try no. 1 
+14:37:27.219 INFO  ack recieved 
+14:37:27.219 INFO  for command 45 try no. 1 
+14:37:27.420 INFO  ack recieved 
+14:37:34.331 INFO  Add coin finished 
+14:37:53.602 INFO  Selecting Wallet 
+14:37:53.802 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482288 
+14:37:54.768 INFO  Add coin initiated 
+14:37:55.511 INFO  Number of packets sending 1 
+14:37:55.511 INFO  for command 41 try no. 1 
+14:37:55.604 INFO  ack recieved 
+14:37:55.806 INFO  Number of packets sending 2 
+14:37:55.806 INFO  for command 45 try no. 1 
+14:37:56.054 INFO  ack recieved 
+14:37:56.054 INFO  for command 45 try no. 1 
+14:37:56.255 INFO  ack recieved 
+14:37:56.510 INFO  Add coin finished 
+14:38:45.074 INFO  Selecting Wallet 
+14:38:45.232 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482288 
+14:38:45.855 INFO  Add coin initiated 
+14:38:54.659 INFO  Selecting Wallet 
+14:38:55.267 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482288 
+14:38:57.120 INFO  Recieve transaction initiated 
+14:38:57.756 INFO  Number of packets sending 1 
+14:38:57.756 INFO  for command 41 try no. 1 
+14:38:57.854 INFO  ack recieved 
+14:39:00.263 INFO  Number of packets sending 2 
+14:39:00.263 INFO  for command 59 try no. 1 
+14:39:00.309 INFO  ack recieved 
+14:39:00.310 INFO  for command 59 try no. 1 
+14:39:00.511 INFO  ack recieved 
+14:40:05.733 INFO  Selecting Wallet 
+14:40:06.178 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482288 
+14:40:07.066 INFO  Recieve transaction initiated 
+14:40:07.926 INFO  Number of packets sending 1 
+14:40:07.926 INFO  for command 41 try no. 1 
+14:40:08.030 INFO  ack recieved 
+14:40:09.673 INFO  Number of packets sending 2 
+14:40:09.673 INFO  for command 59 try no. 1 
+14:40:09.682 INFO  ack recieved 
+14:40:09.682 INFO  for command 59 try no. 1 
+14:40:09.884 INFO  ack recieved 
+14:40:10.138 INFO  Recieve transaction finished 
+15:22:22.899 INFO  Selecting Wallet 
+15:22:31.146 INFO  Add Wallet selected 
+15:22:31.278 INFO  Number of packets sending 1 
+15:22:31.278 INFO  for command 41 try no. 1 
+15:22:31.380 INFO  ack recieved 
+15:22:31.580 INFO  Number of packets sending 1 
+15:22:31.580 INFO  for command 43 try no. 1 
+15:22:31.829 INFO  ack recieved 
+15:22:34.617 INFO  Number of packets sending 1 
+15:22:34.617 INFO  for command 42 try no. 1 
+15:22:34.854 INFO  ack recieved 
+15:22:34.857 INFO  Add wallet completed 
+15:22:47.144 INFO  Selecting Wallet 
+15:22:47.348 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+15:22:48.490 INFO  Add coin initiated 
+15:22:49.696 INFO  Number of packets sending 1 
+15:22:49.696 INFO  for command 41 try no. 1 
+15:22:49.785 INFO  ack recieved 
+15:22:49.988 INFO  Number of packets sending 2 
+15:22:49.988 INFO  for command 45 try no. 1 
+15:22:50.237 INFO  ack recieved 
+15:22:50.237 INFO  for command 45 try no. 1 
+15:22:50.438 INFO  ack recieved 
