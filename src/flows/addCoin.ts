@@ -181,15 +181,15 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
   connection.open();
   console.log(connection);
 
-  connection.on('close', (err)=>{
-    if(err){
-      console.log("error here");
+  connection.on('close', (err) => {
+    if (err) {
+      console.log('error here');
       console.log(err);
       console.log(connection);
       // throw new Error('exit');
     }
     return;
-  })
+  });
 
   const ready = await deviceReady(connection);
 
@@ -202,9 +202,9 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
     await sendData(connection, 45, walletID + coins.join(''));
     console.log('Message: ' + walletID + coins.join('') + '\n\n');
 
-    console.log("before coin confirm");
+    console.log('before coin confirm');
     const coinsConfirmed: any = await receiveCommand(connection, 46);
-    console.log("after coins confrm");
+    console.log('after coins confrm');
     if (!!parseInt(coinsConfirmed, 10)) {
       console.log('From Device: User confirmed coins');
     } else {
@@ -230,7 +230,7 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
     console.log(xPubDetails);
 
     await addXPubsToDB(walletID, xPubDetails, coinTypes);
-    for(let i = 0; i<1000000; i++){
+    for (let i = 0; i < 1000000; i++) {
       process.stdout.write('');
     }
     console.log(`Desktop : Sending Success Command.`);

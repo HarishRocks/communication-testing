@@ -8,10 +8,9 @@ export default async (walletID: string) => {
     console.error('Select at least one coin');
     return;
   }
-  try{
-  	await addCoin(walletID, coinTypes);
-  }
-  catch(e) {
-  	console.log("error occured");
+  try {
+    await addCoin(walletID, coinTypes);
+  } catch (e) {
+    console.log('error occured');
   }
 };

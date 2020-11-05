@@ -98,13 +98,9 @@ const cliTool = async () => {
         },
         {
           type: 'SEND',
-          command: 16,
-          data: '12345678',
-        },
-        {
-          type: 'RECEIVE',
-          command: 17,
-        },
+          command: 42,
+          data: '05',
+        }
       ];
       await customAction(actions);
       break;

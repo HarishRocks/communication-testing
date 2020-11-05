@@ -1,11 +1,9 @@
 import { createPort } from '../core/port';
 import { ackData, sendData } from '../core/sendData';
-import { coins as COINS } from '../config';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import deviceReady from '../core/deviceReady';
 import axios from 'axios';
 import crypto from 'crypto';
-import { queryInput } from '../cli/helper/cliInput';
 const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
@@ -25,7 +23,7 @@ const verifySerialSignature = async (
     signature,
     message,
   });
-
+  console.log(res.data);
   if (res.data.status) {
     console.log('Challenge = ' + res.data.challenge);
     return res.data.challenge;
@@ -37,13 +35,6 @@ const verifyChallengeSignature = async (
   signature: string,
   challenge: string
 ) => {
-  console.log({
-    serial,
-    signature,
-    challenge,
-    //Dont know why it's needed at the moment.
-    firmwareVersion: '1.1.1',
-  });
   const res: any = await axios.post(`${cyBaseURL}/verification/challenge`, {
     serial,
     signature,
@@ -51,6 +42,8 @@ const verifyChallengeSignature = async (
     //Dont know why it's needed at the moment.
     firmwareVersion: '1.1.1',
   });
+
+  console.log(res.data);
 };
 
 const cardAuth = async () => {
@@ -62,11 +55,15 @@ const cardAuth = async () => {
   if (ready) {
     await sendData(connection, 70, '00');
 
+    recieveData(connection).then( (res) => console.log(res));
+
     const receivedHash: any = await receiveCommand(connection, 13);
     console.log('receivedHash: ', receivedHash);
 
     const serial = receivedHash.slice(128).toUpperCase();
     const serialSignature = receivedHash.slice(0, 128);
+
+    console.log({serial, serialSignature});
 
     const challenge = await verifySerialSignature(
       serial,
@@ -85,10 +82,11 @@ const cardAuth = async () => {
     console.log('challengeHash :', challengeHash);
 
     const challengeSignature = challengeHash.slice(0, 128);
+    console.log({challengeSignature});
 
     const verified = await verifyChallengeSignature(
       serial,
-      challengeSignature,
+      challengeSignature+'1',
       challenge
     );
   } else {

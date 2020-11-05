@@ -8,7 +8,8 @@ import deviceReady from '../core/deviceReady';
 import axios from 'axios';
 
 const nulldata = '00000000';
-export const cyBaseURL = 'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
+export const cyBaseURL =
+  'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 export const generateSerialNumber = async () => {
   const res: any = await axios.get(`${cyBaseURL}/generateserialnumber`);
@@ -19,7 +20,7 @@ export const generateSerialNumber = async () => {
 
 export const uploadPublicKey = async (serial: any, publicKey: any) => {
   const res = await axios.post(`${cyBaseURL}/provision/add`, {
-    type : 'DEVICE',
+    type: 'DEVICE',
     serial,
     publicKey,
   });

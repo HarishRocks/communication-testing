@@ -1126,3 +1126,275 @@
 15:22:50.237 INFO  ack recieved 
 15:22:50.237 INFO  for command 45 try no. 1 
 15:22:50.438 INFO  ack recieved 
+13:07:45.127 INFO  Add Wallet selected 
+13:07:45.300 INFO  Number of packets sending 1 
+13:07:45.300 INFO  for command 41 try no. 1 
+13:07:47.305 ERROR Caught error 
+13:07:47.305 INFO  for command 41 try no. 2 
+13:07:49.307 ERROR Caught error 
+13:07:49.308 INFO  for command 41 try no. 3 
+13:07:57.099 INFO  Add Wallet selected 
+13:07:57.255 INFO  Number of packets sending 1 
+13:07:57.255 INFO  for command 41 try no. 1 
+13:07:57.424 INFO  ack recieved 
+13:07:57.624 INFO  Number of packets sending 1 
+13:07:57.624 INFO  for command 43 try no. 1 
+13:07:57.874 INFO  ack recieved 
+13:08:00.607 INFO  Number of packets sending 1 
+13:08:00.607 INFO  for command 42 try no. 1 
+13:08:00.846 INFO  ack recieved 
+13:08:00.849 INFO  Add wallet completed 
+13:08:11.168 INFO  Selecting Wallet 
+13:08:11.546 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+13:08:12.739 INFO  Add coin initiated 
+13:08:13.790 INFO  Number of packets sending 1 
+13:08:13.790 INFO  for command 41 try no. 1 
+13:08:13.871 INFO  ack recieved 
+13:08:14.073 INFO  Number of packets sending 2 
+13:08:14.073 INFO  for command 45 try no. 1 
+13:08:14.322 INFO  ack recieved 
+13:08:14.322 INFO  for command 45 try no. 1 
+13:08:14.523 INFO  ack recieved 
+13:08:41.083 INFO  {"name":"re18d046b5d224d9a61546","addresses":["mjvHjL76N2YtWotxT9CoBTuGoPqRS3Da6T","mpAFjj4kQwvtJxLGNQu9md6MafVAwGFTxj","miCe6KPghKLxzaJgVUW6JDW1ej2KnBgfMP","mqtUJM5FPnESdddUfQ4tMbZ6rPpjeuzNmz","mkXWoCUH8nDhM4FZKDd2HwfQn4ZGULRLVy","mhTX9cAoGNfEn9nViPpwyrKCkZB2yUo6mi","n2AuGc9aeYTwANAAi98MvBZfjy2iAJ7NkY","n4m3rqF4u3bdJNDmgQHKrC5rKLywCbWfm1","n1bDNXREZDG3DVn199QWCz1oVmk6SPDnZW","mtLZgUSV6ZH4n1h7o9WUBs7nGNyH2Lz9NB","moovEaPi2YZ5NudFRixfmi3nhLoaBhkQxy","mscZM9F9wBb6zTDkD8yBCGTGndhyAjU6SP","mok9X4zZDEDKri3v4YQw6L2cbjtYiK6pQ3","mvXRTZof1rTQ2BNwKwo34y8zMFV9ASVfko","n3dn9UAVzwmxqcuN7g7945J1SVJNKJyxfc","mg89YThD3CSG1NeWsKSXrgQUqXQq4MEe7a","myygQC9X5s6TaWwwATcbgAAvNYxu8hFonU","muR79e5xkewR7gNVEikcpvUVYvZp2AKAt1","mjQ9C4NTefp62sugy5xcwwtLpyF5zAsFQk","mhiQ9U6tySgmJReZt5M1HAo84vUAzKmyU3"]} 
+13:08:42.320 INFO  Number of packets sending 1 
+13:08:41.083 INFO  {"name":"ch18d046b5d224d9a61546","addresses":["myTQnZfnsBHiBVPppuaBkChUqTQnhqSeVw","mjX8ES6poVppZP3CNshx6LnfJkxNFSDCpY","moBTjhN71ssBzVPu9P6mvsQwC7bSfkCUDC","moF2BW416XcGZihpK9qU5cvr5HL9oZRXjW","mwuoCVpxQW5Rz9mvnNXwXFhwRdCfc4MxYW","mi88nJgVA9bCm7gZkWbMhU7dEALdJcBonH","mwKHXiRhNX2nCcSMukq9zPMGpZ4ozFQbHY","miqD4hTijrpK8WvdhZiQ6EtXwauKXD6nsx","mfX7omKq4VpbJnpYfdveyEAYWnR3Sg4SRA","mgB844NJo8ZD913MCRxRta7r4zEYeYMUhM","mzYChKi3rtDi3v689fbwJWa4XBwSMm4R3L","mthYDrM8a8Wndnaaw6x8Y63mKM9bfBbEbG","mueZ2Q6q8FdECWZ62xTHZnM1xkVqVqoPm7","mukwoh12zmrzTBG5XrGJGi4mVrau3Wfi1Z","ms363QvLHQvvHvuqAug8mD8EwQtsVRPh7m","n1JBd4v7v9CEs2c55RjMeL6J9dLyoeP5wG","n4pkck6Xc4tCrzvkX6rFAmYzPjNKeDsSeY","mp2BMqqJpfxRnoGaXdPcyq4V9tF5b8suJ1","mjxwujtryS3qGEhvkwXisuJujz4mrqjMrK","mo2pYDR6kqCvdSyokcVVg9uN7VR3QBJLYn"]} 
+13:08:42.320 INFO  for command 42 try no. 1 
+13:08:42.357 INFO  ack recieved 
+13:08:42.357 INFO  Add coin finished 
+13:08:58.504 INFO  Selecting Wallet 
+13:08:58.719 INFO  Selected Wallet ID: c372af88f64e0a40439f97ee98a3a0a03e9b2ac348b464d0cab7f32ee8482298 
+13:09:00.443 INFO  Send transaction initiated 
+13:09:14.672 INFO  Number of packets sending 1 
+13:09:14.672 INFO  for command 41 try no. 1 
+13:09:14.742 INFO  ack recieved 
+13:09:16.150 INFO  External UTXOs fetched : 
+13:09:17.377 INFO  Internal UTXOs fetched : 
+13:09:18.147 INFO  External UTXOs fetched : 
+13:09:19.320 INFO  Internal UTXOs fetched : 
+13:09:20.509 INFO  Ourputs : [{"address":"muR79e5xkewR7gNVEikcpvUVYvZp2AKAt1","value":10000},{"value":187740}] 
+13:09:20.511 INFO  Number of packets sending 3 
+13:09:20.511 INFO  for command 50 try no. 1 
+13:09:20.560 INFO  ack recieved 
+13:09:20.560 INFO  for command 50 try no. 1 
+13:09:20.761 INFO  ack recieved 
+13:09:20.762 INFO  for command 50 try no. 1 
+13:09:20.962 INFO  ack recieved 
+13:09:26.185 INFO  External UTXOs fetched : 
+13:09:27.308 INFO  Internal UTXOs fetched : 
+13:09:27.325 INFO  Number of packets sending 5 
+13:09:27.325 INFO  for command 52 try no. 1 
+13:09:27.334 INFO  ack recieved 
+13:09:27.334 INFO  for command 52 try no. 1 
+13:09:27.535 INFO  ack recieved 
+13:09:27.535 INFO  for command 52 try no. 1 
+13:09:27.737 INFO  ack recieved 
+13:09:27.737 INFO  for command 52 try no. 1 
+13:09:27.938 INFO  ack recieved 
+13:09:27.938 INFO  for command 52 try no. 1 
+13:09:28.139 INFO  ack recieved 
+13:09:50.955 INFO  Send transaction finished 
+13:09:51.982 INFO  {"tx":{"block_height":-1,"block_index":-1,"hash":"b638633e60a1125a22433143ba60301120e451ac13e3e853a483d62c6a7ef9e4","addresses":["mg89YThD3CSG1NeWsKSXrgQUqXQq4MEe7a","muR79e5xkewR7gNVEikcpvUVYvZp2AKAt1","mjX8ES6poVppZP3CNshx6LnfJkxNFSDCpY"],"total":199096,"fees":904,"size":225,"preference":"low","relayed_by":"103.10.224.138","received":"2020-09-10T07:39:51.68348601Z","ver":2,"double_spend":false,"vin_sz":1,"vout_sz":2,"confirmations":0,"inputs":[{"prev_hash":"b54da6505feab88ae1411d7eff56e0df23668f3d77f13e307bb0266d44d2c443","output_index":0,"script":"4730440220168ea1d46fc91ace200a79037439a9544b862e7f66c484c5e80f2cb430d5bf92022016819d245d24f42cd774e41ed809c172aa9af7ddcea799d5f4ea9dfaacb9c0c4012102129a3b70407ca9520fba52732ba74b25d2879ac77e95e73abe358113dacac1ba","output_value":200000,"sequence":4294967295,"addresses":["mg89YThD3CSG1NeWsKSXrgQUqXQq4MEe7a"],"script_type":"pay-to-pubkey-hash","age":1808275}],"outputs":[{"value":10000,"script":"76a9149876a82c83a6863c1d1cb1fe34f832880627086f88ac","addresses":["muR79e5xkewR7gNVEikcpvUVYvZp2AKAt1"],"script_type":"pay-to-pubkey-hash"},{"value":189096,"script":"76a9142be8cc719306b87e23bc9f1478cb77440adac44288ac","addresses":["mjX8ES6poVppZP3CNshx6LnfJkxNFSDCpY"],"script_type":"pay-to-pubkey-hash"}]}} 
+12:12:22.433 INFO  Number of packets sending 1 
+12:12:22.433 INFO  for command 41 try no. 1 
+12:12:22.610 INFO  ack recieved 
+12:12:22.809 INFO  Number of packets sending 1 
+12:12:22.809 INFO  for command 70 try no. 1 
+12:12:23.059 INFO  ack recieved 
+12:12:30.858 INFO  Number of packets sending 1 
+12:12:30.858 INFO  for command 16 try no. 1 
+12:12:30.884 INFO  ack recieved 
+12:14:23.410 INFO  Number of packets sending 1 
+12:14:23.410 INFO  for command 41 try no. 1 
+12:14:23.491 INFO  ack recieved 
+12:14:23.692 INFO  Number of packets sending 1 
+12:14:23.692 INFO  for command 70 try no. 1 
+12:14:23.942 INFO  ack recieved 
+12:14:27.058 INFO  Number of packets sending 1 
+12:14:27.058 INFO  for command 16 try no. 1 
+12:14:27.182 INFO  ack recieved 
+12:15:28.935 INFO  Number of packets sending 1 
+12:15:28.935 INFO  for command 41 try no. 1 
+12:15:29.013 INFO  ack recieved 
+12:15:29.214 INFO  Number of packets sending 1 
+12:15:29.214 INFO  for command 70 try no. 1 
+12:15:29.464 INFO  ack recieved 
+12:15:32.474 INFO  Number of packets sending 1 
+12:15:32.474 INFO  for command 16 try no. 1 
+12:15:32.553 INFO  ack recieved 
+12:16:03.364 INFO  Number of packets sending 1 
+12:16:03.364 INFO  for command 41 try no. 1 
+12:16:03.435 INFO  ack recieved 
+12:16:03.636 INFO  Number of packets sending 1 
+12:16:03.636 INFO  for command 70 try no. 1 
+12:16:03.886 INFO  ack recieved 
+12:16:07.156 INFO  Number of packets sending 1 
+12:16:07.156 INFO  for command 16 try no. 1 
+12:16:07.270 INFO  ack recieved 
+12:17:46.636 INFO  Number of packets sending 1 
+12:17:46.636 INFO  for command 41 try no. 1 
+12:17:46.734 INFO  ack recieved 
+12:17:46.935 INFO  Number of packets sending 1 
+12:17:46.935 INFO  for command 70 try no. 1 
+12:17:47.186 INFO  ack recieved 
+12:17:53.135 INFO  Number of packets sending 1 
+12:17:53.136 INFO  for command 16 try no. 1 
+12:17:53.173 INFO  ack recieved 
+16:03:20.706 INFO  Number of packets sending 1 
+16:03:20.706 INFO  for command 41 try no. 1 
+16:03:20.782 INFO  ack recieved 
+16:03:20.982 INFO  Number of packets sending 1 
+16:03:20.982 INFO  for command 70 try no. 1 
+16:03:21.234 INFO  ack recieved 
+16:09:15.595 INFO  Number of packets sending 1 
+16:09:15.595 INFO  for command 41 try no. 1 
+16:09:15.667 INFO  ack recieved 
+16:09:15.869 INFO  Number of packets sending 1 
+16:09:15.870 INFO  for command 70 try no. 1 
+16:09:16.118 INFO  ack recieved 
+16:09:21.547 INFO  Number of packets sending 1 
+16:09:21.547 INFO  for command 16 try no. 1 
+16:09:21.588 INFO  ack recieved 
+16:10:03.056 INFO  Number of packets sending 1 
+16:10:03.057 INFO  for command 41 try no. 1 
+16:10:03.131 INFO  ack recieved 
+16:10:03.335 INFO  Number of packets sending 1 
+16:10:03.335 INFO  for command 70 try no. 1 
+16:10:03.583 INFO  ack recieved 
+16:10:07.636 INFO  Number of packets sending 1 
+16:10:07.636 INFO  for command 16 try no. 1 
+16:10:07.653 INFO  ack recieved 
+16:14:57.872 INFO  Number of packets sending 1 
+16:14:57.872 INFO  for command 41 try no. 1 
+16:14:57.929 INFO  ack recieved 
+16:14:58.132 INFO  Number of packets sending 1 
+16:14:58.132 INFO  for command 70 try no. 1 
+16:14:58.381 INFO  ack recieved 
+16:19:16.737 INFO  Number of packets sending 1 
+16:19:16.737 INFO  for command 41 try no. 1 
+16:19:16.803 INFO  ack recieved 
+16:19:17.007 INFO  Number of packets sending 1 
+16:19:17.007 INFO  for command 70 try no. 1 
+16:19:17.255 INFO  ack recieved 
+16:19:22.337 INFO  Number of packets sending 1 
+16:19:22.337 INFO  for command 16 try no. 1 
+16:19:22.387 INFO  ack recieved 
+16:20:46.906 INFO  Number of packets sending 1 
+16:20:46.906 INFO  for command 41 try no. 1 
+16:20:46.975 INFO  ack recieved 
+16:20:47.177 INFO  Number of packets sending 1 
+16:20:47.177 INFO  for command 70 try no. 1 
+16:20:47.427 INFO  ack recieved 
+16:20:51.997 INFO  Number of packets sending 1 
+16:20:51.997 INFO  for command 16 try no. 1 
+16:20:52.242 INFO  ack recieved 
+18:48:19.600 INFO  Number of packets sending 1 
+18:48:19.600 INFO  for command 41 try no. 1 
+18:48:19.780 INFO  ack recieved 
+18:48:19.978 INFO  Number of packets sending 1 
+18:48:19.978 INFO  for command 70 try no. 1 
+18:48:20.228 INFO  ack recieved 
+18:48:24.038 INFO  Number of packets sending 1 
+18:48:24.039 INFO  for command 16 try no. 1 
+18:48:24.288 INFO  ack recieved 
+13:57:13.698 INFO  Number of packets sending 1 
+13:57:13.698 INFO  for command 41 try no. 1 
+13:57:13.774 INFO  ack recieved 
+13:57:13.976 INFO  Number of packets sending 1 
+13:57:13.976 INFO  for command 70 try no. 1 
+13:57:14.226 INFO  ack recieved 
+13:57:19.027 INFO  Number of packets sending 1 
+13:57:19.027 INFO  for command 16 try no. 1 
+13:57:19.057 INFO  ack recieved 
+13:57:28.949 INFO  Number of packets sending 1 
+13:57:28.949 INFO  for command 41 try no. 1 
+13:57:29.010 INFO  ack recieved 
+13:57:29.211 INFO  Number of packets sending 1 
+13:57:29.212 INFO  for command 70 try no. 1 
+13:57:29.461 INFO  ack recieved 
+13:57:33.291 INFO  Number of packets sending 1 
+13:57:33.291 INFO  for command 42 try no. 1 
+13:57:33.542 INFO  ack recieved 
+13:58:41.240 INFO  Number of packets sending 1 
+13:58:41.240 INFO  for command 41 try no. 1 
+13:58:41.340 INFO  ack recieved 
+13:58:41.538 INFO  Number of packets sending 1 
+13:58:41.538 INFO  for command 70 try no. 1 
+13:58:41.789 INFO  ack recieved 
+13:58:45.292 INFO  Number of packets sending 1 
+13:58:45.292 INFO  for command 42 try no. 1 
+13:58:45.542 INFO  ack recieved 
+13:59:35.334 INFO  Number of packets sending 1 
+13:59:35.334 INFO  for command 41 try no. 1 
+13:59:35.422 INFO  ack recieved 
+13:59:35.620 INFO  Number of packets sending 1 
+13:59:35.620 INFO  for command 70 try no. 1 
+13:59:35.871 INFO  ack recieved 
+13:59:41.981 INFO  Number of packets sending 1 
+13:59:41.981 INFO  for command 42 try no. 1 
+13:59:42.232 INFO  ack recieved 
+14:03:20.673 INFO  Number of packets sending 1 
+14:03:20.674 INFO  for command 41 try no. 1 
+14:03:20.761 INFO  ack recieved 
+14:03:20.962 INFO  Number of packets sending 1 
+14:03:20.963 INFO  for command 70 try no. 1 
+14:03:21.212 INFO  ack recieved 
+14:03:25.334 INFO  Number of packets sending 1 
+14:03:25.334 INFO  for command 42 try no. 1 
+14:03:25.586 INFO  ack recieved 
+15:23:57.154 INFO  Number of packets sending 1 
+15:23:57.155 INFO  for command 41 try no. 1 
+15:23:57.265 INFO  ack recieved 
+15:23:57.465 INFO  Number of packets sending 1 
+15:23:57.465 INFO  for command 70 try no. 1 
+15:23:57.716 INFO  ack recieved 
+15:24:01.766 INFO  Number of packets sending 1 
+15:24:01.766 INFO  for command 42 try no. 1 
+15:24:02.017 INFO  ack recieved 
+15:25:42.091 INFO  Number of packets sending 1 
+15:25:42.091 INFO  for command 41 try no. 1 
+15:25:42.153 INFO  ack recieved 
+15:25:42.354 INFO  Number of packets sending 1 
+15:25:42.354 INFO  for command 70 try no. 1 
+15:25:42.605 INFO  ack recieved 
+15:25:46.107 INFO  Number of packets sending 1 
+15:25:46.107 INFO  for command 42 try no. 1 
+15:25:46.357 INFO  ack recieved 
+18:06:00.433 INFO  Number of packets sending 1 
+18:06:00.433 INFO  for command 37 try no. 1 
+18:06:02.436 ERROR Caught error 
+18:06:02.437 INFO  for command 37 try no. 2 
+18:06:04.440 ERROR Caught error 
+18:06:04.440 INFO  for command 37 try no. 3 
+18:06:06.442 ERROR Caught error 
+18:06:06.442 INFO  for command 37 try no. 4 
+18:06:08.444 ERROR Caught error 
+18:06:08.444 INFO  for command 37 try no. 5 
+18:06:10.446 ERROR Caught error 
+16:54:15.827 INFO  Number of packets sending 1 
+16:54:15.828 INFO  for command 37 try no. 1 
+16:54:15.861 INFO  ack recieved 
+16:56:52.071 INFO  Number of packets sending 1 
+16:56:52.071 INFO  for command 37 try no. 1 
+16:56:52.125 INFO  ack recieved 
+16:57:15.646 INFO  Number of packets sending 1 
+16:57:15.647 INFO  for command 37 try no. 1 
+16:57:15.696 INFO  ack recieved 
+16:58:12.126 INFO  Number of packets sending 1 
+16:58:12.126 INFO  for command 37 try no. 1 
+16:58:12.182 INFO  ack recieved 
+16:58:32.373 INFO  Number of packets sending 1 
+16:58:32.373 INFO  for command 37 try no. 1 
+16:58:32.421 INFO  ack recieved 
+17:25:11.775 INFO  Number of packets sending 1 
+17:25:11.775 INFO  for command 77 try no. 1 
+17:25:11.785 INFO  ack recieved 
+15:36:41.908 INFO  Number of packets sending 1 
+15:36:41.909 INFO  for command 42 try no. 1 
+15:36:41.927 ERROR Caught error 
+15:36:41.931 INFO  for command 42 try no. 2 
+15:37:03.764 INFO  Number of packets sending 1 
+15:37:03.766 INFO  for command 42 try no. 1 
+15:37:03.816 INFO  ack recieved 
+15:43:51.894 INFO  Number of packets sending 1 
+15:43:51.894 INFO  for command 77 try no. 1 
+15:43:51.941 INFO  ack recieved 
