@@ -615,7 +615,7 @@ export class Wallet {
       intToUintByte(output_count, 8) +
       output_string +
       intToUintByte(change_count, 8) +
-      change_string + 
+      change_string +
       intToUintByte(feeRate, 32)
     );
   };

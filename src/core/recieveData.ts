@@ -4,7 +4,10 @@ import { commands } from '../config';
 const { ACK_PACKET } = commands;
 
 // returns the received data value in hex for the supplied command
-export const receiveCommand = (connection: any, command: any) => {
+export const receiveCommand = (
+  connection: any,
+  command: any
+): Promise<string> => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     const eListener = (packet: any) => {
