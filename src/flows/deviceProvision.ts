@@ -27,7 +27,7 @@ const provisionDevice = async (serial: string, publicKey: string) => {
 };
 
 const deviceProvision = async () => {
-  const { connection, serial } = await createPort();
+  const { connection } = await createPort();
   connection.open();
 
   await sendData(connection, 81, '01');
@@ -48,11 +48,11 @@ const deviceProvision = async () => {
     await sendData(connection, 81, '03');
     console.log(error);
     console.log('Failed to provision device.');
+  } finally {
+    connection.close(async () => {
+      console.log('close');
+    });
   }
-
-  connection.close(async () => {
-    console.log('close');
-  });
 };
 
 export default deviceProvision;
