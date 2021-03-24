@@ -8,7 +8,7 @@ import cardAuth from './handler/cardAuth';
 import deviceProvision from './handler/deviceProvision';
 import addAllWallets from './handler/addAllWallets';
 import { queryList } from './helper/cliInput';
-import { deviceAuthandUpgrade } from '../flows/authAndUpgrade';
+import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
 
 // @ts-ignore
@@ -24,6 +24,7 @@ const cliTool = async () => {
     'Card Authentication',
     'Custom',
     'Upgrade',
+    'Only Upgrade',
     'Device Provision',
     'Fetch Logs',
   ]);
@@ -47,6 +48,10 @@ const cliTool = async () => {
 
     case 'Upgrade':
       await deviceAuthandUpgrade();
+      break;
+
+    case 'Only Upgrade':
+      await onlyUpgrade();
       break;
 
     case 'Device Provision':
