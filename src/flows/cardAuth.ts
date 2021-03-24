@@ -55,7 +55,7 @@ const cardAuth = async () => {
   if (ready) {
     await sendData(connection, 70, '00');
 
-    recieveData(connection).then( (res) => console.log(res));
+    recieveData(connection).then((res) => console.log(res));
 
     const receivedHash: any = await receiveCommand(connection, 13);
     console.log('receivedHash: ', receivedHash);
@@ -63,7 +63,7 @@ const cardAuth = async () => {
     const serial = receivedHash.slice(128).toUpperCase();
     const serialSignature = receivedHash.slice(0, 128);
 
-    console.log({serial, serialSignature});
+    console.log({ serial, serialSignature });
 
     const challenge = await verifySerialSignature(
       serial,
@@ -82,11 +82,11 @@ const cardAuth = async () => {
     console.log('challengeHash :', challengeHash);
 
     const challengeSignature = challengeHash.slice(0, 128);
-    console.log({challengeSignature});
+    console.log({ challengeSignature });
 
     const verified = await verifyChallengeSignature(
       serial,
-      challengeSignature+'1',
+      challengeSignature + '1',
       challenge
     );
   } else {

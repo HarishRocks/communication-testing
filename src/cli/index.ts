@@ -5,6 +5,7 @@ import customAction from './handler/customActions';
 import allWalletsList from './handler/walletsList';
 import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
+import deviceProvision from './handler/deviceProvision';
 import addAllWallets from './handler/addAllWallets';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade } from '../flows/authAndUpgrade';
@@ -23,6 +24,7 @@ const cliTool = async () => {
     'Card Authentication',
     'Custom',
     'Upgrade',
+    'Device Provision',
     'Fetch Logs',
   ]);
 
@@ -45,6 +47,10 @@ const cliTool = async () => {
 
     case 'Upgrade':
       await deviceAuthandUpgrade();
+      break;
+
+    case 'Device Provision':
+      await deviceProvision();
       break;
 
     case 'Fetch Logs':
@@ -100,7 +106,7 @@ const cliTool = async () => {
           type: 'SEND',
           command: 42,
           data: '05',
-        }
+        },
       ];
       await customAction(actions);
       break;
