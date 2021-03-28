@@ -7,6 +7,7 @@ import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
 import deviceProvision from './handler/deviceProvision';
 import addAllWallets from './handler/addAllWallets';
+import addBootloader from './handler/addBootloader';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
@@ -18,6 +19,7 @@ const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
   let selection = await queryList([
+    'Add Bootloader',
     'Select Wallet',
     'Add All Wallets',
     'Add Wallet',
@@ -30,6 +32,10 @@ const cliTool = async () => {
   ]);
 
   switch (selection) {
+    case 'Add Bootloader':
+      await addBootloader();
+      break;
+
     case 'Add Wallet':
       log.info('Add Wallet selected');
       await addWallet();
