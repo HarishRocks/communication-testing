@@ -8,14 +8,14 @@ const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 const sleep = (ms: any) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 const provisionDevice = async (serial: string, publicKey: string) => {
   const res = await axios.post(`${cyBaseURL}/provision/add`, {
     type: 'DEVICE',
     serial,
-    publicKey,
+    publicKey
   });
 
   console.log('Response from server:');
@@ -37,6 +37,10 @@ const deviceProvision = async () => {
   const publicKey = serialAndKey.slice(64);
   console.log('From Device: Serial and public key:');
   console.log({ serialNumber, publicKey });
+  if (serialNumber.search(/[^0]/) === -1 || publicKey.search(/[^0]/) === -1) {
+    console.log('Device returned invalid serial or public key');
+    return;
+  }
 
   try {
     await provisionDevice(serialNumber, publicKey);
