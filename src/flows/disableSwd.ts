@@ -6,7 +6,7 @@ const asyncExec = promisify(exec);
 const disableSwd = async () => {
   try {
     const { stderr, stdout } = await asyncExec(
-      'nrfjprog --memwr 0x10001208 --val 0xFFFFFF00'
+      'nrfjprog.exe --memwr 0x10001208 --val 0xFFFFFF00'
     );
     if (stderr) {
       console.log(`stderr: ${stderr}`);
