@@ -688,7 +688,7 @@ export class Wallet {
     const txBuilder = new bitcoin.TransactionBuilder(this.network);
 
     for (const i in inputs) {
-      let input = inputs[i];
+      const input = inputs[i];
       const scriptPubKey = input.scriptPubKey;
       txBuilder.addInput(
         input.txId,

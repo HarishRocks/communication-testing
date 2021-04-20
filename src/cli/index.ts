@@ -8,6 +8,8 @@ import cardAuth from './handler/cardAuth';
 import deviceProvision from './handler/deviceProvision';
 import addAllWallets from './handler/addAllWallets';
 import addBootloader from './handler/addBootloader';
+import enableSwd from './handler/enableSwd';
+import disableSwd from './handler/disableSwd';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
@@ -29,6 +31,8 @@ const cliTool = async () => {
     'Only Upgrade',
     'Device Provision',
     'Fetch Logs',
+    'Disable SWD',
+    'Enable SWD'
   ]);
 
   switch (selection) {
@@ -60,6 +64,14 @@ const cliTool = async () => {
       await onlyUpgrade();
       break;
 
+    case 'Enable SWD':
+      await enableSwd();
+      break;
+
+    case 'Disable SWD':
+      await disableSwd();
+      break;
+
     case 'Device Provision':
       await deviceProvision();
       break;
@@ -79,7 +91,7 @@ const cliTool = async () => {
       selection = await queryList([
         'Add Coin',
         'Send Transaction',
-        'Recieve Transaction',
+        'Recieve Transaction'
       ]);
 
       switch (selection) {
@@ -107,17 +119,17 @@ const cliTool = async () => {
         {
           type: 'SEND',
           command: 70,
-          data: '00',
+          data: '00'
         },
         {
           type: 'RECEIVE',
-          command: 13,
+          command: 13
         },
         {
           type: 'SEND',
           command: 42,
-          data: '05',
-        },
+          data: '05'
+        }
       ];
       await customAction(actions);
       break;
