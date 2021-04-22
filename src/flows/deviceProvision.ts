@@ -38,8 +38,7 @@ const deviceProvision = async () => {
   console.log('From Device: Serial and public key:');
   console.log({ serialNumber, publicKey });
   if (serialNumber.search(/[^0]/) === -1 || publicKey.search(/[^0]/) === -1) {
-    console.log('Device returned invalid serial or public key');
-    return;
+    throw new Error('Device returned invalid serial or public key');
   }
 
   try {
