@@ -3,11 +3,15 @@ import { promisify } from 'util';
 
 const asyncExec = promisify(exec);
 
+let command = 'nrfjprog';
+
+if (process.platform === 'win32') {
+  command = 'nrfjprog.exe';
+}
+
 const enableSwd = async () => {
   try {
-    const { stderr, stdout } = await asyncExec(
-      'nrfjprog.exe -f NRF52 --recover'
-    );
+    const { stderr, stdout } = await asyncExec(`${command} -f NRF52 --recover`);
     if (stderr) {
       console.log(`stderr: ${stderr}`);
       return;

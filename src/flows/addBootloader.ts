@@ -3,10 +3,16 @@ import { promisify } from 'util';
 
 const asyncExec = promisify(exec);
 
+let command = 'nrfjprog';
+
+if (process.platform === 'win32') {
+  command = 'nrfjprog.exe';
+}
+
 const addBootloader = async () => {
   try {
     const { stderr: eraseError, stdout: eraseOut } = await asyncExec(
-      'nrfjprog.exe --eraseall'
+      `${command} --eraseall`
     );
     if (eraseError) {
       console.log(`stderr: ${eraseError}`);
@@ -15,7 +21,7 @@ const addBootloader = async () => {
     console.log(`stdout: ${eraseOut}`);
 
     const { stderr: mbrError, stdout: mbrOut } = await asyncExec(
-      'nrfjprog.exe --reset --program "mbr.hex"'
+      `${command} --reset --program "mbr.hex"`
     );
     if (mbrError) {
       console.log(`stderr: ${mbrError}`);
@@ -24,7 +30,7 @@ const addBootloader = async () => {
     console.log(`stdout: ${mbrOut}`);
 
     const { stderr: bootError, stdout: bootOut } = await asyncExec(
-      'nrfjprog.exe --program "bootloader.hex"'
+      `${command} --program "bootloader.hex"`
     );
     if (bootError) {
       console.log(`stderr: ${bootError}`);

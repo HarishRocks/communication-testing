@@ -5,18 +5,18 @@ import { recieveData, receiveCommand } from '../core/recieveData';
 import {
   getAccessToken,
   getRandomNumFromServer,
-  verifySignedChallenge
+  verifySignedChallenge,
 } from './auth';
 import axios from 'axios';
 import {
   DfuUpdates,
   DfuTransportSerial,
-  DfuOperation
+  DfuOperation,
   //@ts-ignore
 } from 'pc-nrf-dfu-js';
 
 const sleep = (ms: any) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const nulldata = '00000000';
@@ -48,7 +48,7 @@ const upgrade = async (connection: any) => {
 
 const recieveFirmware = (connection: any) => {
   return new Promise((resolve, reject) => {
-    receiveCommand(connection, 15).then(res => {
+    receiveCommand(connection, 15).then((res) => {
       resolve(res);
     });
     sendData(connection, 14, nulldata);

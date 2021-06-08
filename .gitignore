@@ -3,3 +3,6 @@ node_modules
 .idea
 db
 yarn-error.log
+*.h
+*.bin
+*.log

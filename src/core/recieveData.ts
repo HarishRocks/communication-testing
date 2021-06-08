@@ -1,4 +1,4 @@
-import { xmodemDecode } from '../xmodem';
+import { xmodemDecode } from '../xmodem/index';
 import { ackData } from './sendData';
 import { commands } from '../config';
 const { ACK_PACKET } = commands;

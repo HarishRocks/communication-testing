@@ -22,12 +22,17 @@ export const queryList = async (
   return q.choice;
 };
 
-export const queryInput = async (message: string) => {
+export const queryInput = async (
+  message: string,
+
+  options: { default?: string } = {}
+) => {
   const q = await inquirer.prompt([
     {
       type: 'input',
       name: 'choice',
       message,
+      ...options,
     },
   ]);
   return q.choice;
@@ -49,12 +54,16 @@ export const queryCheckbox = async (
   return q.choice;
 };
 
-export const queryNumber = async (message: string) => {
+export const queryNumber = async (
+  message: string,
+  options: { default?: number } = {}
+) => {
   const q = await inquirer.prompt([
     {
       type: 'number',
       name: 'choice',
       message,
+      ...options,
     },
   ]);
   return q.choice;

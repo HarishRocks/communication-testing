@@ -10,6 +10,7 @@ import addAllWallets from './handler/addAllWallets';
 import addBootloader from './handler/addBootloader';
 import enableSwd from './handler/enableSwd';
 import disableSwd from './handler/disableSwd';
+import stmCli from './stm';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
@@ -21,6 +22,7 @@ const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
   let selection = await queryList([
+    'STM CLI',
     'Add Bootloader',
     'Select Wallet',
     'Add All Wallets',
@@ -32,7 +34,7 @@ const cliTool = async () => {
     'Device Provision',
     'Fetch Logs',
     'Disable SWD',
-    'Enable SWD'
+    'Enable SWD',
   ]);
 
   switch (selection) {
@@ -91,7 +93,7 @@ const cliTool = async () => {
       selection = await queryList([
         'Add Coin',
         'Send Transaction',
-        'Recieve Transaction'
+        'Recieve Transaction',
       ]);
 
       switch (selection) {
@@ -119,19 +121,22 @@ const cliTool = async () => {
         {
           type: 'SEND',
           command: 70,
-          data: '00'
+          data: '00',
         },
         {
           type: 'RECEIVE',
-          command: 13
+          command: 13,
         },
         {
           type: 'SEND',
           command: 42,
-          data: '05'
-        }
+          data: '05',
+        },
       ];
       await customAction(actions);
+      break;
+    case 'STM CLI':
+      await stmCli();
       break;
   }
 };
