@@ -19,3 +19,18 @@
   cd python-cli
   pip install -r requirements.txt
   ```
+- Build the code (Do it one time in setup and after that only if the code changes)
+  ```
+  yarn build
+  ```
+
+## Usage
+
+- Start
+  ```
+  yarn start
+  ```
+- Custom communication
+  ```
+  yarn start:custom
+  ```
