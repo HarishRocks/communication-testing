@@ -2,11 +2,11 @@ import fs from 'fs';
 import { sendData } from '../core/stmSendData';
 import { createPort } from '../core/port';
 
-const filename = 'BlinkLed_Signed.bin';
+const stmUpdate = (input: string) => {
+  return new Promise(async (resolve, reject) => {
+    console.log({ input });
 
-const stmUpdate = () => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filename, async (error, data) => {
+    fs.readFile(input, async (error, data) => {
       if (error) {
         console.log(error);
         reject(error);

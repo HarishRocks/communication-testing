@@ -5,7 +5,7 @@ import {
   signHeader,
   decodeHeader,
 } from './handler/pythonCli';
-import { queryList } from './helper/cliInput';
+import { queryList, queryInput } from './helper/cliInput';
 
 const cliTool = async () => {
   const selection = await queryList([
@@ -18,7 +18,13 @@ const cliTool = async () => {
 
   switch (selection) {
     case 'STM Update':
-      await stmUpdate();
+      const DEFAULT_INPUT = 'BlinkLed_Signed.bin';
+
+      const input = await queryInput(`Enter the input binary filename`, {
+        default: DEFAULT_INPUT,
+      });
+
+      await stmUpdate(input);
       break;
     case 'Generate Keys':
       await generateKeys();

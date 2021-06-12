@@ -36,7 +36,7 @@ const xmodemEncode = (data: string) => {
     const packet = commData + crc;
     packetList.push(packet);
   }
-  //packetList.push(END_OF_TRANSMISSION);
+  packetList.push(END_OF_TRANSMISSION);
   //packetList.push(END_OF_TRANSMISSION_BLOCK);
   return packetList;
 };
