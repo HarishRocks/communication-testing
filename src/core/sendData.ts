@@ -1,3 +1,4 @@
+import { SerialPortType } from '../config/serialport';
 import { constants, commands, radix } from '../config';
 import { xmodemDecode, xmodemEncode } from '../xmodem/index';
 import { intToUintByte, byteStuffing } from '../bytes';
@@ -9,7 +10,7 @@ const log = logs.createSimpleFileLogger('project.log');
 
 const { START_OF_FRAME } = constants;
 
-const writePacket = (connection: any, packet: any) => {
+const writePacket = (connection: SerialPortType, packet: any) => {
   return new Promise((resolve, reject) => {
     /**
      * Ensure is listener is activated first before writing
@@ -48,7 +49,11 @@ const writePacket = (connection: any, packet: any) => {
   });
 };
 
-const sendData = async (connection: any, command: number, data: string) => {
+const sendData = async (
+  connection: SerialPortType,
+  command: number,
+  data: string
+) => {
   const packetsList = xmodemEncode(data, command);
   log.info('Number of packets sending ' + packetsList.length);
   /**

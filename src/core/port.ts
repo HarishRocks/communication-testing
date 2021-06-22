@@ -1,11 +1,14 @@
-import SerialPort from 'serialport';
+import OrgSerialPort from 'serialport';
+import MockSerialPort from './mock/serialport';
+import SerialPort from '../config/serialport';
+import config from '../config/constants';
 
 const closePort = (port: any) => {
   port.close();
 };
 
 const createPortConnection = (port: any) => {
-  const hardwarePort = new SerialPort(port, {
+  const hardwarePort = SerialPort(port, {
     baudRate: 115200,
     autoOpen: false,
   });
@@ -13,14 +16,21 @@ const createPortConnection = (port: any) => {
 };
 
 const createPort = async () => {
-  const list = await SerialPort.list();
+  let list: OrgSerialPort.PortInfo[] = [];
+  if (process.env.MOCK === 'true') {
+    list = await MockSerialPort.list();
+  } else {
+    list = await OrgSerialPort.list();
+  }
+
   let port;
   list.forEach((portParam) => {
     const { vendorId } = portParam;
-    if (vendorId && String(vendorId) === '1915') {
+    if (vendorId && String(vendorId) === config.VENDOR_ID) {
       port = portParam;
     }
   });
+
   if (!port) {
     throw new Error('Device not connected');
   } else {

@@ -1,3 +1,4 @@
+import { SerialPortType } from '../config/serialport';
 import { xmodemDecode } from '../xmodem/index';
 import { ackData } from './sendData';
 import { commands } from '../config';
@@ -5,7 +6,7 @@ const { ACK_PACKET } = commands;
 
 // returns the received data value in hex for the supplied command
 export const receiveCommand = (
-  connection: any,
+  connection: SerialPortType,
   command: any
 ): Promise<string> => {
   const resData: any = [];
@@ -35,7 +36,7 @@ export const receiveCommand = (
 
 // returns the commandType and the data recieved from device
 // open channel: will catch every command and data
-export const recieveData = (connection: any) => {
+export const recieveData = (connection: SerialPortType) => {
   const resData: any = [];
   return new Promise((resolve, reject) => {
     const eListener = (packet: any) => {

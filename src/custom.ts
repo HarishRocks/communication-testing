@@ -1,3 +1,6 @@
+import dotenv from 'dotenv-flow';
+dotenv.config();
+
 import { hexToAscii } from './bytes';
 import { queryInput } from './cli/helper/cliInput';
 import { createPort } from './core/port';

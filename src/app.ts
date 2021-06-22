@@ -1,4 +1,6 @@
 // ToDo ask suraj sir about the added_coins in receiveTransaction flow
+import dotenv from 'dotenv-flow';
+dotenv.config();
 
 import { receiveCommand, recieveData } from './core/recieveData';
 import { sendData } from './core/sendData';
