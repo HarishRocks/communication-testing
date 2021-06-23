@@ -22,6 +22,7 @@ export const receiveCommand = (
             ACK_PACKET,
             `0x${currentPacketNumber.toString(16)}`
           );
+
           connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
           if (currentPacketNumber === totalPacket) {
             resolve(resData.join(''));
@@ -48,7 +49,12 @@ export const recieveData = (connection: SerialPortType) => {
           ACK_PACKET,
           `0x${currentPacketNumber.toString(16)}`
         );
-        connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
+        // Don't add the initial `aa` when mocking, this is for the simulator to work properly
+        if (process.env.MOCK === 'true') {
+          connection.write(Buffer.from(`${ackPacket}`, 'hex'));
+        } else {
+          connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
+        }
         if (currentPacketNumber === totalPacket) {
           resolve({ commandType, data: resData.join('') });
 
