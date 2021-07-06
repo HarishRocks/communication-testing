@@ -144,6 +144,12 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     filename = os.path.basename(filePath)
     filesize = os.path.getsize(filePath)
     (num_versions, magic_no) = readVersionFile(versionFilePath)
+
+    # Remove the initial 0x
+    filesizeHex = hex(filesize)[2:]
+
+    # Pad with 0 to create a 4 byte hex
+    filesizeHex = filesizeHex.zfill(8)
     
     f1 = open(filePath, 'rb')
     filedata = f1.read()
@@ -158,7 +164,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
 
     crc_int = crc32(filedata)
     crc_value = struct.pack("<I", crc_int)
-    metadata = bytes(filename, 'utf-8') + b'\0' + bytes(str(filesize), 'utf-8') + b'\0' + bytes.fromhex(magic_no) + num_versions[0] + num_versions[1] + crc_value
+    metadata = bytes.fromhex(filesizeHex) + bytes.fromhex(magic_no) + num_versions[0] + num_versions[1] + crc_value
     header[0:] = metadata
     for i in range(128 - len(metadata)):
         header.append(0)
