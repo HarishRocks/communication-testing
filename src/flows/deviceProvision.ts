@@ -8,14 +8,14 @@ const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 const sleep = (ms: any) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 const provisionDevice = async (serial: string, publicKey: string) => {
   const res = await axios.post(`${cyBaseURL}/provision/add`, {
     type: 'DEVICE',
     serial,
-    publicKey,
+    publicKey
   });
 
   console.log('Response from server:');
@@ -29,8 +29,16 @@ const provisionDevice = async (serial: string, publicKey: string) => {
 const deviceProvision = async () => {
   const { connection } = await createPort();
   connection.open();
+  const date = new Date();
 
-  await sendData(connection, 81, '01');
+  const day = date.getDate().toString(16);
+  const month = date.getMonth().toString(16);
+  const year = date.getFullYear().toString(16);
+
+  const datePayload =
+    day.padStart(2, '0') + month.padStart(2, '0') + year.padStart(4, '0');
+
+  await sendData(connection, 81, '01' + datePayload); // Add date: DMY
 
   const serialAndKey: string = await receiveCommand(connection, 82);
   const serialNumber = serialAndKey.slice(0, 64).toUpperCase();
