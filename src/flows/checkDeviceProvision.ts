@@ -8,13 +8,13 @@ const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 const sleep = (ms: any) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const checkDeviceProvisice = async (serial: string) => {
   const res = await axios.post(`${cyBaseURL}/provision/check`, {
     type: 'DEVICE',
-    serial
+    serial,
   });
 
   console.log('Response from server:');
