@@ -14,10 +14,11 @@ export default async (actions: any[]) => {
       switch (action.type) {
         case 'SEND':
           await sendData(connection, action.command, action.data);
+          console.log(`Sent: ${action.command},${action.data}`);
           break;
         case 'RECEIVE':
           const received = await receiveCommand(connection, action.command);
-          console.log('Received: ', received);
+          console.log(`Received: ${action.command},${received}`);
           break;
         default:
           throw new Error('invalid command type');

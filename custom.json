@@ -1,0 +1,11 @@
+[
+  {
+    "type": "SEND",
+    "command": 41,
+    "data": "01"
+  },
+  {
+    "type": "RECEIVE",
+    "command": 42
+  }
+]

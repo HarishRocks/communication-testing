@@ -1,3 +1,5 @@
+import path from 'path';
+import fs from 'fs';
 import receiveTransaction from './handler/receiveTransaction';
 import sendTransaction from './handler/sendTransaction';
 import addCoin from './handler/addCoin';
@@ -25,9 +27,6 @@ const cliTool = async () => {
   let selection = await queryList([
     'STM CLI',
     'Add Bootloader',
-    'Select Wallet',
-    'Add All Wallets',
-    'Add Wallet',
     'Card Authentication',
     'Custom',
     'Upgrade',
@@ -42,18 +41,6 @@ const cliTool = async () => {
   switch (selection) {
     case 'Add Bootloader':
       await addBootloader();
-      break;
-
-    case 'Add Wallet':
-      log.info('Add Wallet selected');
-      await addWallet();
-      log.info('Add wallet completed');
-      break;
-
-    case 'Add All Wallets':
-      log.info('Add Wallet selected');
-      await addAllWallets();
-      log.info('Add wallet completed');
       break;
 
     case 'Card Authentication':
@@ -88,58 +75,19 @@ const cliTool = async () => {
       await fetchLogs();
       break;
 
-    case 'Select Wallet':
-      log.info('Selecting Wallet');
-      const walletId = await queryList(
-        await allWalletsList(),
-        'Select your wallet'
-      );
-      log.info('Selected Wallet ID: ' + walletId);
-
-      selection = await queryList([
-        'Add Coin',
-        'Send Transaction',
-        'Recieve Transaction',
-      ]);
-
-      switch (selection) {
-        case 'Add Coin':
-          log.info('Add coin initiated');
-          await addCoin(walletId);
-          log.info('Add coin finished');
-          break;
-        case 'Send Transaction':
-          log.info('Send transaction initiated');
-          await sendTransaction(walletId);
-          log.info('Send transaction finished');
-          break;
-
-        case 'Recieve Transaction':
-          log.info('Recieve transaction initiated');
-          await receiveTransaction(walletId);
-          log.info('Recieve transaction finished');
-
-          break;
-      }
-      break;
     case 'Custom':
-      const actions = [
-        {
-          type: 'SEND',
-          command: 70,
-          data: '00',
-        },
-        {
-          type: 'RECEIVE',
-          command: 13,
-        },
-        {
-          type: 'SEND',
-          command: 42,
-          data: '05',
-        },
-      ];
-      await customAction(actions);
+      let customData: any;
+      try {
+        const fileData = fs.readFileSync(
+          path.join(__dirname, '../', '../', 'custom.json')
+        );
+
+        customData = JSON.parse(fileData.toString('utf-8'));
+      } catch (error) {
+        console.error('Error in reading `custom.json` file');
+        console.error(error);
+      }
+      await customAction(customData);
       break;
     case 'STM CLI':
       await stmCli();
