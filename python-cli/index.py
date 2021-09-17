@@ -154,7 +154,8 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     f1 = open(filePath, 'rb')
     filedata = f1.read()
     signatureData = ''
-    sk1 = SigningKey.from_string(bytes.fromhex(readKeyFromFile(privateKeyFile)), curve=SECP256k1, hashfunc=hashlib.sha256)
+    privateKey=bytes.fromhex(readKeyFromFile(privateKeyFile))
+    sk1 = SigningKey.from_string(privateKey, curve=SECP256k1, hashfunc=hashlib.sha256)
     sig = sk1.sign_deterministic(filedata)
     signatureData += sig.hex();
 
@@ -166,7 +167,13 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     crc_value = struct.pack("<I", crc_int)
     metadata = bytes.fromhex(filesizeHex) + bytes.fromhex(magic_no) + num_versions[0] + num_versions[1] + crc_value
     header[0:] = metadata
-    for i in range(128 - len(metadata)):
+    for i in range(64 - len(metadata)):
+        header.append(0)
+
+    headerSig = sk1.sign_deterministic(metadata)
+    header[64:] = headerSig;
+
+    for i in range(128 - len(header)):
         header.append(0)
 
     outputFilePath = customOutput
