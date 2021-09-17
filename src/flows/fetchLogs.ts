@@ -1,14 +1,11 @@
+import fs from 'fs';
+import path from 'path';
 import { createPort } from '../core/port';
 import { sendData } from '../core/sendData';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import { addWalletToDB, allAvailableWallets } from './wallet';
 import deviceReady from '../core/deviceReady';
 import { hexToAscii } from '../bytes';
-
-// @ts-ignore
-import * as logs from 'simple-node-logger';
-
-const log = logs.createSimpleFileLogger('deviceLogs.log');
 
 // ADD_LOG_DATA_REQUEST: 37,
 // ADD_LOG_DATA_SEND: 38,
@@ -23,38 +20,71 @@ const log = logs.createSimpleFileLogger('deviceLogs.log');
 //   })
 // }
 
-const waitForMessage = (connection: any) => {
-  return new Promise(async (resolve, reject) => {
-    setTimeout(() => resolve(false), 5000);
-    const data = await receiveCommand(connection, 38);
-    resolve(true);
-    if (!hexToAscii(data).includes('ÿ')) {
-      console.log(hexToAscii(data));
-      log.info(hexToAscii(data));
-    }
-  });
-};
+//const waitForMessage = (connection: any) => {
+//return new Promise(async (resolve, reject) => {
+//setTimeout(() => resolve(false), 5000);
+//const data = await receiveCommand(connection, 38);
+//resolve(true);
+//if (!hexToAscii(data).includes('ÿ')) {
+//console.log(hexToAscii(data));
+//log.info(hexToAscii(data));
+//}
+//});
+//};
 
 export const fetchLogs = async () => {
   const { connection, serial } = await createPort();
-  connection.open();
-  console.log('Opened connection.');
+  await new Promise((resolve, reject) =>
+    connection.open((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
+  );
 
+  console.log('Opened connection.');
+  const stream = fs.createWriteStream(
+    path.join(__dirname, '../', '../', 'deviceLogs.log'),
+    { flags: 'a' }
+  );
+
+  const ready = await deviceReady(connection);
+
+  if (ready) {
+    await sendData(connection, 37, '00');
+
+    console.log('Waiting for user confirmation.');
+    const acceptedRequest: any = await receiveCommand(connection, 37);
+    if (acceptedRequest === '00') {
+      console.error('Rejected by user');
+      return;
+    }
+
+    stream.write('\n\n****************************************\n\n');
+
+    await sendData(connection, 38, '00');
+
+    let data: any = '';
+    let rawData: any;
+    console.log('Fetching logs...');
+    let i = 1;
+    //end of packet in hex with carrige return and line feed.
+    while (rawData !== '656e646f667061636b65740d0a') {
+      console.log('Waiting to receive line: ' + i);
+      i += 1;
+      rawData = await receiveCommand(connection, 38, 2000);
+      data = hexToAscii(rawData);
+      stream.write(data);
+      console.log(data);
+    }
+  } else {
+    console.error('Device not ready');
+  }
   // const ready = await deviceReady(connection);
 
   // only proceed if device is ready, else quit.
-  if (1) {
-    console.log(`\n\nDesktop : Sending Fetch Logs Command.\n\n`);
-    await sendData(connection, 37, '00000000');
-
-    while (1) {
-      if (await waitForMessage(connection)) {
-        console.log('true');
-      } else break;
-    }
-
-    console.log('out of for loop.');
-  }
 
   connection.close();
   connection.on('error', (d) => {

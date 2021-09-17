@@ -7,13 +7,49 @@ const { ACK_PACKET } = commands;
 // returns the received data value in hex for the supplied command
 export const receiveCommand = (
   connection: SerialPortType,
-  command: any
+  command: any,
+  timeout?: number
 ): Promise<string> => {
+  /**
+   * Be sure to remove all listeners and timeout.
+   *
+   * Using functions for listeners to be able to refer to them before declaration
+   * in setTimeout.
+   *
+   * Using onClose hooks to check if the connection has been closed. If this is not
+   * present then the function will wait for the command even after the device has been
+   * disconneced.
+   */
   const resData: any = [];
   return new Promise((resolve, reject) => {
-    const eListener = (packet: any) => {
-      // console.log(packet)
+    if (!connection.isOpen) {
+      reject(new Error('Connection is not open'));
+      return;
+    }
+
+    let timeoutIdentifier: NodeJS.Timeout | null = null;
+
+    if (timeout) {
+      timeoutIdentifier = setTimeout(() => {
+        connection.removeListener('data', eListener);
+        connection.removeListener('close', onClose);
+        reject(new Error('Receive command timeout.'));
+      }, timeout);
+    }
+
+    function eListener(packet: any) {
       const data = xmodemDecode(packet);
+      // When fetching logs
+      if (data[0].commandType === 38) {
+        resolve(data[0].dataChunk);
+        if (timeoutIdentifier) {
+          clearTimeout(timeoutIdentifier);
+        }
+        connection.removeListener('close', onClose);
+        connection.removeListener('data', eListener);
+        return;
+      }
+
       data.forEach((d) => {
         const { commandType, currentPacketNumber, totalPacket, dataChunk } = d;
         if (commandType === command) {
@@ -22,16 +58,36 @@ export const receiveCommand = (
             ACK_PACKET,
             `0x${currentPacketNumber.toString(16)}`
           );
-
           connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
           if (currentPacketNumber === totalPacket) {
             resolve(resData.join(''));
+            if (timeoutIdentifier) {
+              clearTimeout(timeoutIdentifier);
+            }
             connection.removeListener('data', eListener);
+            connection.removeListener('close', onClose);
           }
         }
       });
-    };
+    }
+
+    function onClose(err: any) {
+      if (timeoutIdentifier) {
+        clearTimeout(timeoutIdentifier);
+      }
+      connection.removeListener('data', eListener);
+      connection.removeListener('close', onClose);
+
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      reject(new Error('Connection was closed'));
+    }
+
     connection.on('data', eListener);
+    connection.on('close', onClose);
   });
 };
 
