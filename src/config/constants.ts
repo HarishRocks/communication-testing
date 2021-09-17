@@ -14,5 +14,5 @@ export default {
   ACK_TIME: 150,
   DEVICE_IN_FILE,
   DEVICE_OUT_FILE,
-  VENDOR_ID: '1915',
+  VENDOR_ID: '0483',
 };
