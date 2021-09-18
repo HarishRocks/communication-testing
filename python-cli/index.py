@@ -45,6 +45,13 @@ args = parser.parse_args()
 ACTION = args.action
 OUTPUT_DIR = os.path.join("../", "output")
 
+def bigToLittleEndian(s):
+    newStr = ''
+    for i in range(int((len(s)) / 2)):
+        newStr = s[i * 2: i* 2+2] + newStr
+
+    return newStr
+
 def bytesToCBytesStr(bytesStr):
     if (type(bytesStr) != bytes):
         raise Exception('`bytesToCBytes` require an argument of type `bytes`.')
@@ -149,7 +156,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     filesizeHex = hex(filesize)[2:]
 
     # Pad with 0 to create a 4 byte hex
-    filesizeHex = filesizeHex.zfill(8)
+    filesizeHex = bigToLittleEndian(filesizeHex.zfill(8))
     
     f1 = open(filePath, 'rb')
     filedata = f1.read()
@@ -170,7 +177,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     for i in range(64 - len(metadata)):
         header.append(0)
 
-    headerSig = sk1.sign_deterministic(metadata)
+    headerSig = sk1.sign_deterministic(bytes(header))
     header[64:] = headerSig;
 
     for i in range(128 - len(header)):
