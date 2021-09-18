@@ -6,7 +6,15 @@ import { receiveCommand } from '../core/recieveData';
 export default async (actions: any[]) => {
   const { connection, serial } = await createPort();
   console.log('Serial Number: ' + serial);
-  connection.open();
+  await new Promise((resolve, reject) =>
+    connection.open(err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
+  );
 
   const ready = await deviceReady(connection);
   if (ready) {

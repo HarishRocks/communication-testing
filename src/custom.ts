@@ -40,7 +40,15 @@ const customLiveSend = async (connection: any) => {
 
 const customLive = async () => {
   const { connection } = await createPort();
-  connection.open();
+  await new Promise((resolve, reject) =>
+    connection.open((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
+  );
   customLiveReceive(connection);
   customLiveSend(connection);
 };

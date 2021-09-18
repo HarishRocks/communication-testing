@@ -247,25 +247,6 @@ def decodeHeader(customInput):
     firmwareVersion = ''
     hardwareVersion = ''
 
-    # metadata = filename + '\0' + str(filesize) + '\0' + str(magic_no) + str(num_versions[0]) + str(num_versions[1]) + str(crc_value)
-
-    # Accessing bytes element as `b[0]` or using bytes in for loop will return int value
-    # for i in range(len(headerData)):
-        # b = headerData[i]
-        # if b != 0:
-            # filename += chr(b)
-        # else:
-            # lastIndex = i
-            # break
-
-    # for i in range(lastIndex + 1, len(headerData)):
-        # b = headerData[i]
-        # if b != 0:
-            # filesize += chr(b)
-        # else:
-            # lastIndex = i
-            # break
-
     # Size is 4
     filesize = bigToLittleEndian((headerData[lastIndex + 1: lastIndex + 5]).hex())
     lastIndex += 4
