@@ -180,6 +180,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     headerSig = sk1.sign_deterministic(bytes(header))
     header[64:] = headerSig;
 
+
     for i in range(128 - len(header)):
         header.append(0)
 
@@ -234,13 +235,13 @@ def decodeHeader(customInput):
     f1 = open(filePath, 'rb')
 
     allData = f1.read()
-    headerData = allData[:128]
+    headerData = allData[:64]
+    headerSig = allData[64:128]
     firstSig = allData[128:192]
     secondSig = allData[192:256]
-    filedata = allData[:256]
+    # filedata = allData[:256]
 
-    lastIndex = 0
-    filename = ''
+    lastIndex = -1 
     filesize = ''
     magic_no = ''
     firmwareVersion = ''
@@ -249,21 +250,25 @@ def decodeHeader(customInput):
     # metadata = filename + '\0' + str(filesize) + '\0' + str(magic_no) + str(num_versions[0]) + str(num_versions[1]) + str(crc_value)
 
     # Accessing bytes element as `b[0]` or using bytes in for loop will return int value
-    for i in range(len(headerData)):
-        b = headerData[i]
-        if b != 0:
-            filename += chr(b)
-        else:
-            lastIndex = i
-            break
+    # for i in range(len(headerData)):
+        # b = headerData[i]
+        # if b != 0:
+            # filename += chr(b)
+        # else:
+            # lastIndex = i
+            # break
 
-    for i in range(lastIndex + 1, len(headerData)):
-        b = headerData[i]
-        if b != 0:
-            filesize += chr(b)
-        else:
-            lastIndex = i
-            break
+    # for i in range(lastIndex + 1, len(headerData)):
+        # b = headerData[i]
+        # if b != 0:
+            # filesize += chr(b)
+        # else:
+            # lastIndex = i
+            # break
+
+    # Size is 4
+    filesize = bigToLittleEndian((headerData[lastIndex + 1: lastIndex + 5]).hex())
+    lastIndex += 4
 
     # Size is 4
     binaryMagicNo = headerData[lastIndex + 1: lastIndex + 5]
@@ -281,16 +286,20 @@ def decodeHeader(customInput):
     binaryCRC = headerData[lastIndex + 1: lastIndex + 5]
 
     magic_no = binaryMagicNo.hex()
-    firmwareVersion = binaryFV.hex()
-    hardwareVersion = binaryHV.hex()
+    firmwareVersion = bigToLittleEndian(binaryFV.hex())
+    hardwareVersion = bigToLittleEndian(binaryHV.hex())
     crcValue = binaryCRC.hex()
 
-    print("Filename: {}".format(filename))
+    print("");
     print("Filesize: {}".format(filesize))
     print("Magic No: {}".format(magic_no))
     print("Firmware Version: {}".format(firmwareVersion))
     print("Hardware Version: {}".format(hardwareVersion))
     print("CRC Value: {}".format(crcValue))
+    print("");
+    print("Raw header data: {}".format(headerData.hex()))
+    print("Header Sig: {}".format(headerSig.hex()))
+    print("");
     print("First Sig: {}".format(firstSig.hex()))
     print("Second Sig: {}".format(secondSig.hex()))
 
