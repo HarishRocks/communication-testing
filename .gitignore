@@ -6,4 +6,7 @@ yarn-error.log
 *.h
 *.bin
 *.log
+deviceLogs.txt
+device_in.txt
+device_out.txt
 .env
