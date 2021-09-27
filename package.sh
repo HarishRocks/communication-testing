@@ -40,14 +40,14 @@ packageAll() {
 
 case $1 in
   linux)
-    TARGET=node12-linux-x64
+    TARGET=node14-linux-x64
     PYTHON_COMMAND=python3
     CLI_FILENAME=cli
     CUSTOM_CLI_FILENAME=custom
     packageAll
   ;;
   win)
-    TARGET=node12-win-x64
+    TARGET=node14-win-x64
     PYTHON_COMMAND=python
     CLI_FILENAME=cli.exe
     CUSTOM_CLI_FILENAME=custom.exe
