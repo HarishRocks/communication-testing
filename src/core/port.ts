@@ -3,11 +3,11 @@ import MockSerialPort from './mock/serialport';
 import SerialPort from '../config/serialport';
 import config from '../config/constants';
 
-const closePort = (port: any) => {
+export const closePort = (port: any) => {
   port.close();
 };
 
-const createPortConnection = (port: any) => {
+export const createPortConnection = (port: any) => {
   const hardwarePort = SerialPort(port, {
     baudRate: 115200,
     autoOpen: false,
@@ -15,7 +15,7 @@ const createPortConnection = (port: any) => {
   return hardwarePort;
 };
 
-const createPort = async () => {
+export const createPort = async () => {
   let list: OrgSerialPort.PortInfo[] = [];
   if (process.env.MOCK === 'true') {
     list = await MockSerialPort.list();
@@ -42,4 +42,31 @@ const createPort = async () => {
   }
 };
 
-export { createPort, closePort };
+export const openConnection = (connection: OrgSerialPort | MockSerialPort) => {
+  return new Promise((resolve, reject) =>
+    connection.open((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
+  );
+};
+
+export const closeConnection = (connection: OrgSerialPort | MockSerialPort) => {
+  return new Promise((resolve, reject) => {
+    if (connection.isOpen) {
+      resolve();
+      return;
+    }
+
+    connection.close((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+};

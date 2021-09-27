@@ -10,3 +10,4 @@ deviceLogs.txt
 device_in.txt
 device_out.txt
 .env
+build

@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import { addAllWalletsToDB } from './wallet';
@@ -10,7 +10,7 @@ import deviceReady from '../core/deviceReady';
 
 export const addAllWallets = async () => {
   const { connection, serial } = await createPort();
-  connection.open();
+  await openConnection(connection);
 
   const ready = await deviceReady(connection);
 
@@ -23,7 +23,7 @@ export const addAllWallets = async () => {
     const walletDetails = await receiveCommand(connection, 73);
     if (walletDetails === '00') {
       console.log('From Device (Rejected Request)\n');
-      connection.close();
+      await closeConnection(connection);
       return 0;
     }
     console.log('Wallet Details From Device: ');
@@ -35,7 +35,7 @@ export const addAllWallets = async () => {
     await sendData(connection, 42, '01');
   }
 
-  connection.close();
+  await closeConnection(connection);
   connection.on('error', (d) => {
     console.log(d);
   });

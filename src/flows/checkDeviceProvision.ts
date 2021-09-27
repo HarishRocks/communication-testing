@@ -1,5 +1,5 @@
 // DEVICE_CONFIRM_FOR_DFU_MODE not used
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { receiveCommand } from '../core/recieveData';
 import axios from 'axios';
@@ -25,7 +25,7 @@ const checkDeviceProvisice = async (serial: string) => {
 
 const checkDeviceProvision = async () => {
   const { connection } = await createPort();
-  connection.open();
+  await openConnection(connection);
 
   await sendData(connection, 87, '00');
   const data: any = await receiveCommand(connection, 87);
@@ -49,7 +49,7 @@ const checkDeviceProvision = async () => {
     console.log(error);
     console.log('Failed to check device provision.');
   } finally {
-    connection.close(() => {});
+    await closeConnection(connection);
   }
 };
 

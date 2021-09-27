@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { ackData, sendData } from '../core/sendData';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import deviceReady from '../core/deviceReady';
@@ -49,7 +49,7 @@ const verifyChallengeSignature = async (
 const cardAuth = async () => {
   const { connection, serial } = await createPort();
   console.log('Serial Number: ' + serial);
-  connection.open();
+  await openConnection(connection);
 
   const ready = await deviceReady(connection);
   if (ready) {
@@ -92,7 +92,7 @@ const cardAuth = async () => {
   } else {
     console.log('device not ready');
   }
-  connection.close();
+  await closeConnection(connection);
 };
 
 export default cardAuth;

@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { receiveCommand } from '../core/recieveData';
 import { coins as COINS } from '../config';
@@ -178,7 +178,7 @@ export const coinsNotAdded = async (walletID: any) => {
 
 export const addCoin = async (walletID: any, coinTypes: any) => {
   const { connection, serial } = await createPort();
-  connection.open();
+  await openConnection(connection);
   console.log(connection);
 
   connection.on('close', (err) => {
@@ -211,7 +211,7 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
       console.log(
         'From Device: User did not confirm coins.\nExiting Function...'
       );
-      connection.close();
+      await closeConnection(connection);
       return 0;
     }
 
@@ -237,8 +237,8 @@ export const addCoin = async (walletID: any, coinTypes: any) => {
     await sendData(connection, 42, '01');
   } else {
     console.log('Device not ready');
-    connection.close();
+    await closeConnection(connection);
     return 0;
   }
-  connection.close();
+  await closeConnection(connection);
 };

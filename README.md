@@ -34,3 +34,32 @@
   ```
   yarn start:custom
   ```
+
+## Package
+
+### Requirements
+
+- Install `pkg`
+  ```
+  npm i -g pkg
+  ```
+- Install `patchelf` (Linux)
+  ```
+  sudo apt-get install patchelf
+  ```
+
+### Package for Windows
+
+- Run `package-win` command (This needs to be executed on git bash terminal)
+  ```
+  yarn package-win
+  ```
+- The executables will be created inside `build` folder
+
+### Package for Linux
+
+- Run `package-linux` command
+  ```
+  yarn package-linux
+  ```
+- The executables will be created inside `build` folder

@@ -1,24 +1,39 @@
+import process from 'process';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { queryNumber, queryInput } from '../helper/cliInput';
+import isExecutable from '../../utils/isExecutable';
 
 const asyncExec = promisify(exec);
 
-let command = 'python';
+let cliCommand: string;
+if (isExecutable()) {
+  let command = 'index';
 
-if (process.platform === 'linux') {
-  command = 'python3';
+  if (process.platform === 'win32') {
+    command = 'index.exe';
+  }
+
+  const cliPath = path.join(process.cwd(), 'python-cli', command);
+  cliCommand = cliPath;
+} else {
+  let command = 'python';
+
+  if (process.platform === 'linux') {
+    command = 'python3';
+  }
+
+  const cliPath = path.join(
+    __dirname,
+    '../',
+    '../',
+    '../',
+    'python-cli',
+    'index.py'
+  );
+  cliCommand = `${command} ${cliPath}`;
 }
-
-const cliPath = path.join(
-  __dirname,
-  '../',
-  '../',
-  '../',
-  'python-cli',
-  'index.py'
-);
 
 export const generateKeys = async () => {
   try {
@@ -27,7 +42,7 @@ export const generateKeys = async () => {
       { default: 1 }
     );
     const { stderr, stdout } = await asyncExec(
-      `${command} ${cliPath} gen-key --index=${index}`
+      `${cliCommand} gen-key --index=${index}`
     );
     if (stderr) {
       console.log(`stderr: ${stderr}`);
@@ -64,7 +79,7 @@ export const addHeader = async () => {
     });
 
     const { stderr, stdout } = await asyncExec(
-      `${command} ${cliPath} add-header --input=${input} --output=${output} --version=${version} --private-key=${privateKey}`
+      `${cliCommand} add-header --input=${input} --output=${output} --version=${version} --private-key=${privateKey}`
     );
     if (stderr) {
       console.log(`stderr: ${stderr}`);
@@ -97,7 +112,7 @@ export const signHeader = async () => {
     });
 
     const { stderr, stdout } = await asyncExec(
-      `${command} ${cliPath} sign-header --input=${input} --output=${output} --private-key=${privateKey}`
+      `${cliCommand} sign-header --input=${input} --output=${output} --private-key=${privateKey}`
     );
     if (stderr) {
       console.log(`stderr: ${stderr}`);
@@ -122,7 +137,7 @@ export const decodeHeader = async () => {
     });
 
     const { stderr, stdout } = await asyncExec(
-      `${command} ${cliPath} decode-header --input=${input}`
+      `${cliCommand} decode-header --input=${input}`
     );
     if (stderr) {
       console.log(`stderr: ${stderr}`);

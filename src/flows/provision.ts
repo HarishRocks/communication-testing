@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
 import { receiveCommand } from '../core/recieveData';
@@ -38,7 +38,7 @@ export const deletePublicKey = (serialNumber: any, publicKey: any) => {
 
 export const provision = async () => {
   const { connection, serial } = await createPort();
-  connection.open();
+  await openConnection(connection);
 
   // const ready = await deviceReady(connection);
   const ready = 1;
@@ -82,7 +82,7 @@ export const provision = async () => {
     console.log('Device not ready');
   }
 
-  connection.close();
+  await closeConnection(connection);
   connection.on('error', (d) => {
     console.log(d);
   });

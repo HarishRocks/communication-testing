@@ -1,11 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import { createPort } from '../core/port';
+import process from 'process';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { recieveData, receiveCommand } from '../core/recieveData';
 import { addWalletToDB, allAvailableWallets } from './wallet';
 import deviceReady from '../core/deviceReady';
 import { hexToAscii } from '../bytes';
+import isExecutable from '../utils/isExecutable';
 
 // ADD_LOG_DATA_REQUEST: 37,
 // ADD_LOG_DATA_SEND: 38,
@@ -26,7 +28,7 @@ import { hexToAscii } from '../bytes';
 //const data = await receiveCommand(connection, 38);
 //resolve(true);
 //if (!hexToAscii(data).includes('ÿ')) {
-//console.log(hexToAscii(data));
+//console.log(hexToAscii(data)):
 //log.info(hexToAscii(data));
 //}
 //});
@@ -34,21 +36,20 @@ import { hexToAscii } from '../bytes';
 
 export const fetchLogs = async () => {
   const { connection, serial } = await createPort();
-  await new Promise((resolve, reject) =>
-    connection.open((err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    })
-  );
+  await openConnection(connection);
 
   console.log('Opened connection.');
-  const stream = fs.createWriteStream(
-    path.join(__dirname, '../', '../', 'deviceLogs.log'),
-    { flags: 'a' }
-  );
+  let stream: fs.WriteStream;
+  if (isExecutable()) {
+    stream = fs.createWriteStream(path.join(process.cwd(), 'deviceLogs.log'), {
+      flags: 'a',
+    });
+  } else {
+    stream = fs.createWriteStream(
+      path.join(__dirname, '../', '../', 'deviceLogs.log'),
+      { flags: 'a' }
+    );
+  }
 
   const ready = await deviceReady(connection);
 
@@ -86,7 +87,7 @@ export const fetchLogs = async () => {
 
   // only proceed if device is ready, else quit.
 
-  connection.close();
+  await closeConnection(connection);
   connection.on('error', (d) => {
     console.log(d);
   });

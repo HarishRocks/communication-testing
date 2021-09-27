@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
 import { receiveCommand } from '../core/recieveData';
@@ -43,7 +43,7 @@ export const allAvailableCoins = async (walletId: any) => {
 export const receiveTransaction = async (walletId: any, coinType: any) => {
   try {
     const { connection } = await createPort();
-    connection.open();
+    await openConnection(connection);
 
     const ready = await deviceReady(connection);
     if (ready) {
@@ -66,13 +66,13 @@ export const receiveTransaction = async (walletId: any, coinType: any) => {
           break;
         case '00':
           logger.info('From Device (Devices Rejected)');
-          connection.close();
+          await closeConnection(connection);
           return 0;
         default:
           logger.info(
             `From Device (Unknown Value Received) : ${coinsConfirmed}`
           );
-          connection.close();
+          await closeConnection(connection);
           return 0;
       }
 
@@ -91,7 +91,7 @@ export const receiveTransaction = async (walletId: any, coinType: any) => {
     } else {
       logger.alert('Device not ready');
     }
-    connection.close();
+    await closeConnection(connection);
   } catch (e) {
     logger.error('Error occurred ' + e);
     return 0;

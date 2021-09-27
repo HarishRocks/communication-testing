@@ -1,4 +1,4 @@
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import deviceReady from '../core/deviceReady';
 import { sendData } from '../core/sendData';
 import { receiveCommand } from '../core/recieveData';
@@ -6,15 +6,7 @@ import { receiveCommand } from '../core/recieveData';
 export default async (actions: any[]) => {
   const { connection, serial } = await createPort();
   console.log('Serial Number: ' + serial);
-  await new Promise((resolve, reject) =>
-    connection.open((err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    })
-  );
+  await openConnection(connection);
 
   const ready = await deviceReady(connection);
   if (ready) {
@@ -35,5 +27,5 @@ export default async (actions: any[]) => {
   } else {
     console.log('device not ready');
   }
-  connection.close();
+  await closeConnection(connection);
 };

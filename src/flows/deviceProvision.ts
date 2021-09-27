@@ -1,5 +1,5 @@
 // DEVICE_CONFIRM_FOR_DFU_MODE not used
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { receiveCommand } from '../core/recieveData';
 import axios from 'axios';
@@ -28,7 +28,7 @@ const provisionDevice = async (serial: string, publicKey: string) => {
 
 const deviceProvision = async () => {
   const { connection } = await createPort();
-  connection.open();
+  await openConnection(connection);
   const date = new Date();
 
   const day = date.getDate().toString(16);
@@ -60,9 +60,8 @@ const deviceProvision = async () => {
     console.log(error);
     console.log('Failed to provision device.');
   } finally {
-    connection.close(async () => {
-      console.log('close');
-    });
+    await closeConnection(connection);
+    console.log('close');
   }
 };
 

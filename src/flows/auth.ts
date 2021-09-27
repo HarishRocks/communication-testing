@@ -1,5 +1,5 @@
 // DEVICE_CONFIRM_FOR_DFU_MODE not used
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, receiveCommand } from '../core/recieveData';
@@ -60,7 +60,7 @@ export const deviceAuth = async () => {
   // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
-  connection.open();
+  await openConnection(connection);
 
   // await sendData(connection , IN_BOOTLOADER_MODE, "00");
 

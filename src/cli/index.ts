@@ -1,4 +1,8 @@
+import dotenv from 'dotenv-flow';
+dotenv.config();
+
 import path from 'path';
+import process from 'process';
 import fs from 'fs';
 import receiveTransaction from './handler/receiveTransaction';
 import sendTransaction from './handler/sendTransaction';
@@ -17,6 +21,7 @@ import stmCli from './stm';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
+import isExecutable from '../utils/isExecutable';
 
 // @ts-ignore
 import * as logs from 'simple-node-logger';
@@ -28,7 +33,7 @@ const cliTool = async () => {
     'STM CLI',
     'Add Bootloader',
     'Card Authentication',
-    'Custom',
+    'Custom from JSON',
     'Upgrade',
     'Only Upgrade',
     'Device Provision',
@@ -75,12 +80,17 @@ const cliTool = async () => {
       await fetchLogs();
       break;
 
-    case 'Custom':
+    case 'Custom from JSON':
       let customData: any;
       try {
-        const fileData = fs.readFileSync(
-          path.join(__dirname, '../', '../', 'custom.json')
-        );
+        let fileData: Buffer;
+        if (isExecutable()) {
+          fileData = fs.readFileSync(path.join(process.cwd(), 'custom.json'));
+        } else {
+          fileData = fs.readFileSync(
+            path.join(__dirname, '../', '../', 'custom.json')
+          );
+        }
 
         customData = JSON.parse(fileData.toString('utf-8'));
       } catch (error) {

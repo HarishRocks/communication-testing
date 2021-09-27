@@ -1,6 +1,6 @@
 // ToDo, create a universal coinType object for refrence in whole system - done (kind of)
 // ToDo, if user enters same address twice, instead of making two output fields, make 1 output field with added balance, or give the user an error.
-import { createPort } from '../core/port';
+import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { coins as COINS } from '../config';
 import { recieveData, receiveCommand } from '../core/recieveData';
@@ -76,7 +76,7 @@ export const sendTransaction = async (
   // will get xPub from wallet_id and the coin_type
 
   const { connection, serial } = await createPort();
-  connection.open();
+  await openConnection(connection);
 
   const ready = await deviceReady(connection);
 
@@ -87,7 +87,7 @@ export const sendTransaction = async (
     const wallet = new Wallet(xpub, coinType);
     if (!(await wallet.funds_check(output_list))) {
       console.log('Funds not sufficient');
-      connection.close();
+      await closeConnection(connection);
       return 0;
     }
     const txn_metadata = await wallet.generateMetaData(output_list);
