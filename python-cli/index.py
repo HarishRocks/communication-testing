@@ -156,7 +156,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     filesizeHex = hex(filesize)[2:]
 
     # Pad with 0 to create a 4 byte hex
-    filesizeHex = bigToLittleEndian(filesizeHex.zfill(8))
+    filesizeHex = filesizeHex.zfill(8)
     
     f1 = open(filePath, 'rb')
     filedata = f1.read()
@@ -174,12 +174,6 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     crc_value = struct.pack("<I", crc_int)
     metadata = bytes.fromhex(filesizeHex) + bytes.fromhex(magic_no) + num_versions[0] + num_versions[1] + crc_value
     header[0:] = metadata
-    for i in range(64 - len(metadata)):
-        header.append(0)
-
-    headerSig = sk1.sign_deterministic(bytes(header))
-    header[64:] = headerSig;
-
 
     for i in range(128 - len(header)):
         header.append(0)
@@ -235,8 +229,7 @@ def decodeHeader(customInput):
     f1 = open(filePath, 'rb')
 
     allData = f1.read()
-    headerData = allData[:64]
-    headerSig = allData[64:128]
+    headerData = allData[:128]
     firstSig = allData[128:192]
     secondSig = allData[192:256]
     # filedata = allData[:256]
@@ -248,7 +241,7 @@ def decodeHeader(customInput):
     hardwareVersion = ''
 
     # Size is 4
-    filesize = bigToLittleEndian((headerData[lastIndex + 1: lastIndex + 5]).hex())
+    filesize = (headerData[lastIndex + 1: lastIndex + 5]).hex()
     lastIndex += 4
 
     # Size is 4
@@ -279,7 +272,6 @@ def decodeHeader(customInput):
     print("CRC Value: {}".format(crcValue))
     print("");
     print("Raw header data: {}".format(headerData.hex()))
-    print("Header Sig: {}".format(headerSig.hex()))
     print("");
     print("First Sig: {}".format(firstSig.hex()))
     print("Second Sig: {}".format(secondSig.hex()))
