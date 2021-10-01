@@ -38,7 +38,7 @@ const deviceProvision = async () => {
   const datePayload =
     day.padStart(2, '0') + month.padStart(2, '0') + year.padStart(4, '0');
 
-  await sendData(connection, 81, '01' + datePayload); // Add date: DMY
+  await sendData(connection, 84, '01' + datePayload); // Add date: DMY
 
   const serialAndKey: string = await receiveCommand(connection, 82);
   const serialNumber = serialAndKey.slice(0, 64).toUpperCase();
