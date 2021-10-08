@@ -49,7 +49,7 @@ const deviceProvision = async () => {
   const serialAndKey: string = await receiveCommand(connection, 82);
   const serialNumber = serialAndKey.slice(0, 64).toUpperCase();
 
-  if (index !== undefined || index !== null) {
+  if (index === undefined || index === null) {
     console.log('Upload failed. Try again.\nExiting function..');
     return 0;
   }
