@@ -30,7 +30,7 @@ const provisionDevice = async (serial: string, publicKey: string) => {
   }
 };
 
-let index = 0;
+let index = "0";
 
 const deviceProvision = async () => {
   const { connection } = await createPort();
