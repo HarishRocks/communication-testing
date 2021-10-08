@@ -1,8 +1,12 @@
 // DEVICE_CONFIRM_FOR_DFU_MODE not used
+import axios from 'axios';
+
+import config from '../config/constants';
 import { createPort, openConnection, closeConnection } from '../core/port';
 import { sendData } from '../core/sendData';
 import { receiveCommand } from '../core/recieveData';
-import axios from 'axios';
+import { getKeysFromSeed, calculatePathFromIndex } from '../utils/crypto';
+import { intToUintByte } from '../bytes';
 
 const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
@@ -26,6 +30,8 @@ const provisionDevice = async (serial: string, publicKey: string) => {
   }
 };
 
+let index = 0;
+
 const deviceProvision = async () => {
   const { connection } = await createPort();
   await openConnection(connection);
@@ -42,27 +48,57 @@ const deviceProvision = async () => {
 
   const serialAndKey: string = await receiveCommand(connection, 82);
   const serialNumber = serialAndKey.slice(0, 64).toUpperCase();
-  const publicKey = serialAndKey.slice(64);
+
+  if (index !== undefined || index !== null) {
+    console.log('Upload failed. Try again.\nExiting function..');
+    return 0;
+  }
+
+  const deviceNfcKeys = getKeysFromSeed(
+    config.SECRET_SEED,
+    `m/1000'/1'/2'/0/${calculatePathFromIndex(index)}`
+  );
+  const cardNfcKeys = getKeysFromSeed(config.SECRET_SEED, `m/1000'/0'/2'/0`);
+  const deviceAuthKeys = getKeysFromSeed(
+    config.SECRET_SEED,
+    `m/1000'/1'/0'/0/${calculatePathFromIndex(index)}`
+  );
+
   console.log('From Device: Serial and public key:');
-  console.log({ serialNumber, publicKey });
-  if (serialNumber.search(/[^0]/) === -1 || publicKey.search(/[^0]/) === -1) {
+  console.log({ serialNumber });
+  if (serialNumber.search(/[^0]/) === -1) {
     throw new Error('Device returned invalid serial or public key');
   }
 
-  try {
-    await provisionDevice(serialNumber, publicKey);
-    await sleep(2000);
-    await sendData(connection, 81, '02');
+  const keysData =
+    deviceAuthKeys.privateKey +
+    deviceAuthKeys.publicKey +
+    intToUintByte(index, 8 * 8) + // 8 Bytes index
+    deviceNfcKeys.privateKey +
+    cardNfcKeys.xpub;
+
+  await sendData(connection, 84, '02' + keysData); // Add date: DMY
+  await sleep(200);
+  const isSuccess = await receiveCommand(connection, 84);
+
+  if (isSuccess.startsWith('01')) {
     console.log('Device provisioned successfully.');
-  } catch (error) {
-    await sleep(2000);
-    await sendData(connection, 81, '03');
-    console.log(error);
+  } else {
     console.log('Failed to provision device.');
-  } finally {
-    await closeConnection(connection);
-    console.log('close');
   }
+
+  //try {
+  //// await provisionDevice(serialNumber, publicKey);
+  //await sleep(2000);
+  //await sendData(connection, 81, '02');
+  //} catch (error) {
+  //await sleep(2000);
+  //await sendData(connection, 81, '03');
+  //console.log(error);
+  //} finally {
+  //await closeConnection(connection);
+  //console.log('close');
+  //}
 };
 
 export default deviceProvision;

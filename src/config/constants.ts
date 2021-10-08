@@ -15,4 +15,5 @@ export default {
   DEVICE_IN_FILE,
   DEVICE_OUT_FILE,
   VENDOR_ID: process.env.VENDOR_ID,
+  SECRET_SEED: process.env.SECRET_SEED || '',
 };
