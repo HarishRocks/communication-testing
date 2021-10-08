@@ -22,6 +22,11 @@ packageNode() {
   pkg --target=${TARGET} dist/custom.js -o ./build/${CUSTOM_CLI_FILENAME}
 }
 
+packageNode2() {
+  nexe dist/cli/index.js -o ./build/${CLI_FILENAME} --build
+  nexe dist/custom.js -o ./build/${CUSTOM_CLI_FILENAME} --build
+}
+
 # Package python
 packagePython() {
   cd python-cli 
@@ -33,9 +38,9 @@ packagePython() {
 packageAll() {
   clean
   copyEnv
-  build
-  packageNode
-  packagePython
+  #build
+  packageNode2
+  #packagePython
 }
 
 case $1 in
