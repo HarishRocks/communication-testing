@@ -1,5 +1,10 @@
+import path from 'path';
+import process from 'process';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+
+const asyncExec = promisify(exec);
 
 export const calculatePathFromIndex = (index: string) => {
   const PER_INDEX_LIMIT = new BigNumber(2).pow(31);
@@ -38,19 +43,60 @@ export const calculatePathFromIndex = (index: string) => {
   return `${firstIndex}/${secondIndex}`;
 };
 
-export const getKeysFromSeed = (seed: string, path: string) => {
-  console.log({ path });
-  const wallet = bitcoin.bip32
-    .fromSeed(Buffer.from(seed, 'hex'))
-    .derivePath(path);
+const formatOutput = (data: string) => {
+  const obj: { [key: string]: string } = {};
 
-  if (!wallet.privateKey) {
-    throw new Error('Cannot derive private keys');
+  for (const line of data.split('\n')) {
+    const varArr = line.split('=');
+    if (varArr.length >= 2) {
+      const key = varArr[0].trim();
+      const value = varArr.slice(1).join('').trim();
+      obj[key] = value;
+    }
   }
 
+  return obj;
+};
+
+export const getKeysFromSeed = async (
+  seed: string,
+  derivationPath: string,
+  curve: string
+) => {
+  console.log({ path: derivationPath });
+  let command = 'deriveKeys';
+
+  if (process.platform === 'win32') {
+    command += '.exe';
+  }
+
+  const cliPath = path.join(__dirname, '../', '../', command);
+  const { stderr, stdout } = await asyncExec(
+    `${cliPath} ${seed} "${derivationPath}" ${curve}`
+  );
+
+  if (stderr) {
+    throw new Error(`stderr: ${stderr}`);
+  }
+
+  const data = formatOutput(stdout);
   return {
-    publicKey: wallet.publicKey.toString('hex'),
-    privateKey: wallet.privateKey.toString('hex'),
-    xpub: wallet.neutered().toBase58(),
+    privateKey: data['Private Key'],
+    publicKey: data['Public Key'],
+    xpub: data['XPUB(bin)'],
   };
+  //const wallet = bitcoin.bip32
+  //.fromSeed(Buffer.from(seed, 'hex'))
+  //.derivePath(path);
+
+  //if (!wallet.privateKey) {
+  //throw new Error('Cannot derive private keys');
+  //}
+
+  //return {
+  //publicKey: wallet.publicKey.toString('hex'),
+  //privateKey: wallet.privateKey.toString('hex'),
+  //wif: wallet.toWIF(),
+  //xpub: wallet.neutered().toBase58(),
+  //};
 };

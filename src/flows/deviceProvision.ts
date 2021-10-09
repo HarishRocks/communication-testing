@@ -12,14 +12,14 @@ const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 const sleep = (ms: any) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const provisionDevice = async (serial: string, publicKey: string) => {
   const res = await axios.post(`${cyBaseURL}/provision/add`, {
     type: 'DEVICE',
     serial,
-    publicKey
+    publicKey,
   });
 
   console.log('Response from server:');
@@ -54,17 +54,23 @@ const deviceProvision = async () => {
     return 0;
   }
 
-  const deviceNfcKeys = getKeysFromSeed(
+  const deviceNfcKeys = await getKeysFromSeed(
     config.SECRET_SEED,
-    `m/1000'/1'/2'/0/${calculatePathFromIndex(index)}`
+    `m/1000'/1'/2'/0/${calculatePathFromIndex(index)}`,
+    'secp256k1'
   );
-  const cardNfcKeys = getKeysFromSeed(config.SECRET_SEED, `m/1000'/0'/2'/0`);
-  const deviceAuthKeys = getKeysFromSeed(
+  const cardNfcKeys = await getKeysFromSeed(
     config.SECRET_SEED,
-    `m/1000'/1'/0'/0/${calculatePathFromIndex(index)}`
+    `m/1000'/0'/2'/0`,
+    'secp256k1'
+  );
+  const deviceAuthKeys = await getKeysFromSeed(
+    config.SECRET_SEED,
+    `m/1000'/1'/0'/0/${calculatePathFromIndex(index)}`,
+    'secp256k1'
   );
 
-  console.log('From Device: Serial and public key:');
+  console.log('From Device: Serial:');
   console.log({ serialNumber });
   if (serialNumber.search(/[^0]/) === -1) {
     throw new Error('Device returned invalid serial or public key');
