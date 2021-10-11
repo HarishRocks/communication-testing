@@ -12,14 +12,14 @@ const cyBaseURL =
   'http://cypherockserver-env.eba-hvatxy8g.ap-south-1.elasticbeanstalk.com';
 
 const sleep = (ms: any) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 const provisionDevice = async (serial: string, publicKey: string) => {
   const res = await axios.post(`${cyBaseURL}/provision/add`, {
     type: 'DEVICE',
     serial,
-    publicKey,
+    publicKey
   });
 
   console.log('Response from server:');
@@ -57,17 +57,17 @@ const deviceProvision = async () => {
   const deviceNfcKeys = await getKeysFromSeed(
     config.SECRET_SEED,
     `m/1000'/1'/2'/0/${calculatePathFromIndex(index)}`,
-    'secp256k1'
+    'nist256p1'
   );
   const cardNfcKeys = await getKeysFromSeed(
     config.SECRET_SEED,
     `m/1000'/0'/2'/0`,
-    'secp256k1'
+    'nist256p1'
   );
   const deviceAuthKeys = await getKeysFromSeed(
     config.SECRET_SEED,
     `m/1000'/1'/0'/0/${calculatePathFromIndex(index)}`,
-    'secp256k1'
+    'nist256p1'
   );
 
   console.log('From Device: Serial:');
@@ -81,7 +81,7 @@ const deviceProvision = async () => {
     deviceAuthKeys.publicKey +
     intToUintByte(index, 8 * 8) + // 8 Bytes index
     deviceNfcKeys.privateKey +
-    Buffer.from(cardNfcKeys.xpub).toString('hex');
+    cardNfcKeys.xpub;
 
   await sendData(connection, 84, '02' + keysData); // Add date: DMY
   await sleep(200);
