@@ -7,7 +7,7 @@ import re
 import struct
 from zlib import crc32
 import hashlib
-from ecdsa import SigningKey, SECP256k1 
+from ecdsa import SigningKey, NIST256p
 
 DEFAULT_BIN_PREFIX = 'BlinkLed'
 
@@ -162,7 +162,7 @@ def addHeader(privateKeyFile, customInput, customOutput, versionFilePath):
     filedata = f1.read()
     signatureData = ''
     privateKey=bytes.fromhex(readKeyFromFile(privateKeyFile))
-    sk1 = SigningKey.from_string(privateKey, curve=SECP256k1, hashfunc=hashlib.sha256)
+    sk1 = SigningKey.from_string(privateKey, curve=NIST256p, hashfunc=hashlib.sha256)
     sig = sk1.sign_deterministic(filedata)
     signatureData += sig.hex();
 
@@ -206,7 +206,7 @@ def addSig(privateKeyFile, customInput, customOutput):
     if (re.match("[^0]", secondSig.hex()) != None):
         raise Exception('The binary file already contains second signature.')
 
-    sk1 = SigningKey.from_string(bytes.fromhex(readKeyFromFile(privateKeyFile)), curve=SECP256k1, hashfunc=hashlib.sha256)
+    sk1 = SigningKey.from_string(bytes.fromhex(readKeyFromFile(privateKeyFile)), curve=NIST256p, hashfunc=hashlib.sha256)
     sig = sk1.sign_deterministic(filedata)
     signatureData += sig.hex();
 
@@ -277,7 +277,7 @@ def decodeHeader(customInput):
     print("Second Sig: {}".format(secondSig.hex()))
 
 def genKeys(privateKeyFile, publicKeyFile, keyIndex):
-    sk = SigningKey.generate(curve=SECP256k1, hashfunc=hashlib.sha256)
+    sk = SigningKey.generate(curve=NIST256p, hashfunc=hashlib.sha256)
     vk = sk.verifying_key
     binarySk = sk.to_string()
     binaryVk = vk.to_string("compressed")
