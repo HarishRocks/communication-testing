@@ -1,4 +1,5 @@
 import path from 'path';
+import elliptic from 'elliptic';
 import process from 'process';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -58,6 +59,13 @@ const formatOutput = (data: string) => {
   return obj;
 };
 
+const compressedToFullPublicKey = (publicKey: string) => {
+  const ec = new elliptic.ec('p256');
+  const key = ec.keyFromPublic(Buffer.from(publicKey, 'hex'));
+  const fullPublicKey = key.getPublic(false, 'hex');
+  return fullPublicKey.slice(2);
+};
+
 export const getKeysFromSeed = async (
   seed: string,
   derivationPath: string,
@@ -83,6 +91,7 @@ export const getKeysFromSeed = async (
   return {
     privateKey: data['Private Key'],
     publicKey: data['Public Key'],
+    fullPublicKey: compressedToFullPublicKey(data['Public Key']),
     xpub: data['XPUB(bin)'],
   };
   //const wallet = bitcoin.bip32

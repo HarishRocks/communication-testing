@@ -45,20 +45,6 @@ const provisionDevice = async (serial: string, publicKey: string) => {
   }
 };
 
-const confirmProvisonDevice = async (serial: string) => {
-  const res = await axios.post(`${cyBaseURL}/provision/index/confirm`, {
-    type: 'DEVICE',
-    serial,
-  });
-
-  console.log('Response from server:');
-  console.log(res.data);
-
-  if (res.data.status !== 1) {
-    throw new Error('Server responded in error');
-  }
-};
-
 const deviceProvision = async () => {
   const { connection } = await createPort();
   try {
@@ -122,8 +108,7 @@ const deviceProvision = async () => {
       throw new Error('Failed to provision device.');
     }
 
-    await provisionDevice(serialNumber, deviceAuthKeys.publicKey);
-    await confirmProvisonDevice(serialNumber);
+    await provisionDevice(serialNumber, deviceAuthKeys.fullPublicKey);
     console.log('Device provisioned successfully.');
 
     await sleep(2000);
