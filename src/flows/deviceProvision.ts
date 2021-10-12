@@ -76,9 +76,11 @@ const deviceProvision = async () => {
       return 0;
     }
 
+    const calculatedPath = calculatePathFromIndex(index);
+
     const deviceNfcKeys = await getKeysFromSeed(
       config.SECRET_SEED,
-      `m/1000'/1'/2'/0/${calculatePathFromIndex(index)}`,
+      `m/1000'/1'/2'/0/${calculatedPath.path}`,
       'nist256p1'
     );
     const cardNfcKeys = await getKeysFromSeed(
@@ -88,14 +90,15 @@ const deviceProvision = async () => {
     );
     const deviceAuthKeys = await getKeysFromSeed(
       config.SECRET_SEED,
-      `m/1000'/1'/0'/0/${calculatePathFromIndex(index)}`,
+      `m/1000'/1'/0'/0/${calculatedPath.path}`,
       'nist256p1'
     );
 
     const keysData =
       deviceAuthKeys.privateKey +
       deviceAuthKeys.publicKey +
-      intToUintByte(index, 8 * 8) + // 8 Bytes index
+      intToUintByte(calculatedPath.firstIndex, 4 * 8) + // 4 Bytes index
+      intToUintByte(calculatedPath.secondIndex, 4 * 8) + // 4 Bytes index
       deviceNfcKeys.privateKey +
       cardNfcKeys.xpub;
 

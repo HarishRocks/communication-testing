@@ -11,14 +11,13 @@ export const calculatePathFromIndex = (index: string) => {
   const PER_INDEX_LIMIT = new BigNumber(2).pow(31);
   const num = new BigNumber(index);
 
-  let firstIndex = -1;
-  let secondIndex = -1;
+  let firstIndex = 0;
+  let secondIndex = 0;
 
   if (num.isGreaterThanOrEqualTo(PER_INDEX_LIMIT)) {
     firstIndex = num
       .dividedBy(PER_INDEX_LIMIT)
       .integerValue(BigNumber.ROUND_DOWN)
-      .minus(1)
       .toNumber();
 
     secondIndex = num
@@ -26,7 +25,7 @@ export const calculatePathFromIndex = (index: string) => {
       .integerValue(BigNumber.ROUND_DOWN)
       .toNumber();
   } else {
-    firstIndex = num.toNumber();
+    secondIndex = num.toNumber();
   }
 
   if (firstIndex >= PER_INDEX_LIMIT.toNumber()) {
@@ -37,11 +36,7 @@ export const calculatePathFromIndex = (index: string) => {
     throw new Error(`Second index: ${secondIndex} is invalid.`);
   }
 
-  if (secondIndex < 0) {
-    return `${firstIndex}`;
-  }
-
-  return `${firstIndex}/${secondIndex}`;
+  return { firstIndex, secondIndex, path: `${firstIndex}/${secondIndex}` };
 };
 
 const formatOutput = (data: string) => {
