@@ -113,8 +113,6 @@ const deviceProvision = async () => {
       deviceNfcKeys.privateKey +
       cardNfcKeys.xpub;
 
-    await provisionDevice(serialNumber, deviceAuthKeys.publicKey);
-
     await sendData(connection, 84, '02' + keysData); // Add date: DMY
     await sleep(200);
 
@@ -124,6 +122,7 @@ const deviceProvision = async () => {
       throw new Error('Failed to provision device.');
     }
 
+    await provisionDevice(serialNumber, deviceAuthKeys.publicKey);
     await confirmProvisonDevice(serialNumber);
     console.log('Device provisioned successfully.');
 
