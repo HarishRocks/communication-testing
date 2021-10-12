@@ -2,7 +2,8 @@
 
 ## Setup
 
-- Install Nodejs v12
+- Install Nodejs v14.15.3
+- If you need to change nodejs version frequently, try using [this](https://github.com/coreybutler/nvm-windows)
 - Install Visual Studio with workload "Desktop development with C++" (Only for windows)
 - Python v3
 - Run the following commands
@@ -39,9 +40,9 @@
 
 ### Requirements
 
-- Install `pkg`
+- Install `nexe`
   ```
-  npm i -g pkg
+  npm i -g nexe
   ```
 - Install `patchelf` (Linux)
   ```
@@ -50,6 +51,8 @@
 
 ### Package for Windows
 
+- Nodejs v14.15.3 is required
+
 - Run `package-win` command (This needs to be executed on git bash terminal)
   ```
   yarn package-win
@@ -57,6 +60,8 @@
 - The executables will be created inside `build` folder
 
 ### Package for Linux
+
+- Nodejs v14.15.3 is required
 
 - Run `package-linux` command
   ```

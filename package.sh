@@ -16,15 +16,15 @@ copyEnv() {
   echo "\nEXECUTION_TYPE=EXECUTABLE" >> ./build/.env
 }
 
-# Package node
-packageNode() {
-  pkg --target=${TARGET} dist/cli/index.js -o ./build/${CLI_FILENAME}
-  pkg --target=${TARGET} dist/custom.js -o ./build/${CUSTOM_CLI_FILENAME}
+# Copy Node modules
+copyEnv() {
+  cp -rv node_modules ./build/
 }
 
-packageNode2() {
-  nexe dist/cli/index.js -o ./build/${CLI_FILENAME} --build
-  nexe dist/custom.js -o ./build/${CUSTOM_CLI_FILENAME} --build
+# Package node
+packageNode() {
+  nexe dist/cli/index.js -o ./build/${CLI_FILENAME} --target=${TARGET} 
+  nexe dist/custom.js -o ./build/${CUSTOM_CLI_FILENAME} --target=${TARGET}
 }
 
 # Package python
@@ -38,21 +38,22 @@ packagePython() {
 packageAll() {
   clean
   copyEnv
-  #build
-  packageNode2
-  #packagePython
+  build
+  copyNodeModules
+  packageNode
+  packagePython
 }
 
 case $1 in
   linux)
-    TARGET=node14-linux-x64
+    TARGET=linux-x64-14.15.3
     PYTHON_COMMAND=python3
     CLI_FILENAME=cli
     CUSTOM_CLI_FILENAME=custom
     packageAll
   ;;
   win)
-    TARGET=node14-win-x64
+    TARGET=windows-x64-14.15.3
     PYTHON_COMMAND=python
     CLI_FILENAME=cli.exe
     CUSTOM_CLI_FILENAME=custom.exe
