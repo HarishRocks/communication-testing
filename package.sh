@@ -17,7 +17,7 @@ copyEnv() {
 }
 
 # Copy Node modules
-copyEnv() {
+copyNodeModules() {
   cp -rv node_modules ./build/
 }
 
