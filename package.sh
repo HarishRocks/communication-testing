@@ -37,11 +37,11 @@ packagePython() {
 
 packageAll() {
   clean
-  copyEnv
   build
-  copyNodeModules
   packageNode
   packagePython
+  copyEnv
+  copyNodeModules
 }
 
 case $1 in
