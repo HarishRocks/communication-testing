@@ -11,8 +11,6 @@ import customAction from './handler/customActions';
 import allWalletsList from './handler/walletsList';
 import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
-import deviceProvision from './handler/deviceProvision';
-import checkDeviceProvision from './handler/checkDeviceProvision';
 import addAllWallets from './handler/addAllWallets';
 import addBootloader from './handler/addBootloader';
 import enableSwd from './handler/enableSwd';
@@ -36,8 +34,6 @@ const cliTool = async () => {
     'Custom from JSON',
     'Upgrade',
     'Only Upgrade',
-    'Device Provision',
-    'Check Device Provision',
     'Fetch Logs',
     'Disable SWD',
     'Enable SWD',
@@ -66,14 +62,6 @@ const cliTool = async () => {
 
     case 'Disable SWD':
       await disableSwd();
-      break;
-
-    case 'Device Provision':
-      await deviceProvision();
-      break;
-
-    case 'Check Device Provision':
-      await checkDeviceProvision();
       break;
 
     case 'Fetch Logs':
