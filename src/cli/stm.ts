@@ -8,13 +8,28 @@ import {
 import { queryList, queryInput } from './helper/cliInput';
 
 const cliTool = async () => {
-  const selection = await queryList([
-    'STM Update',
-    'Generate Keys',
-    'Add Header',
-    'Sign Header',
-    'Decode Header',
-  ]);
+  const allArgs = process.argv;
+
+  let args: string[] = [];
+
+  if (allArgs.length > 3) {
+    args = allArgs.slice(3);
+  }
+
+  let selection = '';
+  if (allArgs.length > 2) {
+    if (args.length > 0) {
+      selection = args[0];
+    }
+  } else {
+    selection = await queryList([
+      'STM Update',
+      'Generate Keys',
+      'Add Header',
+      'Sign Header',
+      'Decode Header',
+    ]);
+  }
 
   switch (selection) {
     case 'STM Update':
@@ -38,6 +53,9 @@ const cliTool = async () => {
     case 'Decode Header':
       await decodeHeader();
       break;
+    default:
+      console.log('Invalid selection');
+      process.exit(1);
   }
 };
 

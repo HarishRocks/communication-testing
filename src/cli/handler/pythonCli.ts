@@ -65,18 +65,46 @@ export const addHeader = async () => {
     const DEFAULT_VERSION = 'BlinkLed-version.txt';
     const DEFAULT_PRIVATE_KEY = 'private_key1.h';
 
-    const input = await queryInput(`Enter the input binary filename`, {
-      default: DEFAULT_INPUT,
-    });
-    const output = await queryInput(`Enter the output binary filename`, {
-      default: DEFAULT_OUTPUT,
-    });
-    const version = await queryInput(`Enter the version filename`, {
-      default: DEFAULT_VERSION,
-    });
-    const privateKey = await queryInput(`Enter the private key filename`, {
-      default: DEFAULT_PRIVATE_KEY,
-    });
+    const allArgs = process.argv;
+
+    let args: string[] = [];
+
+    if (allArgs.length > 4) {
+      args = allArgs.slice(4);
+    }
+
+    let input = DEFAULT_INPUT;
+    let output = DEFAULT_OUTPUT;
+    let version = DEFAULT_VERSION;
+    let privateKey = DEFAULT_PRIVATE_KEY;
+
+    if (allArgs.length <= 2) {
+      input = await queryInput(`Enter the input binary filename`, {
+        default: DEFAULT_INPUT,
+      });
+      output = await queryInput(`Enter the output binary filename`, {
+        default: DEFAULT_OUTPUT,
+      });
+      version = await queryInput(`Enter the version filename`, {
+        default: DEFAULT_VERSION,
+      });
+      privateKey = await queryInput(`Enter the private key filename`, {
+        default: DEFAULT_PRIVATE_KEY,
+      });
+    } else {
+      if (args.length > 0) {
+        input = args[0];
+      }
+      if (args.length > 1) {
+        output = args[1];
+      }
+      if (args.length > 2) {
+        version = args[2];
+      }
+      if (args.length > 3) {
+        privateKey = args[3];
+      }
+    }
 
     const { stderr, stdout } = await asyncExec(
       `${cliCommand} add-header --input=${input} --output=${output} --version=${version} --private-key=${privateKey}`
@@ -101,15 +129,39 @@ export const signHeader = async () => {
     const DEFAULT_OUTPUT = 'BlinkLed_Signed.bin';
     const DEFAULT_PRIVATE_KEY = 'private_key2.h';
 
-    const input = await queryInput(`Enter the input binary filename`, {
-      default: DEFAULT_INPUT,
-    });
-    const output = await queryInput(`Enter the output binary filename`, {
-      default: DEFAULT_OUTPUT,
-    });
-    const privateKey = await queryInput(`Enter the private key filename`, {
-      default: DEFAULT_PRIVATE_KEY,
-    });
+    const allArgs = process.argv;
+
+    let args: string[] = [];
+
+    if (allArgs.length > 4) {
+      args = allArgs.slice(4);
+    }
+
+    let input = DEFAULT_INPUT;
+    let output = DEFAULT_OUTPUT;
+    let privateKey = DEFAULT_PRIVATE_KEY;
+
+    if (allArgs.length <= 2) {
+      input = await queryInput(`Enter the input binary filename`, {
+        default: DEFAULT_INPUT,
+      });
+      output = await queryInput(`Enter the output binary filename`, {
+        default: DEFAULT_OUTPUT,
+      });
+      privateKey = await queryInput(`Enter the private key filename`, {
+        default: DEFAULT_PRIVATE_KEY,
+      });
+    } else {
+      if (args.length > 0) {
+        input = args[0];
+      }
+      if (args.length > 1) {
+        output = args[1];
+      }
+      if (args.length > 2) {
+        privateKey = args[2];
+      }
+    }
 
     const { stderr, stdout } = await asyncExec(
       `${cliCommand} sign-header --input=${input} --output=${output} --private-key=${privateKey}`

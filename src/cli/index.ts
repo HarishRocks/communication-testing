@@ -27,17 +27,31 @@ import * as logs from 'simple-node-logger';
 const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
-  let selection = await queryList([
-    'STM CLI',
-    'Add Bootloader',
-    'Card Authentication',
-    'Custom from JSON',
-    'Upgrade',
-    'Only Upgrade',
-    'Fetch Logs',
-    'Disable SWD',
-    'Enable SWD',
-  ]);
+  const allArgs = process.argv;
+  console.log({ allArgs });
+
+  let args: string[] = [];
+
+  if (allArgs.length > 2) {
+    args = allArgs.slice(2);
+  }
+
+  let selection = '';
+  if (args.length > 0) {
+    selection = args[0];
+  } else {
+    selection = await queryList([
+      'STM CLI',
+      'Add Bootloader',
+      'Card Authentication',
+      'Custom from JSON',
+      'Upgrade',
+      'Only Upgrade',
+      'Fetch Logs',
+      'Disable SWD',
+      'Enable SWD',
+    ]);
+  }
 
   switch (selection) {
     case 'Add Bootloader':
@@ -90,6 +104,9 @@ const cliTool = async () => {
     case 'STM CLI':
       await stmCli();
       break;
+    default:
+      console.log('Invalid selection');
+      process.exit(1);
   }
 };
 

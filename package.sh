@@ -2,7 +2,7 @@
 # Clean
 clean() {
   rm -rf build/*
-  mkdir build
+  mkdir -p build
 }
 
 # Build
@@ -18,7 +18,7 @@ copyEnv() {
 
 # Copy Node modules
 copyNodeModules() {
-  cp -rv node_modules ./build/
+  cp -r node_modules ./build/
 }
 
 # Package node
