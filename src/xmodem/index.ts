@@ -1,10 +1,20 @@
 import { constants, radix } from '../config';
-import { intToUintByte, byteStuffing, byteUnstuffing } from '../bytes';
+import { byteStuffing, byteUnstuffing, intToUintByte } from '../bytes';
 import { crc16 } from '../core';
+export * from './stm';
 
 const { CHUNK_SIZE, START_OF_FRAME } = constants;
 
+/**
+ * Encodes the data and command number, and returns a list of packets.
+ *
+ *
+ * @param data - Data in hex format
+ * @param commandType - The command number to be sent
+ * @return list of packets (or list of strings)
+ */
 const xmodemEncode = (data: string, commandType: number) => {
+  console.log(data);
   const rounds = Math.ceil(data.length / CHUNK_SIZE);
   const packetList: string[] = [];
   for (let i = 1; i <= rounds; i += 1) {
@@ -26,18 +36,37 @@ const xmodemEncode = (data: string, commandType: number) => {
     const packet = commHeader + stuffedData;
     packetList.push(packet);
   }
+  console.log(JSON.stringify({ data, packetList }, undefined, 2));
   return packetList;
 };
 
+/**
+ * Decodes the data from a Buffer object into a packetList with the format
+ *   {
+ *    startOfFrame,
+ *     commandType,
+ *     currentPacketNumber,
+ *     totalPacket,
+ *     dataSize,
+ *     dataChunk,
+ *     crc,
+ *     errorList
+ *   }
+ *
+ *
+ * @param param - Data in buffer object
+ * @return list of decoded packets
+ */
 const xmodemDecode = (param: Buffer) => {
   let data = param.toString('hex').toUpperCase();
   const packetList: any[] = [];
   let offset = data.indexOf(START_OF_FRAME);
 
   while (data.length > 0) {
+    console.log({ data });
     offset = data.indexOf(START_OF_FRAME);
-    const startOfFrame = data.slice(offset, offset + 2);
-    offset += 2;
+    const startOfFrame = data.slice(offset, offset + 4);
+    offset += 4;
     const commandType = parseInt(
       `0x${data.slice(offset, offset + radix.commandType / 4)}`,
       16
@@ -74,7 +103,6 @@ const xmodemDecode = (param: Buffer) => {
       0,
       unStuffedData.length - radix.crc / 4
     );
-    // console.log('input for crc', crcInput)
     const actualCRC = crc16(Buffer.from(crcInput, 'hex')).toString(16);
 
     // data validation

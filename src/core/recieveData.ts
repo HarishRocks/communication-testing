@@ -2,7 +2,7 @@ import { SerialPortType } from '../config/serialport';
 import { xmodemDecode } from '../xmodem/index';
 import { ackData } from './sendData';
 import { commands } from '../config';
-const { ACK_PACKET } = commands;
+const { ACK_PACKET, NACK_PACKET } = commands;
 
 // returns the received data value in hex for the supplied command
 export const receiveCommand = (
@@ -58,7 +58,7 @@ export const receiveCommand = (
             ACK_PACKET,
             `0x${currentPacketNumber.toString(16)}`
           );
-          connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
+          connection.write(Buffer.from(ackPacket, 'hex'));
           if (currentPacketNumber === totalPacket) {
             resolve(resData.join(''));
             if (timeoutIdentifier) {
@@ -67,6 +67,13 @@ export const receiveCommand = (
             connection.removeListener('data', eListener);
             connection.removeListener('close', onClose);
           }
+        } else {
+          // Send NACK if invalid command.
+          const nackPacket = ackData(
+            NACK_PACKET,
+            `0x${currentPacketNumber.toString(16)}`
+          );
+          connection.write(Buffer.from(nackPacket, 'hex'));
         }
       });
     }
@@ -106,11 +113,7 @@ export const recieveData = (connection: SerialPortType) => {
           `0x${currentPacketNumber.toString(16)}`
         );
         // Don't add the initial `aa` when mocking, this is for the simulator to work properly
-        if (process.env.MOCK === 'true') {
-          connection.write(Buffer.from(`${ackPacket}`, 'hex'));
-        } else {
-          connection.write(Buffer.from(`aa${ackPacket}`, 'hex'));
-        }
+        connection.write(Buffer.from(`${ackPacket}`, 'hex'));
         if (currentPacketNumber === totalPacket) {
           resolve({ commandType, data: resData.join('') });
 
