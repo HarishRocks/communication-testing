@@ -107,7 +107,7 @@ const xmodemDecode = (param: Buffer) => {
 
     // data validation
     let errorList = '';
-    if (startOfFrame.toUpperCase() !== 'AA') errorList.concat();
+    if (startOfFrame.toUpperCase() !== START_OF_FRAME) errorList.concat();
     errorList += ' Invalid Start of frame ';
     if (currentPacketNumber > totalPacket)
       errorList += ' currentPacketNumber is greater than totalPacketNumber ';
