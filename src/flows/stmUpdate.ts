@@ -4,8 +4,6 @@ import { createPort } from '../core/port';
 
 const stmUpdate = (input: string) => {
   return new Promise(async (resolve, reject) => {
-    console.log({ input });
-
     fs.readFile(input, async (error, data) => {
       if (error) {
         console.log(error);

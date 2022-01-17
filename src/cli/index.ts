@@ -1,34 +1,20 @@
 import dotenv from 'dotenv-flow';
 dotenv.config();
 
-import path from 'path';
 import process from 'process';
 import fs from 'fs';
-import receiveTransaction from './handler/receiveTransaction';
-import sendTransaction from './handler/sendTransaction';
-import addCoin from './handler/addCoin';
 import customAction from './handler/customActions';
-import allWalletsList from './handler/walletsList';
-import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
-import addAllWallets from './handler/addAllWallets';
 import addBootloader from './handler/addBootloader';
 import enableSwd from './handler/enableSwd';
 import disableSwd from './handler/disableSwd';
 import stmCli from './stm';
-import { queryList } from './helper/cliInput';
+import { queryList, queryInput } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
 import fetchLogs from './handler/fetchLogs';
-import isExecutable from '../utils/isExecutable';
-
-// @ts-ignore
-import * as logs from 'simple-node-logger';
-
-const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
   const allArgs = process.argv;
-  console.log({ allArgs });
 
   let args: string[] = [];
 
@@ -84,20 +70,19 @@ const cliTool = async () => {
 
     case 'Custom from JSON':
       let customData: any;
-      try {
-        let fileData: Buffer;
-        if (isExecutable()) {
-          fileData = fs.readFileSync(path.join(process.cwd(), 'custom.json'));
-        } else {
-          fileData = fs.readFileSync(
-            path.join(__dirname, '../', '../', 'custom.json')
-          );
-        }
+      const DEFAULT_INPUT = 'custom.json';
 
+      const filename = await queryInput(`Enter the custom JSON filename`, {
+        default: DEFAULT_INPUT,
+      });
+
+      try {
+        let fileData = fs.readFileSync(filename);
         customData = JSON.parse(fileData.toString('utf-8'));
       } catch (error) {
         console.error('Error in reading `custom.json` file');
         console.error(error);
+        process.exit(1);
       }
       await customAction(customData);
       break;
