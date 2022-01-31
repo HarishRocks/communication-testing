@@ -14,7 +14,6 @@ const { CHUNK_SIZE, START_OF_FRAME } = constants;
  * @return list of packets (or list of strings)
  */
 const xmodemEncode = (data: string, commandType: number) => {
-  console.log(data);
   const rounds = Math.ceil(data.length / CHUNK_SIZE);
   const packetList: string[] = [];
   for (let i = 1; i <= rounds; i += 1) {
@@ -36,7 +35,6 @@ const xmodemEncode = (data: string, commandType: number) => {
     const packet = commHeader + stuffedData;
     packetList.push(packet);
   }
-  console.log(JSON.stringify({ data, packetList }, undefined, 2));
   return packetList;
 };
 
@@ -63,10 +61,9 @@ const xmodemDecode = (param: Buffer) => {
   let offset = data.indexOf(START_OF_FRAME);
 
   while (data.length > 0) {
-    console.log({ data });
     offset = data.indexOf(START_OF_FRAME);
-    const startOfFrame = data.slice(offset, offset + 4);
-    offset += 4;
+    const startOfFrame = data.slice(offset, offset + START_OF_FRAME.length);
+    offset += START_OF_FRAME.length;
     const commandType = parseInt(
       `0x${data.slice(offset, offset + radix.commandType / 4)}`,
       16
@@ -107,8 +104,8 @@ const xmodemDecode = (param: Buffer) => {
 
     // data validation
     let errorList = '';
-    if (startOfFrame.toUpperCase() !== START_OF_FRAME) errorList.concat();
-    errorList += ' Invalid Start of frame ';
+    if (startOfFrame.toUpperCase() !== START_OF_FRAME)
+      errorList += ' Invalid Start of frame ';
     if (currentPacketNumber > totalPacket)
       errorList += ' currentPacketNumber is greater than totalPacketNumber ';
     if (dataSize > CHUNK_SIZE)

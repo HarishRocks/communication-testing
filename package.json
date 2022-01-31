@@ -6,6 +6,7 @@
   "scripts": {
     "dev:live": "ts-node src/app.ts",
     "dev:cli": "ts-node src/cli/index.ts",
+    "dev:custom": "ts-node src/custom.ts",
     "dev": "yarn dev:cli",
     "cli": "cross-env NODE_ENV=cli yarn run:cli",
     "build": "tsc -p tsconfig.json",

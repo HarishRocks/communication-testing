@@ -8,7 +8,7 @@ const DEVICE_IN_FILE = path.join(tempDir, 'cypherock_device_in.bin');
 const DEVICE_OUT_FILE = path.join(tempDir, 'cypherock_device_out.bin');
 
 export default {
-  START_OF_FRAME: 'AAAA',
+  START_OF_FRAME: '5A5A',
   ACK_BYTE: '06',
   CHUNK_SIZE: 32 * 2,
   ACK_TIME: 150,
