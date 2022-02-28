@@ -1,3 +1,8 @@
+import {
+  receiveCommand as commReceiveCommand,
+  PacketVersionMap,
+} from '@cypherock/communication';
+import SerialPort from 'serialport';
 import { SerialPortType } from '../config/serialport';
 import { xmodemDecode } from '../xmodem/index';
 import { ackData } from './sendData';
@@ -20,6 +25,15 @@ export const receiveCommand = (
    * present then the function will wait for the command even after the device has been
    * disconneced.
    */
+  if (connection instanceof SerialPort) {
+    return commReceiveCommand(
+      connection,
+      command,
+      PacketVersionMap.v2,
+      timeout
+    ) as Promise<string>;
+  }
+
   const resData: any = [];
   return new Promise((resolve, reject) => {
     if (!connection.isOpen) {

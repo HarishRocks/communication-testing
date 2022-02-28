@@ -1,3 +1,8 @@
+import {
+  sendData as commSendData,
+  PacketVersionMap,
+} from '@cypherock/communication';
+import SerialPort from 'serialport';
 import { SerialPortType } from '../config/serialport';
 import { constants, commands, radix } from '../config';
 import { xmodemDecode, xmodemEncode } from '../xmodem/index';
@@ -54,6 +59,10 @@ const sendData = async (
   command: number,
   data: string
 ) => {
+  if (connection instanceof SerialPort) {
+    return commSendData(connection, command, data, PacketVersionMap.v2);
+  }
+
   const packetsList = xmodemEncode(data, command);
   log.info('Number of packets sending ' + packetsList.length);
   /**
