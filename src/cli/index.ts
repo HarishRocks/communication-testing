@@ -4,27 +4,17 @@ dotenv.config();
 import path from 'path';
 import process from 'process';
 import fs from 'fs';
-import receiveTransaction from './handler/receiveTransaction';
-import sendTransaction from './handler/sendTransaction';
-import addCoin from './handler/addCoin';
 import customAction from './handler/customActions';
-import allWalletsList from './handler/walletsList';
-import addWallet from './handler/addWallet';
 import cardAuth from './handler/cardAuth';
-import addAllWallets from './handler/addAllWallets';
 import addBootloader from './handler/addBootloader';
 import enableSwd from './handler/enableSwd';
 import disableSwd from './handler/disableSwd';
 import stmCli from './stm';
 import { queryList } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
+import commTest from '../flows/commTest';
 import fetchLogs from './handler/fetchLogs';
 import isExecutable from '../utils/isExecutable';
-
-// @ts-ignore
-import * as logs from 'simple-node-logger';
-
-const log = logs.createSimpleFileLogger('project.log');
 
 const cliTool = async () => {
   const allArgs = process.argv;
@@ -50,6 +40,7 @@ const cliTool = async () => {
       'Fetch Logs',
       'Disable SWD',
       'Enable SWD',
+      'Communication Test',
     ]);
   }
 
@@ -80,6 +71,10 @@ const cliTool = async () => {
 
     case 'Fetch Logs':
       await fetchLogs();
+      break;
+
+    case 'Communication Test':
+      await commTest();
       break;
 
     case 'Custom from JSON':
