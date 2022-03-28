@@ -126,7 +126,7 @@ export const addHeader = async () => {
 export const signHeader = async () => {
   try {
     const DEFAULT_INPUT = 'BlinkLed_Header.bin';
-    const DEFAULT_OUTPUT = 'BlinkLed_Signed.bin';
+    const DEFAULT_OUTPUT = 'app_dfu_package.bin';
     const DEFAULT_PRIVATE_KEY = 'private_key2.h';
 
     const allArgs = process.argv;
@@ -182,7 +182,7 @@ export const signHeader = async () => {
 
 export const decodeHeader = async () => {
   try {
-    const DEFAULT_INPUT = 'BlinkLed_Signed.bin';
+    const DEFAULT_INPUT = 'app_dfu_package.bin';
 
     const input = await queryInput(`Enter the input binary filename`, {
       default: DEFAULT_INPUT,

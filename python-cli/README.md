@@ -111,7 +111,7 @@ We need the following files before doing this.
 - `BlinkLed_Header.bin` - The bin file with the header and 1st signature that is to be signed.
 - `private_key2.h` - The private key used for signature.
 
-Running `python cli.py sign-header` will generate a new bin file (`BlinkLed_Signed.bin`)
+Running `python cli.py sign-header` will generate a new bin file (`app_dfu_package.bin`)
 by adding the second signature to the existing binary file.
 
 You can change the filepath of the input/output binary file and the private key
@@ -127,7 +127,7 @@ optional arguments:
   --private-key PRIVATE_KEY
                         Path to the private key file. Defaults to `private_key2.h`
   --input INPUT         Path to the input bin file. Defaults to `BlinkLed_Header.bin`
-  --output OUTPUT       Path to the output bin file. Defaults to `BlinkLed_Signed.bin`
+  --output OUTPUT       Path to the output bin file. Defaults to `app_dfu_package.bin`
 ```
 
 #### Decoding headers
@@ -137,7 +137,7 @@ you can use this command to check the header data.
 
 We need the following files before doing this.
 
-- `BlinkLed_Signed.bin` - The bin file with the header and 1 or 2 signature that is to be decoded.
+- `app_dfu_package.bin` - The bin file with the header and 1 or 2 signature that is to be decoded.
 
 Running `python cli.py decode-header` will print the header data on the console.
 
@@ -150,5 +150,5 @@ usage: cli.py decode-header [-h] [--input INPUT]
 
 optional arguments:
   -h, --help     show this help message and exit
-  --input INPUT  Path to the input bin file. Defaults to `BlinkLed_Signed.bin`
+  --input INPUT  Path to the input bin file. Defaults to `app_dfu_package.bin`
 ```
