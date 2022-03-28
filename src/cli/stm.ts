@@ -33,7 +33,7 @@ const cliTool = async () => {
 
   switch (selection) {
     case 'STM Update':
-      const DEFAULT_INPUT = 'BlinkLed_Signed.bin';
+      const DEFAULT_INPUT = 'app_dfu_package.bin';
 
       const input = await queryInput(`Enter the input binary filename`, {
         default: DEFAULT_INPUT,
