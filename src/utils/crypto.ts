@@ -89,18 +89,4 @@ export const getKeysFromSeed = async (
     fullPublicKey: compressedToFullPublicKey(data['Public Key']),
     xpub: data['XPUB(bin)'],
   };
-  //const wallet = bitcoin.bip32
-  //.fromSeed(Buffer.from(seed, 'hex'))
-  //.derivePath(path);
-
-  //if (!wallet.privateKey) {
-  //throw new Error('Cannot derive private keys');
-  //}
-
-  //return {
-  //publicKey: wallet.publicKey.toString('hex'),
-  //privateKey: wallet.privateKey.toString('hex'),
-  //wif: wallet.toWIF(),
-  //xpub: wallet.neutered().toBase58(),
-  //};
 };

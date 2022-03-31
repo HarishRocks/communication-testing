@@ -26,6 +26,13 @@ parser_gen.add_argument("--private-key", help="Path to the save the private key 
 parser_gen.add_argument("--public-key", help="Path to the save the public key file. Defaults to `public_key`", default="public_key")
 parser_gen.add_argument("--index", help="Index of the key pairs. Defaults to `1`", type=int, default="1")
 
+parser_store_key = subparsers.add_parser('store-key', help='Store the key pairs')
+parser_store_key.add_argument("--private-key-file", help="Path to the save the private key file. Defaults to `private_key`", default="private_key")
+parser_store_key.add_argument("--public-key-file", help="Path to the save the public key file. Defaults to `public_key`", default="public_key")
+parser_store_key.add_argument("--private-key", help="The private key", required=True)
+parser_store_key.add_argument("--public-key", help="The public key", required=True)
+parser_store_key.add_argument("--index", help="Index of the key pairs. Defaults to `1`", type=int, default="1")
+
 parser_add_header = subparsers.add_parser('add-header', help='Add headers to the binary file')
 parser_add_header.add_argument("--private-key", help="Path to the private key file. Defaults to `private_key1.h`", default="private_key1.h")
 parser_add_header.add_argument("--input", help=f"Path to the input bin file. Defaults to `{ADD_HEADER_DEFAULT_INPUT_BIN}`", default=ADD_HEADER_DEFAULT_INPUT_BIN)
@@ -299,8 +306,23 @@ def genKeys(privateKeyFile, publicKeyFile, keyIndex):
     writeCFile(privateKeyFile, privateKeyVarName, '32', 'PRIVATE_KEY_HEX', binarySk, hexSk)
     writeCFile(publicKeyFile, publicKeyVarName, '33','PUBLIC_KEY_HEX', binaryVk, hexVk)
 
+def storeKeys(privateKeyFile, publicKeyFile, keyIndex, privateKey, publicKey):
+    binarySk = bytes.fromhex(privateKey)
+    binaryVk = bytes.fromhex(publicKey)
+
+    hexSk = privateKey
+    hexVk = publicKey
+
+    privateKeyVarName = f"private_key{keyIndex}";
+    publicKeyVarName = f"public_key{keyIndex}";
+
+    writeCFile(privateKeyFile, privateKeyVarName, '32', 'PRIVATE_KEY_HEX', binarySk, hexSk)
+    writeCFile(publicKeyFile, publicKeyVarName, '33','PUBLIC_KEY_HEX', binaryVk, hexVk)
+
 if (ACTION == 'gen-key'):
     genKeys(args.private_key + str(args.index) + '.h', args.public_key + str(args.index) + '.h', args.index)
+if (ACTION == 'store-key'):
+    storeKeys(args.private_key_file + str(args.index) + '.h', args.public_key_file + str(args.index) + '.h', args.index, args.private_key, args.public_key)
 elif (ACTION == 'add-header'):
     addHeader(args.private_key, args.input, args.output, args.version)
 elif (ACTION == 'sign-header'):

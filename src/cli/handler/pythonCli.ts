@@ -4,6 +4,8 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { queryNumber, queryInput } from '../helper/cliInput';
 import isExecutable from '../../utils/isExecutable';
+import { constants } from '../../config';
+import { getKeysFromSeed, calculatePathFromIndex } from '../../utils/crypto';
 
 const asyncExec = promisify(exec);
 
@@ -37,13 +39,25 @@ if (isExecutable()) {
 
 export const generateKeys = async () => {
   try {
+    if (!constants.SECRET_SEED) {
+      throw new Error('Please define a SECRET_SEED in .env');
+    }
+
     const index = await queryNumber(
       'Enter the index of key pair (defaults to `1`)',
       { default: 1 }
     );
-    const { stderr, stdout } = await asyncExec(
-      `${cliCommand} gen-key --index=${index}`
+
+    const keys = await getKeysFromSeed(
+      constants.SECRET_SEED,
+      `m/1000'/4'/1'/0/${index - 1}`,
+      'nist256p1'
     );
+
+    const { stderr, stdout } = await asyncExec(
+      `${cliCommand} store-key --index=${index} --private-key=${keys.privateKey} --public-key=${keys.publicKey}`
+    );
+
     if (stderr) {
       console.log(`stderr: ${stderr}`);
       return;
