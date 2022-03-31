@@ -11,7 +11,9 @@ import disableSwd from './handler/disableSwd';
 import stmCli from './stm';
 import { queryList, queryInput } from './helper/cliInput';
 import { deviceAuthandUpgrade, onlyUpgrade } from '../flows/authAndUpgrade';
+import commTest from '../flows/commTest';
 import fetchLogs from './handler/fetchLogs';
+import isExecutable from '../utils/isExecutable';
 
 const cliTool = async () => {
   const allArgs = process.argv;
@@ -36,6 +38,7 @@ const cliTool = async () => {
       'Fetch Logs',
       'Disable SWD',
       'Enable SWD',
+      'Communication Test',
     ]);
   }
 
@@ -66,6 +69,10 @@ const cliTool = async () => {
 
     case 'Fetch Logs':
       await fetchLogs();
+      break;
+
+    case 'Communication Test':
+      await commTest();
       break;
 
     case 'Custom from JSON':

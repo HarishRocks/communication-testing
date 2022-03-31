@@ -6,7 +6,7 @@ export default {
   COIN_VERIFIED_PACKET: 4, // only sent
   ADDRESSES_VERIFIED_PACKET: 5, // only sent
   SIGNED_TRANSACTION_PACKET: 6, // only sent
-  ERROR_PACKET: 7,
+  NACK_PACKET: 7,
   USB_CONNECTION_STATE_PACKET: 8, // with user name/
 
   //Application specific

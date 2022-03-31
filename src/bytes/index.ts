@@ -5,7 +5,7 @@ const byteUnstuffing = (inputBuff: Buffer): Buffer => {
   for (let i = 0; i < size; i += 1) {
     if (inputBuff[i] === 0xa3 && i < size - 1) {
       if (inputBuff[i + 1] === 0x3a) {
-        outputData.push(0xaa);
+        outputData.push(0x5a);
         i += 1;
       } else if (inputBuff[i + 1] === 0x33) {
         outputData.push(0xa3);
@@ -24,7 +24,7 @@ const byteStuffing = (inputBuff: Buffer) => {
   if (inputBuff.length <= 0) throw new Error('Byte stuffing failed: 0 size');
   const outputData: any = [];
   inputBuff.forEach((byte) => {
-    if (byte === 0xaa) {
+    if (byte === 0x5a) {
       outputData.push(0xa3);
       outputData.push(0x3a);
     } else if (byte === 0xa3) {

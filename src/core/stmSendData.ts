@@ -1,13 +1,11 @@
-import { constants, commands, radix } from '../config';
-import { xmodemDecode, xmodemEncode } from '../xmodem/stm';
-import { intToUintByte, byteStuffing } from '../bytes';
-import { crc16 } from './crc';
+import { stmUpdateSendData as commSendData } from '@cypherock/communication';
+import SerialPort from 'serialport';
+import { xmodemEncode } from '../xmodem/stm';
 // @ts-ignore
 import * as logs from 'simple-node-logger';
 
 const log = logs.createSimpleFileLogger('project.log');
 
-const { START_OF_FRAME } = constants;
 const ACK_PACKET = '06';
 const ERROR_CODES = [
   {
@@ -92,6 +90,10 @@ const writePacket = (
 };
 
 const sendData = async (connection: any, data: string) => {
+  if (connection instanceof SerialPort) {
+    return commSendData(connection, data);
+  }
+
   const packetsList = xmodemEncode(data);
   log.info('Number of packets sending ' + packetsList.length);
   /**

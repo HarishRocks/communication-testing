@@ -1,3 +1,8 @@
+import {
+  sendData as commSendData,
+  PacketVersionMap,
+} from '@cypherock/communication';
+import SerialPort from 'serialport';
 import { SerialPortType } from '../config/serialport';
 import { constants, commands, radix } from '../config';
 import { xmodemDecode, xmodemEncode } from '../xmodem/index';
@@ -17,7 +22,7 @@ const writePacket = (connection: SerialPortType, packet: any) => {
      */
     const eListener = (ePacket: any) => {
       const data = xmodemDecode(ePacket);
-      // console.log(data);
+      console.log({ listenerData: data });
       data.forEach((d) => {
         const { commandType } = d;
         if (Number(commandType) === commands.ACK_PACKET) {
@@ -35,7 +40,7 @@ const writePacket = (connection: SerialPortType, packet: any) => {
     /**
      * Write packet
      */
-    connection.write(Buffer.from(`aa${packet}`, 'hex'), (err: any) => {
+    connection.write(Buffer.from(packet, 'hex'), (err: any) => {
       if (err) {
         reject('device diconnected');
         return;
@@ -45,7 +50,7 @@ const writePacket = (connection: SerialPortType, packet: any) => {
     /**
      * as writing is done, fail so we can retry if no acknowledgement within 2 second
      */
-    setTimeout(() => reject(), 2000);
+    setTimeout(() => reject('Write packet timeout'), 2000);
   });
 };
 
@@ -54,6 +59,10 @@ const sendData = async (
   command: number,
   data: string
 ) => {
+  if (connection instanceof SerialPort) {
+    return commSendData(connection, command, data, PacketVersionMap.v2);
+  }
+
   const packetsList = xmodemEncode(data, command);
   log.info('Number of packets sending ' + packetsList.length);
   /**
@@ -71,6 +80,7 @@ const sendData = async (
         } catch (e) {
           log.error('Caught error');
           console.log('Caught Error');
+          console.log(e);
         }
         tries++;
       }
