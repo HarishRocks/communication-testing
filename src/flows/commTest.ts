@@ -17,8 +17,8 @@ const commTest = async () => {
 
   for (let i = 0; i < 100; i++) {
     try {
-      const commandType = randomNumber(1, 50);
-      const data = crypto.randomBytes(randomNumber(1, 10)).toString('hex');
+      const commandType = randomNumber(1, 100);
+      const data = crypto.randomBytes(randomNumber(1, 1000)).toString('hex');
       console.log({ commandType, data });
       await sendData(connection, commandType, data);
       const recData = await receiveCommand(connection, commandType);
