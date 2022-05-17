@@ -1,3 +1,4 @@
+set -e
 
 # Clean
 clean() {
@@ -57,6 +58,13 @@ case $1 in
     PYTHON_COMMAND=python
     CLI_FILENAME=cli.exe
     CUSTOM_CLI_FILENAME=custom.exe
+    packageAll
+  ;;
+  mac)
+    TARGET=mac-x64-14.15.3
+    PYTHON_COMMAND=python3
+    CLI_FILENAME=cli
+    CUSTOM_CLI_FILENAME=custom
     packageAll
   ;;
   *)
